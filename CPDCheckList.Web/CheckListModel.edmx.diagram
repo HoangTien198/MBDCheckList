@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9aef4e3afc3d44a080b6b94f7de05ae3" Name="Diagram1" ZoomLevel="103">
+        <EntityTypeShape EntityType="CheckListModel.CheckListFirst" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CheckListModel.CheckListOnTime" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CheckListModel.Roles" Width="1.5" PointX="5.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CheckListModel.TimeLine" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CheckListModel.Users" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="CheckListModel.FK_CheckListOnTime_CheckListFirsts" ManuallyRouted="false" />
+        <AssociationConnector Association="CheckListModel.FK_CheckListOnTime_TimeLine" ManuallyRouted="false" />
+        <AssociationConnector Association="CheckListModel.FK_Users_Roles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CheckListModel.CheckListRutKiem" Width="1.5" PointX="11.75" PointY="5.75" />
+        <AssociationConnector Association="CheckListModel.CheckListRutKiemUsers" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="CheckListModel.CheckListRutKiemUsers1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

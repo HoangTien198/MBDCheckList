@@ -1,0 +1,561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CheckListModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CheckListFirsts">
+          <Key>
+            <PropertyRef Name="CheckListFirstId" />
+          </Key>
+          <Property Name="CheckListFirstId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MO" Type="varchar" MaxLength="50" />
+          <Property Name="ChecklistCreateDate" Type="datetime" />
+          <Property Name="ShiftWork" Type="tinyint" />
+          <Property Name="ModelName" Type="nvarchar" MaxLength="60" />
+          <Property Name="ProgramName" Type="nvarchar" MaxLength="250" />
+          <Property Name="SoftwareName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Checksum" Type="nvarchar" MaxLength="60" />
+          <Property Name="MaterialCode" Type="varchar" MaxLength="100" />
+          <Property Name="MaterialCodeProducer" Type="varchar" MaxLength="100" />
+          <Property Name="MachineCode" Type="varchar" MaxLength="50" />
+          <Property Name="ICColor" Type="varchar" MaxLength="50" />
+          <Property Name="PersonalColor" Type="varchar" MaxLength="50" />
+          <Property Name="CheckESD" Type="tinyint" />
+          <Property Name="TECreatedBy" Type="int" />
+          <Property Name="TestQuantityFirst" Type="tinyint" />
+          <Property Name="LineLeaderConfirm" Type="tinyint" />
+          <Property Name="LineLeaderConfirmBy" Type="int" />
+          <Property Name="LineLeaderConfirmDate" Type="datetime" />
+          <Property Name="LineLeaderReasonReject" Type="ntext" />
+          <Property Name="LineLeaderRejectBy" Type="int" />
+          <Property Name="LineLeaderRejectDate" Type="datetime" />
+          <Property Name="IPQCConfirm" Type="tinyint" />
+          <Property Name="IPQCConfirmBy" Type="int" />
+          <Property Name="IPQCConfirmDate" Type="datetime" />
+          <Property Name="IPQCReasonReject" Type="ntext" />
+          <Property Name="IPQCRejectBy" Type="int" />
+          <Property Name="IPQCRejectDate" Type="datetime" />
+          <Property Name="StatusConfirm" Type="tinyint" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="Location" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CheckListOnTimes">
+          <Key>
+            <PropertyRef Name="CheckListOnTimeId" />
+          </Key>
+          <Property Name="CheckListOnTimeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PassQuantity" Type="int" />
+          <Property Name="FailQuantity" Type="int" />
+          <Property Name="ReasonAndSolution" Type="ntext" />
+          <Property Name="LineLeaderTestQuantity" Type="int" />
+          <Property Name="LineLeaderConfirmBy" Type="int" />
+          <Property Name="IPQCTestQuantity" Type="int" />
+          <Property Name="IPQCConfirmBy" Type="int" />
+          <Property Name="StatusCheckListOnTime" Type="tinyint" />
+          <Property Name="ProgramPassOrFail" Type="tinyint" />
+          <Property Name="ICStatus" Type="tinyint" />
+          <Property Name="PinNG" Type="tinyint" />
+          <Property Name="Other" Type="nvarchar" MaxLength="255" />
+          <Property Name="TimeLineId" Type="int" />
+          <Property Name="CheckListFirstId" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CheckListRutKiem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="StampCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Model" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaterialCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CheckSum" Type="nvarchar" MaxLength="50" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" />
+          <Property Name="NumColor" Type="int" />
+          <Property Name="NumWithdrawals" Type="int" />
+          <Property Name="NumProgramErrors" Type="int" />
+          <Property Name="NumExternalErrors" Type="int" />
+          <Property Name="CreateUserId" Type="int" />
+          <Property Name="HeadLineId" Type="int" />
+          <Property Name="MachineName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Note" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="TimeLines">
+          <Key>
+            <PropertyRef Name="TimeLineId" />
+          </Key>
+          <Property Name="TimeLineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkOn" Type="varchar" MaxLength="50" />
+          <Property Name="ShiftWork" Type="tinyint" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserCode" Type="varchar" MaxLength="20" />
+          <Property Name="UserFullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <Association Name="FK_CheckListOnTime_CheckListFirsts">
+          <End Role="CheckListFirsts" Type="Self.CheckListFirsts" Multiplicity="0..1" />
+          <End Role="CheckListOnTimes" Type="Self.CheckListOnTimes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckListFirsts">
+              <PropertyRef Name="CheckListFirstId" />
+            </Principal>
+            <Dependent Role="CheckListOnTimes">
+              <PropertyRef Name="CheckListFirstId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CheckListOnTime_TimeLine">
+          <End Role="TimeLines" Type="Self.TimeLines" Multiplicity="0..1" />
+          <End Role="CheckListOnTimes" Type="Self.CheckListOnTimes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeLines">
+              <PropertyRef Name="TimeLineId" />
+            </Principal>
+            <Dependent Role="CheckListOnTimes">
+              <PropertyRef Name="TimeLineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CheckListModelStoreContainer">
+          <EntitySet Name="CheckListFirsts" EntityType="Self.CheckListFirsts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CheckListOnTimes" EntityType="Self.CheckListOnTimes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CheckListRutKiem" EntityType="Self.CheckListRutKiem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeLines" EntityType="Self.TimeLines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CheckListOnTime_CheckListFirsts" Association="Self.FK_CheckListOnTime_CheckListFirsts">
+            <End Role="CheckListFirsts" EntitySet="CheckListFirsts" />
+            <End Role="CheckListOnTimes" EntitySet="CheckListOnTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CheckListOnTime_TimeLine" Association="Self.FK_CheckListOnTime_TimeLine">
+            <End Role="TimeLines" EntitySet="TimeLines" />
+            <End Role="CheckListOnTimes" EntitySet="CheckListOnTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CheckListModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CheckListFirst">
+          <Key>
+            <PropertyRef Name="CheckListFirstId" />
+          </Key>
+          <Property Name="CheckListFirstId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ChecklistCreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ShiftWork" Type="Byte" />
+          <Property Name="ModelName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ProgramName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SoftwareName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Checksum" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="MaterialCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MaterialCodeProducer" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MachineCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ICColor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PersonalColor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CheckESD" Type="Byte" />
+          <Property Name="TECreatedBy" Type="Int32" />
+          <Property Name="TestQuantityFirst" Type="Byte" />
+          <Property Name="LineLeaderConfirm" Type="Byte" />
+          <Property Name="LineLeaderConfirmBy" Type="Int32" />
+          <Property Name="LineLeaderConfirmDate" Type="DateTime" Precision="3" />
+          <Property Name="LineLeaderReasonReject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LineLeaderRejectBy" Type="Int32" />
+          <Property Name="LineLeaderRejectDate" Type="DateTime" Precision="3" />
+          <Property Name="IPQCConfirm" Type="Byte" />
+          <Property Name="IPQCConfirmBy" Type="Int32" />
+          <Property Name="IPQCConfirmDate" Type="DateTime" Precision="3" />
+          <Property Name="IPQCReasonReject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IPQCRejectBy" Type="Int32" />
+          <Property Name="IPQCRejectDate" Type="DateTime" Precision="3" />
+          <Property Name="StatusConfirm" Type="Byte" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CheckListOnTimes" Relationship="Self.FK_CheckListOnTime_CheckListFirsts" FromRole="CheckListFirsts" ToRole="CheckListOnTimes" />
+        </EntityType>
+        <EntityType Name="CheckListOnTime">
+          <Key>
+            <PropertyRef Name="CheckListOnTimeId" />
+          </Key>
+          <Property Name="CheckListOnTimeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PassQuantity" Type="Int32" />
+          <Property Name="FailQuantity" Type="Int32" />
+          <Property Name="ReasonAndSolution" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LineLeaderTestQuantity" Type="Int32" />
+          <Property Name="LineLeaderConfirmBy" Type="Int32" />
+          <Property Name="IPQCTestQuantity" Type="Int32" />
+          <Property Name="IPQCConfirmBy" Type="Int32" />
+          <Property Name="StatusCheckListOnTime" Type="Byte" />
+          <Property Name="ProgramPassOrFail" Type="Byte" />
+          <Property Name="ICStatus" Type="Byte" />
+          <Property Name="PinNG" Type="Byte" />
+          <Property Name="Other" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TimeLineId" Type="Int32" />
+          <Property Name="CheckListFirstId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <NavigationProperty Name="CheckListFirst" Relationship="Self.FK_CheckListOnTime_CheckListFirsts" FromRole="CheckListOnTimes" ToRole="CheckListFirsts" />
+          <NavigationProperty Name="TimeLine" Relationship="Self.FK_CheckListOnTime_TimeLine" FromRole="CheckListOnTimes" ToRole="TimeLines" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TimeLine">
+          <Key>
+            <PropertyRef Name="TimeLineId" />
+          </Key>
+          <Property Name="TimeLineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkOn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ShiftWork" Type="Byte" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <NavigationProperty Name="CheckListOnTimes" Relationship="Self.FK_CheckListOnTime_TimeLine" FromRole="TimeLines" ToRole="CheckListOnTimes" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+          </EntityType>
+        <Association Name="FK_CheckListOnTime_CheckListFirsts">
+          <End Role="CheckListFirsts" Type="Self.CheckListFirst" Multiplicity="0..1" />
+          <End Role="CheckListOnTimes" Type="Self.CheckListOnTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckListFirsts">
+              <PropertyRef Name="CheckListFirstId" />
+            </Principal>
+            <Dependent Role="CheckListOnTimes">
+              <PropertyRef Name="CheckListFirstId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CheckListOnTime_TimeLine">
+          <End Role="TimeLines" Type="Self.TimeLine" Multiplicity="0..1" />
+          <End Role="CheckListOnTimes" Type="Self.CheckListOnTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeLines">
+              <PropertyRef Name="TimeLineId" />
+            </Principal>
+            <Dependent Role="CheckListOnTimes">
+              <PropertyRef Name="TimeLineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="CheckListModel.Roles" Multiplicity="0..1" />
+          <End Role="Users" Type="CheckListModel.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CheckListEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CheckListFirsts" EntityType="Self.CheckListFirst" />
+          <EntitySet Name="CheckListOnTimes" EntityType="Self.CheckListOnTime" />
+          <EntitySet Name="Roles1" EntityType="CheckListModel.Roles" />
+          <EntitySet Name="TimeLines" EntityType="Self.TimeLine" />
+          <EntitySet Name="Users1" EntityType="CheckListModel.Users" />
+          <AssociationSet Name="FK_CheckListOnTime_CheckListFirsts" Association="Self.FK_CheckListOnTime_CheckListFirsts">
+            <End Role="CheckListFirsts" EntitySet="CheckListFirsts" />
+            <End Role="CheckListOnTimes" EntitySet="CheckListOnTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CheckListOnTime_TimeLine" Association="Self.FK_CheckListOnTime_TimeLine">
+            <End Role="TimeLines" EntitySet="TimeLines" />
+            <End Role="CheckListOnTimes" EntitySet="CheckListOnTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles1" />
+            <End Role="Users" EntitySet="Users1" />
+          </AssociationSet>
+          <EntitySet Name="CheckListRutKiems" EntityType="CheckListModel.CheckListRutKiem" />
+          <AssociationSet Name="CheckListRutKiemUsers" Association="CheckListModel.CheckListRutKiemUsers">
+            <End Role="CheckListRutKiem" EntitySet="CheckListRutKiems" />
+            <End Role="Users" EntitySet="Users1" />
+          </AssociationSet>
+          <AssociationSet Name="CheckListRutKiemUsers1" Association="CheckListModel.CheckListRutKiemUsers1">
+            <End Role="CheckListRutKiem" EntitySet="CheckListRutKiems" />
+            <End Role="Users" EntitySet="Users1" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CheckListRutKiem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="StampCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MaterialCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CheckSum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NumColor" Type="Int32" />
+          <Property Name="NumWithdrawals" Type="Int32" />
+          <Property Name="NumProgramErrors" Type="Int32" />
+          <Property Name="NumExternalErrors" Type="Int32" />
+          <Property Name="CreateUserId" Type="Int32" />
+          <Property Name="HeadLineId" Type="Int32" />
+          <Property Name="MachineName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CreatedUsers" Relationship="CheckListModel.CheckListRutKiemUsers" FromRole="CheckListRutKiem" ToRole="Users" />
+          <NavigationProperty Name="HeadUsers" Relationship="CheckListModel.CheckListRutKiemUsers1" FromRole="CheckListRutKiem" ToRole="Users" />
+        </EntityType>
+        <Association Name="CheckListRutKiemUsers">
+          <End Type="CheckListModel.CheckListRutKiem" Role="CheckListRutKiem" Multiplicity="*" />
+          <End Type="CheckListModel.Users" Role="Users" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CheckListRutKiem">
+              <PropertyRef Name="CreateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CheckListRutKiemUsers1">
+          <End Type="CheckListModel.CheckListRutKiem" Role="CheckListRutKiem" Multiplicity="*" />
+          <End Type="CheckListModel.Users" Role="Users" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CheckListRutKiem">
+              <PropertyRef Name="HeadLineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CheckListModelStoreContainer" CdmEntityContainer="CheckListEntities">
+          <EntitySetMapping Name="CheckListFirsts">
+            <EntityTypeMapping TypeName="CheckListModel.CheckListFirst">
+              <MappingFragment StoreEntitySet="CheckListFirsts">
+                <ScalarProperty Name="CheckListFirstId" ColumnName="CheckListFirstId" />
+                <ScalarProperty Name="MO" ColumnName="MO" />
+                <ScalarProperty Name="ChecklistCreateDate" ColumnName="ChecklistCreateDate" />
+                <ScalarProperty Name="ShiftWork" ColumnName="ShiftWork" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="ProgramName" ColumnName="ProgramName" />
+                <ScalarProperty Name="SoftwareName" ColumnName="SoftwareName" />
+                <ScalarProperty Name="Checksum" ColumnName="Checksum" />
+                <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
+                <ScalarProperty Name="MaterialCodeProducer" ColumnName="MaterialCodeProducer" />
+                <ScalarProperty Name="MachineCode" ColumnName="MachineCode" />
+                <ScalarProperty Name="ICColor" ColumnName="ICColor" />
+                <ScalarProperty Name="PersonalColor" ColumnName="PersonalColor" />
+                <ScalarProperty Name="CheckESD" ColumnName="CheckESD" />
+                <ScalarProperty Name="TECreatedBy" ColumnName="TECreatedBy" />
+                <ScalarProperty Name="TestQuantityFirst" ColumnName="TestQuantityFirst" />
+                <ScalarProperty Name="LineLeaderConfirm" ColumnName="LineLeaderConfirm" />
+                <ScalarProperty Name="LineLeaderConfirmBy" ColumnName="LineLeaderConfirmBy" />
+                <ScalarProperty Name="LineLeaderConfirmDate" ColumnName="LineLeaderConfirmDate" />
+                <ScalarProperty Name="LineLeaderReasonReject" ColumnName="LineLeaderReasonReject" />
+                <ScalarProperty Name="LineLeaderRejectBy" ColumnName="LineLeaderRejectBy" />
+                <ScalarProperty Name="LineLeaderRejectDate" ColumnName="LineLeaderRejectDate" />
+                <ScalarProperty Name="IPQCConfirm" ColumnName="IPQCConfirm" />
+                <ScalarProperty Name="IPQCConfirmBy" ColumnName="IPQCConfirmBy" />
+                <ScalarProperty Name="IPQCConfirmDate" ColumnName="IPQCConfirmDate" />
+                <ScalarProperty Name="IPQCReasonReject" ColumnName="IPQCReasonReject" />
+                <ScalarProperty Name="IPQCRejectBy" ColumnName="IPQCRejectBy" />
+                <ScalarProperty Name="IPQCRejectDate" ColumnName="IPQCRejectDate" />
+                <ScalarProperty Name="StatusConfirm" ColumnName="StatusConfirm" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CheckListOnTimes">
+            <EntityTypeMapping TypeName="CheckListModel.CheckListOnTime">
+              <MappingFragment StoreEntitySet="CheckListOnTimes">
+                <ScalarProperty Name="CheckListOnTimeId" ColumnName="CheckListOnTimeId" />
+                <ScalarProperty Name="PassQuantity" ColumnName="PassQuantity" />
+                <ScalarProperty Name="FailQuantity" ColumnName="FailQuantity" />
+                <ScalarProperty Name="ReasonAndSolution" ColumnName="ReasonAndSolution" />
+                <ScalarProperty Name="LineLeaderTestQuantity" ColumnName="LineLeaderTestQuantity" />
+                <ScalarProperty Name="LineLeaderConfirmBy" ColumnName="LineLeaderConfirmBy" />
+                <ScalarProperty Name="IPQCTestQuantity" ColumnName="IPQCTestQuantity" />
+                <ScalarProperty Name="IPQCConfirmBy" ColumnName="IPQCConfirmBy" />
+                <ScalarProperty Name="StatusCheckListOnTime" ColumnName="StatusCheckListOnTime" />
+                <ScalarProperty Name="ProgramPassOrFail" ColumnName="ProgramPassOrFail" />
+                <ScalarProperty Name="ICStatus" ColumnName="ICStatus" />
+                <ScalarProperty Name="PinNG" ColumnName="PinNG" />
+                <ScalarProperty Name="Other" ColumnName="Other" />
+                <ScalarProperty Name="TimeLineId" ColumnName="TimeLineId" />
+                <ScalarProperty Name="CheckListFirstId" ColumnName="CheckListFirstId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles1">
+            <EntityTypeMapping TypeName="CheckListModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeLines">
+            <EntityTypeMapping TypeName="CheckListModel.TimeLine">
+              <MappingFragment StoreEntitySet="TimeLines">
+                <ScalarProperty Name="TimeLineId" ColumnName="TimeLineId" />
+                <ScalarProperty Name="WorkOn" ColumnName="WorkOn" />
+                <ScalarProperty Name="ShiftWork" ColumnName="ShiftWork" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users1">
+            <EntityTypeMapping TypeName="CheckListModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="UserFullName" ColumnName="UserFullName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CheckListRutKiems">
+            <EntityTypeMapping TypeName="CheckListModel.CheckListRutKiem">
+              <MappingFragment StoreEntitySet="CheckListRutKiem">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+                <ScalarProperty Name="HeadLineId" ColumnName="HeadLineId" />
+                <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+                <ScalarProperty Name="NumExternalErrors" ColumnName="NumExternalErrors" />
+                <ScalarProperty Name="NumProgramErrors" ColumnName="NumProgramErrors" />
+                <ScalarProperty Name="NumWithdrawals" ColumnName="NumWithdrawals" />
+                <ScalarProperty Name="NumColor" ColumnName="NumColor" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="CheckSum" ColumnName="CheckSum" />
+                <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="StampCode" ColumnName="StampCode" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
