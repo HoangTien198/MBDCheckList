@@ -60,11 +60,11 @@ function compareTime(strTime1, strTime2) {
     }
 }
 
-function DrawTableRows(item, isAddInDatatable = false) {
+function DrawTableRowsIPQC(item, isAddInDatatable = false) {
 
     var row = [];
 
-    var col_0 = `<td class=""><label>${item.MO}</label></td>`;
+    var col_0 = `<td class="col_0"><label>${item.MO}</label></td>`;
     row.push(col_0); //col 0
 
     var col_1 = `<td class=""><label>${item.ModelName}</label></td>`;
@@ -76,10 +76,10 @@ function DrawTableRows(item, isAddInDatatable = false) {
     var col_3 = `<td class=""><label>${item.TeCreatedByName}</label></td>`;
     row.push(col_3) // col 3
 
-    var col_4 = `<td class=""><label>${(item.ShiftWork == 1) ? "Ngày" : "Đêm"}</label></td>`;
+    var col_4 = `<td class="text-center"><label>${(item.ShiftWork == 1) ? "Ngày" : "Đêm"}</label></td>`;
     row.push(col_4) // col 4
 
-    var col_5 = `<td class=""><label>${formatDateyyyyMMdd(item.ChecklistCreateDate) }</label></td>`;
+    var col_5 = `<td class="text-center"><label>${formatDateyyyyMMdd(item.ChecklistCreateDate) }</label></td>`;
     row.push(col_5); //col 5
 
 
@@ -113,28 +113,188 @@ function DrawTableRows(item, isAddInDatatable = false) {
                 break;
             }
         }
-        row.push(`<td class=""><label class="badge ${badgeStyle}">${badgeMessage}</label></td>`);
+        row.push(`<td class="text-center"><label class="badge ${badgeStyle}">${badgeMessage}</label></td>`);
     } // col 6
 
     {
         var cButton = "";
         if (item.StatusConfirm == 1) {
             cButton =
-                `<td class="actionCol"><button title="Chi tiết" data-id=${item.CheckListFirstId} class="btn btn-info" data-details>
-                <i class="bi bi-info-lg"></i>
-            </button>
-            <button title="Xác nhận" data-id=${item.CheckListFirstId} class="btn btn-success">
-                <i class="bi bi-check-lg"></i>
-            </button>
-            <button title="Không xác nhận" data-id=${item.CheckListFirstId} class="btn btn-danger">
-                <i class="bi bi-x"></i>
-            </button></td>`;
+                `<td class="col_7">
+                    <button title="Chi tiết"       data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>
+                    <button title="Xác nhận"       data-id=${item.CheckListFirstId} class="btn btn-success" onclick="ConfirmCheckList(this, event)"><i class="bi bi-check-lg"></i></button>
+                    <button title="Không xác nhận" data-id=${item.CheckListFirstId} class="btn btn-danger"  onclick="RejectCheckList(this, event)"><i class="bi bi-x"></i></button>
+                 </td>`;
         }
         else {
             cButton =
-                `<td class="actionCol"><button title="Chi tiết" data-id=${item.CheckListFirstId} class="btn btn-info">
-                <i class="bi bi-info-lg"></i>
-            </button></td>`;
+                `<td class="col_7">
+                    <button title="Chi tiết"       data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>
+                 </td>`;
+        }
+        row.push(cButton);
+    } // col 7
+
+    if (!isAddInDatatable) {
+        return `<tr>${row}</tr>`;
+    }
+    else {
+        return row;
+    }
+}
+function DrawTableRowsLead(item, isAddInDatatable = false) {
+
+    var row = [];
+
+    var col_0 = `<td class="col_0"><label>${item.MO}</label></td>`;
+    row.push(col_0); //col 0
+
+    var col_1 = `<td class=""><label>${item.ModelName}</label></td>`;
+    row.push(col_1); //col 1
+
+    var col_2 = `<td class=""><label>${item.MachineCode}</label></td>`;
+    row.push(col_2) // col 2
+
+    var col_3 = `<td class=""><label>${item.TeCreatedByName}</label></td>`;
+    row.push(col_3) // col 3
+
+    var col_4 = `<td class="text-center"><label>${(item.ShiftWork == 1) ? "Ngày" : "Đêm"}</label></td>`;
+    row.push(col_4) // col 4
+
+    var col_5 = `<td class="text-center"><label>${formatDateyyyyMMdd(item.ChecklistCreateDate)}</label></td>`;
+    row.push(col_5); //col 5
+
+
+    {
+        var badgeMessage = "";
+        var badgeStyle = "";
+        switch (item.StatusConfirm) {
+            case 0: {
+                badgeMessage = "Chờ chuyền trưởng xác nhận";
+                badgeStyle = "bg-info";
+                break;
+            }
+            case 1: {
+                badgeMessage = "Chờ IPQC xác nhận";
+                badgeStyle = "bg-warning";
+                break;
+            }
+            case 2: {
+                badgeMessage = "IPQC đã xác nhận";
+                badgeStyle = "bg-success";
+                break;
+            }
+            case 3: {
+                badgeMessage = "Chuyền trưởng từ chối đơn";
+                badgeStyle = "bg-danger";
+                break;
+            }
+            case 4: {
+                badgeMessage = "IPQC từ chối đơn";
+                badgeStyle = "bg-danger";
+                break;
+            }
+        }
+        row.push(`<td class="text-center"><label class="badge ${badgeStyle}">${badgeMessage}</label></td>`);
+    } // col 6
+
+    {
+        var cButton = "";
+        if (item.StatusConfirm == 0) {
+            cButton =
+                `<td class="col_7">
+                    <button title="Chi tiết"       data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>
+                    <button title="Xác nhận"       data-id=${item.CheckListFirstId} class="btn btn-success" onclick="ConfirmCheckList(this, event)"><i class="bi bi-check-lg"></i></button>
+                    <button title="Không xác nhận" data-id=${item.CheckListFirstId} class="btn btn-danger"  onclick="RejectCheckList(this, event)"><i class="bi bi-x"></i></button>
+                 </td>`;
+        }
+        else {
+            cButton =
+                `<td class="col_7">
+                    <button title="Chi tiết"       data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>
+                 </td>`;
+        }
+        row.push(cButton);
+    } // col 7
+
+    if (!isAddInDatatable) {
+        return `<tr>${row}</tr>`;
+    }
+    else {
+        return row;
+    }
+}
+function DrawTableRowsWork(item, isAddInDatatable = false) {
+
+    var row = [];
+
+    var col_0 = `<td class="col_0"><label>${item.MO}</label></td>`;
+    row.push(col_0); //col 0
+
+    var col_1 = `<td class=""><label>${item.ModelName}</label></td>`;
+    row.push(col_1); //col 1
+
+    var col_2 = `<td class=""><label>${item.MachineCode}</label></td>`;
+    row.push(col_2) // col 2
+
+    var col_3 = `<td class=""><label>${item.TeCreatedByName}</label></td>`;
+    row.push(col_3) // col 3
+
+    var col_4 = `<td class="text-center"><label>${(item.ShiftWork == 1) ? "Ngày" : "Đêm"}</label></td>`;
+    row.push(col_4) // col 4
+
+    var col_5 = `<td class="text-center"><label>${formatDateyyyyMMdd(item.ChecklistCreateDate)}</label></td>`;
+    row.push(col_5); //col 5
+
+
+    {
+        var badgeMessage = "";
+        var badgeStyle = "";
+        switch (item.StatusConfirm) {
+            case 0: {
+                badgeMessage = "Chờ chuyền trưởng xác nhận";
+                badgeStyle = "bg-info";
+                break;
+            }
+            case 1: {
+                badgeMessage = "Chờ IPQC xác nhận";
+                badgeStyle = "bg-warning";
+                break;
+            }
+            case 2: {
+                badgeMessage = "IPQC đã xác nhận";
+                badgeStyle = "bg-success";
+                break;
+            }
+            case 3: {
+                badgeMessage = "Chuyền trưởng từ chối đơn";
+                badgeStyle = "bg-danger";
+                break;
+            }
+            case 4: {
+                badgeMessage = "IPQC từ chối đơn";
+                badgeStyle = "bg-danger";
+                break;
+            }
+        }
+        row.push(`<td class="text-center"><label class="badge ${badgeStyle}">${badgeMessage}</label></td>`);
+    } // col 6
+
+    {
+        var cButton = "";
+        if (item.StatusConfirm == 0) {
+            cButton =
+                `<td class="col_7">
+                    <button title="Chi tiết"       data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>
+                    <button title="Xác nhận"       data-id=${item.CheckListFirstId} class="btn btn-success" onclick="ConfirmCheckList(this, event)"><i class="bi bi-check-lg"></i></button>
+                    <button title="Không xác nhận" data-id=${item.CheckListFirstId} class="btn btn-danger"  onclick="RejectCheckList(this, event)"><i class="bi bi-x"></i></button>
+                 </td>`;
+        }
+        else {
+            cButton =
+                `<td class="col_7">
+                    <button title="Chi tiết"       data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>
+                 </td>`;
         }
         row.push(cButton);
     } // col 7
@@ -149,7 +309,7 @@ function DrawTableRows(item, isAddInDatatable = false) {
 
 var dataTable;
 function CreateCheckListTable() {
-    var scrollHeight = document.querySelector('#sidebar').offsetHeight - 180 + 'px';
+    var scrollHeight = document.querySelector('#sidebar').offsetHeight - 220 + 'px';
     var myTable = document.querySelector('#table_Checklist');
     dataTable = new simpleDatatables.DataTable(myTable, {
         scrollY: scrollHeight,

@@ -1,6 +1,13 @@
 ﻿var formMode = "add";
 var shiftWork;
 var checkListFirstId_Edit;
+
+var thisYear = new Date().getFullYear();
+var thisMonth = new Date().getMonth() + 1;
+var thisDay = new Date().getDate();
+
+var isLoadingData = false;
+
 $(document).ready(function () {
     loadDataCheckList();
     btnCreateNewCheckListOnClick();
@@ -465,6 +472,97 @@ function loadDataCheckList() {
         }
     });
 }
+//load data
+function loadDataCheckList() {
+    onload();
+    $.ajax({
+        type: "Get",
+        url: "/CheckList/GetAllCheckListFirst",
+        data: {
+            location: $('[data-location]').data('location'),
+            year: thisYear,
+            month: thisMonth,
+            day: thisDay
+        },
+        contentType: "application/json;charset=utf-8",
+        success: async function (response) {
+            try {
+                var jsonCheckList = JSON.parse(response);
+
+                await $.each(jsonCheckList, async function (k, item) {
+                    var row = await DrawTableRowsLead(item);
+                    $('#tbody_checklist').append(row);
+                });
+                CreateCheckListTable();
+                DynamicLoadCheckList();
+                endload();
+            }
+            catch (ex) {
+                endload();
+                Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
+            }
+        },
+        error: function (err) {
+            // endload();
+            Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
+        }
+    });
+}
+function DynamicLoadCheckList() {
+    const divElement = document.querySelector('.dataTable-container');
+    divElement.addEventListener('scroll', function () {
+        var scrollLenght = parseInt((divElement.scrollTop + divElement.clientHeight));
+        var scrollHeight = parseInt(divElement.scrollHeight * 0.9);
+
+        if (!isLoadingData && (scrollLenght > scrollHeight)) {
+            isLoadingData = true;
+
+            onload();
+
+            thisMonth -= 1;
+            if (thisMonth == 0) {
+                thisYear -= 1;
+                thisMonth = 12;
+            }
+
+            $.ajax({
+                type: "Get",
+                url: "/CheckList/GetAllCheckListFirst",
+                data: {
+                    location: $('[data-location]').data('location'),
+                    year: thisYear,
+                    month: thisMonth,
+                    day: -1
+                },
+                contentType: "application/json;charset=utf-8",
+                success: async function (response) {
+                    try {
+                        var jsonCheckList = JSON.parse(response);
+
+                        await $.each(jsonCheckList, async function (k, item) {
+                            var row = await DrawTableRowsLead(item, true);
+                            dataTable.rows().add(row, true);
+                        });
+
+                        if (jsonCheckList.length > 0) {
+                            isLoadingData = false;
+                        }
+                        endload();
+                    }
+                    catch (ex) {
+                        endload();
+                        Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
+                    }
+                },
+                error: function (err) {
+                    endload();
+                    Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
+                }
+            });
+        }
+    });
+}
+
 
 //click btn-detail-checklist
 function btnDetailCheckListOnclick() {

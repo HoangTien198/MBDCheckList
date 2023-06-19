@@ -658,12 +658,9 @@
     <Content Include="files\assets\js\menu\menu-rtl.js" />
     <Content Include="files\assets\js\menu\menu-sidebar-fixed.js" />
     <Content Include="files\assets\js\menu\menu-sidebar-static.js" />
-    <Content Include="files\assets\js\pages\IPQC-F17.js" />
     <Content Include="files\assets\js\pages\IPQC.js" />
-    <Content Include="files\assets\js\pages\LineLeader-F17.js" />
     <Content Include="files\assets\js\pages\LineLeader.js" />
     <Content Include="files\assets\js\pages\login.js" />
-    <Content Include="files\assets\js\pages\TE-F17.js" />
     <Content Include="files\assets\js\pages\TE.js" />
     <Content Include="files\bower_components\bootstrap\css\bootstrap.min.css" />
     <Content Include="files\bower_components\bootstrap\js\bootstrap.min.js" />
@@ -732,8 +729,7 @@
     <Content Include="Areas\RutKiem\Views\RutKiem\Home.cshtml" />
     <Content Include="Areas\Shared\_AreaLayoutShare.cshtml" />
     <Content Include="Areas\BanDau\Views\web.config" />
-    <Content Include="Areas\BanDau\Views\BanDau\F06.cshtml" />
-    <Content Include="Areas\BanDau\Views\BanDau\F17.cshtml" />
+    <Content Include="Areas\BanDau\Views\BanDau\BanDau.cshtml" />
     <Content Include="Areas\Dashboard\Views\web.config" />
     <Content Include="Areas\Dashboard\Views\Home\Home.cshtml" />
     <Content Include="Content\Front\memtYaGs126MiZpBA-UFUIcVXSCEkx2cmqvXlWqWt06F15M.woff2" />

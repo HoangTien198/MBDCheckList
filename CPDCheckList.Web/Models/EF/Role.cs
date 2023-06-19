@@ -5,6 +5,7 @@ namespace CPDCheckList.Web.Models.EF
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Text.Json.Serialization;
 
     public partial class Role
     {
@@ -26,7 +27,7 @@ namespace CPDCheckList.Web.Models.EF
         public DateTime? UpdatedDate { get; set; }
 
         public int? UpdatedBy { get; set; }
-
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
     }

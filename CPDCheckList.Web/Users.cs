@@ -9,6 +9,7 @@
 
 namespace CPDCheckList.Web
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -24,7 +25,6 @@ namespace CPDCheckList.Web
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<int> RoleId { get; set; }
-    
         public virtual Roles Role { get; set; }
     }
 }

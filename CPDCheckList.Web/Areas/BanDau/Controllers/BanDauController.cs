@@ -19,11 +19,13 @@ namespace CPDCheckList.Web.Areas.BanDau.Controllers
         }
         public ActionResult F06()
         {
-            return View();
+            ViewBag.Location = "F06";
+            return View("BanDau");
         }
         public ActionResult F17()
         {
-            return View();
+            ViewBag.Location = "F17";
+            return View("BanDau");
         }
 
         #region IPQC
@@ -44,59 +46,65 @@ namespace CPDCheckList.Web.Areas.BanDau.Controllers
             }
         }
         [HttpPost]
-        public int IPQCRejectCheckList(int checkListId, string iPQCReasonReject)
+        public JsonResult IPQCRejectCheckList(int checkListId, string iPQCReasonReject)
         {
             AccountLogin userLogin = (AccountLogin)Session["USER_SESSION"];
             var checkListDao = new CheckListDao();
             var check = checkListDao.IPQCRejectCheckList(checkListId, iPQCReasonReject, userLogin);
             if (check == 1)
             {
-                return 1;
+                return Json(new { status = 1, Data = JsonConvert.SerializeObject(checkListDao.GetVMCheckListById(checkListId)) });//thành công
             }
             else
             {
-                return 0;
+                return Json(new { status = 0 });//thất bại
             }
         }
         [HttpPost]
-        public int ConfirmCheckListOnTimeIPQC(CheckListOnTimeAjaxIPQC data)
+        public JsonResult ConfirmCheckListOnTimeIPQC(CheckListOnTimeAjaxIPQC checkListOnTime)
         {
             AccountLogin userLogin = (AccountLogin)Session["USER_SESSION"];
             var clOnTimeDao = new CheckListOnTimeDao();
-            var check = clOnTimeDao.IPQCConfirmCheckListOnTime(data, userLogin);
-            if (check == 1)
+            var check = clOnTimeDao.IPQCConfirmCheckListOnTime(checkListOnTime, userLogin);
+
+            Users user = new Users();
+            using (var db = new CheckListEntities())
             {
-                return 1;
-            }
-            else
-            {
-                return 0;
+                user = db.Users_.FirstOrDefault(u => u.UserId == userLogin.UserId);
+
+                if (check == 1)
+                {
+                    return Json(new { status = 1, Data = JsonConvert.SerializeObject(user) });//thành công
+                }
+                else
+                {
+                    return Json(new { status = 0 });//thất bại
+                }
             }
         }
         #endregion
 
-
-
         #region Line Leader
         [HttpPost]
-        public int ConfirmCheckList(int checkListId, string mailSelected)
+        public JsonResult ConfirmCheckListLineLeader(int checkListId, string mailSelected)
         {
             AccountLogin userLogin = (AccountLogin)Session["USER_SESSION"];
             var checkListDao = new CheckListDao();
-            var check = checkListDao.ConfirmCheckList(checkListId, userLogin, mailSelected);
+            //var check = checkListDao.ConfirmCheckList(checkListId, userLogin, mailSelected);
+            int check = 1;
             if (check == 1)
             {
-                return 1;//thành công
+                return Json(new { status = 1, Data = JsonConvert.SerializeObject(checkListDao.GetVMCheckListById(checkListId)) });//thành công
             }
             else
             {
-                return 0;//thất bại
+                return Json(new { status = 0 });//thất bại
 
             }
         }
 
         [HttpPost]
-        public int RejectCheckList(int checkListId, string lineLeaderReasonReject)
+        public int RejectCheckListLineLeader(int checkListId, string lineLeaderReasonReject)
         {
             AccountLogin userLogin = (AccountLogin)Session["USER_SESSION"];
             var checkListDao = new CheckListDao();

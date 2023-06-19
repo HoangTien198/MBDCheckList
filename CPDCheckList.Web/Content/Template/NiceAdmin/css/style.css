@@ -1277,6 +1277,23 @@ h6 {
     justify-content: center;
     background-color: #0000004f
 }
-.actionCol{
+.col_0 {
+    max-width: 150px;
+}
+.col_6 {
+    
+}
+.col_7 {
     width: 170px;
+    min-width: 170px;
+}
+tbody > tr > td > label {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.text-center {
+    vertical-align: middle;
 }

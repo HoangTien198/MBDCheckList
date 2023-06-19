@@ -1,205 +1,263 @@
-﻿var checkListId_global;
-var shiftWork;
+﻿var shiftWork;
+var thisYear = new Date().getFullYear();
+var thisMonth = new Date().getMonth() + 1;
+var thisDay = new Date().getDate();
+
+var isLoadingData = false;
+
 $(document).ready(function () {
     loadDataCheckList();
-    btnDetailCheckListOnclick();
-    btn_Confirm_ChecklistOnClick();
-    btn_Reject_ChecklistOnclick();
+});
 
-    btnConfirmChecklistOntimeOnClick();
-
-    setInterval(function () {
-        loadDataCheckList();
-    }, 180000);
-})
-
-//load data check list new
+//load data
 function loadDataCheckList() {
     onload();
     $.ajax({
         type: "Get",
         url: "/CheckList/GetAllCheckListFirst",
         data: {
-            location: "F06"
+            location: $('[data-location]').data('location'),
+            year: thisYear,
+            month: thisMonth,
+            day: thisDay
         },
-        success: function (response) {
-            endload();
+        contentType: "application/json;charset=utf-8",
+        success: async function (response) {
             try {
                 var jsonCheckList = JSON.parse(response);
-                //binding table data
-                var t = $('#table_Checklist').DataTable({
-                    order: [[5, 'desc']],
-                    destroy: true,
+
+                await $.each(jsonCheckList, async function (k, item) {
+                    var row = await DrawTableRowsLead(item);
+                    $('#tbody_checklist').append(row);
                 });
-                t.clear();
-                for (const item of jsonCheckList) {
-                    t.row.add([`${item.MO}`, `${item.ModelName}`, `${item.MachineCode}`, `${item.TeCreatedByName}`, `${(item.ShiftWork == 1) ? 'Ngày' : 'Đêm'}`, `${formatDateyyyyMMdd(item.ChecklistCreateDate)}`,
-                    `${(item.StatusConfirm == 0) ? `<label class="badge badge-inverse-info">Chờ chuyền trưởng xác nhận</label>` : ((item.StatusConfirm == 1) ? `<label class="badge badge-inverse-warning">Chờ IPQC xác nhận</label>` : ((item.StatusConfirm == 2) ? `<label class="badge badge-success">IPQC đã xác nhận</label>` : ((item.StatusConfirm == 3) ? `<label class="badge badge-danger">Chuyền trưởng từ chối đơn</label>` : `<label class="badge badge-danger">IPQC từ chối đơn</label>`)))}`,
-                    `${(item.StatusConfirm == 0) ? `<button title="Chi tiết" data-id=${item.CheckListFirstId} class="btn btn-info btn-outline-info btn-detail-checklist"><i class="icofont icofont-info-square"></i></button> <button title="Xác nhận" data-id=${item.CheckListFirstId} class="btn btn-success btn-outline-success btn_Confirm_Checklist"><i class="icofont icofont-check-circled"></i></button> <button title="Không xác nhận" data-id=${item.CheckListFirstId} class="btn btn-danger btn-outline-danger btn_Reject_Checklist"><i class="icofont icofont-close-line"></i></button>` : `<button title="Chi tiết" data-id=${item.CheckListFirstId} class="btn btn-info btn-outline-info btn-detail-checklist"><i class="icofont icofont-info-square"></i></button>`}`]).draw(false);
-                }
+                CreateCheckListTable();
+                DynamicLoadCheckList();
+                endload();
             }
             catch (ex) {
+                endload();
                 Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
             }
-
         },
         error: function (err) {
-            endload();
+            // endload();
             Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
         }
     });
 }
+function DynamicLoadCheckList() {
+    const divElement = document.querySelector('.dataTable-container');
+    divElement.addEventListener('scroll', function () {
+        var scrollLenght = parseInt((divElement.scrollTop + divElement.clientHeight));
+        var scrollHeight = parseInt(divElement.scrollHeight * 0.9);
 
-//click btn-detail-checklist
-function btnDetailCheckListOnclick() {
-    $(document).on('click', '.btn-detail-checklist', function () {
-        $("#modalCheckList .modal-body #formCheckListOnTime").remove();
-        checkListId_global = $(this).data('id');
-        //gọi ajax binding form data
-        $.ajax({
-            type: "Get",
-            url: "/CheckList/GetCheckListById",
-            data: { checklistId: checkListId_global },
-            success: function (response) {
-                try {
-                    var jsonCheckList = JSON.parse(response);
-                    shiftWork = jsonCheckList.ShiftWork;//1: Ngày, 2:Đêm
+        if (!isLoadingData && (scrollLenght > scrollHeight)) {
+            isLoadingData = true;
 
-                    var arrFieldName = $("#formAddCheckList input,#formAddCheckList select");
-                    //binding form data
-                    for (const item of arrFieldName) {
-                        $(item).prop('disabled', true);
-                        if ($(item).data('fieldname') == "MO") {
-                            $(item).val(jsonCheckList.MO);
+            onload();
+
+            thisMonth -= 1;
+            if (thisMonth == 0) {
+                thisYear -= 1;
+                thisMonth = 12;
+            }
+
+            $.ajax({
+                type: "Get",
+                url: "/CheckList/GetAllCheckListFirst",
+                data: {
+                    location: $('[data-location]').data('location'),
+                    year: thisYear,
+                    month: thisMonth,
+                    day: -1
+                },
+                contentType: "application/json;charset=utf-8",
+                success: async function (response) {
+                    try {
+                        var jsonCheckList = JSON.parse(response);
+
+                        await $.each(jsonCheckList, async function (k, item) {
+                            var row = await DrawTableRowsLead(item, true);
+                            dataTable.rows().add(row, true);
+                        });
+
+                        if (jsonCheckList.length > 0) {
+                            isLoadingData = false;
                         }
-                        if ($(item).data('fieldname') == "DateTECreated") {
-                            $(item).val(jsonCheckList.ChecklistCreateDate);
-                        }
-                        if ($(item).data('fieldname') == "ShiftWork") {
-                            $(item).val(jsonCheckList.ShiftWork);
-                        }
-                        if ($(item).data('fieldname') == "ModelName") {
-                            $(item).val(jsonCheckList.ModelName);
-                        }
-                        if ($(item).data('fieldname') == "ProgramName") {
-                            $(item).val(jsonCheckList.ProgramName);
-                        }
-                        if ($(item).data('fieldname') == "SoftwareName") {
-                            $(item).val(jsonCheckList.SoftwareName);
-                        }
-                        if ($(item).data('fieldname') == "Checksum") {
-                            $(item).val(jsonCheckList.Checksum);
-                        }
-                        if ($(item).data('fieldname') == "MaterialCode") {
-                            $(item).val(jsonCheckList.MaterialCode);
-                        }
-                        if ($(item).data('fieldname') == "MaterialCodeProducer") {
-                            $(item).val(jsonCheckList.MaterialCodeProducer);
-                        }
-                        if ($(item).data('fieldname') == "MachineCode") {
-                            $(item).val(jsonCheckList.MachineCode);
-                        }
-                        if ($(item).data('fieldname') == "ICColor") {
-                            $(item).val(jsonCheckList.ICColor);
-                        }
-                        if ($(item).data('fieldname') == "PersonalColor") {
-                            $(item).val(jsonCheckList.PersonalColor);
-                        }
-                        if ($(item).data('fieldname') == "CheckESD") {
-                            $(item).val(jsonCheckList.CheckESD);
-                        }
-                        if ($(item).data('fieldname') == "TECreatedBy") {
-                            $(item).attr('data-userid', jsonCheckList.TECreatedBy);
-                            $(item).val(jsonCheckList.TeCreatedByName)
-                        }
-                        if ($(item).data('fieldname') == "TestQuantityFirst") {
-                            $(item).val(jsonCheckList.TestQuantityFirst);
+                        endload();
+                    }
+                    catch (ex) {
+                        endload();
+                        Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
+                    }
+                },
+                error: function (err) {
+                    endload();
+                    Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
+                }
+            });
+        }
+    });
+}
+
+//DetailChecklist
+function DetailsCheckList(elm, e) {
+    e.preventDefault();
+
+    $("#modalCheckList .modal-body #formCheckListOnTime").remove();
+    var checkListId = $(elm).data('id');
+    var index = $(elm).closest('tr').index();
+    //gọi ajax binding form data
+    $.ajax({
+        type: "Get",
+        url: "/CheckList/GetCheckListById",
+        contentType: "application/json;charset=utf-8",
+        data: { checklistId: checkListId },
+        success: function (response) {
+            try {
+                var jsonCheckList = JSON.parse(response);
+                shiftWork = jsonCheckList.ShiftWork;//1: Ngày, 2:Đêm
+
+                var arrFieldName = $("#formAddCheckList input,#formAddCheckList select");
+                //binding form data
+                for (const item of arrFieldName) {
+                    $(item).prop('disabled', true);
+                    if ($(item).data('fieldname') == "MO") {
+                        $(item).val(jsonCheckList.MO);
+                    }
+                    if ($(item).data('fieldname') == "DateTECreated") {
+                        $(item).val(jsonCheckList.ChecklistCreateDate);
+                    }
+                    if ($(item).data('fieldname') == "ShiftWork") {
+                        $(item).val(jsonCheckList.ShiftWork);
+                    }
+                    if ($(item).data('fieldname') == "ModelName") {
+                        $(item).val(jsonCheckList.ModelName);
+                    }
+                    if ($(item).data('fieldname') == "ProgramName") {
+                        $(item).val(jsonCheckList.ProgramName);
+                    }
+                    if ($(item).data('fieldname') == "SoftwareName") {
+                        $(item).val(jsonCheckList.SoftwareName);
+                    }
+                    if ($(item).data('fieldname') == "Checksum") {
+                        $(item).val(jsonCheckList.Checksum);
+                    }
+                    if ($(item).data('fieldname') == "MaterialCode") {
+                        $(item).val(jsonCheckList.MaterialCode);
+                    }
+                    if ($(item).data('fieldname') == "MaterialCodeProducer") {
+                        $(item).val(jsonCheckList.MaterialCodeProducer);
+                    }
+                    if ($(item).data('fieldname') == "MachineCode") {
+                        $(item).val(jsonCheckList.MachineCode);
+                    }
+                    if ($(item).data('fieldname') == "ICColor") {
+                        $(item).val(jsonCheckList.ICColor);
+                    }
+                    if ($(item).data('fieldname') == "PersonalColor") {
+                        $(item).val(jsonCheckList.PersonalColor);
+                    }
+                    if ($(item).data('fieldname') == "CheckESD") {
+                        $(item).val(jsonCheckList.CheckESD);
+                    }
+                    if ($(item).data('fieldname') == "TECreatedBy") {
+                        $(item).attr('data-userid', jsonCheckList.TECreatedBy);
+                        $(item).val(jsonCheckList.TeCreatedByName)
+                    }
+                    if ($(item).data('fieldname') == "TestQuantityFirst") {
+                        $(item).val(jsonCheckList.TestQuantityFirst);
+                    }
+                }
+
+
+                //bindting status checklist
+                var statusCheckList = jsonCheckList.StatusConfirm;
+                $('.status-checklist').empty();
+
+                (statusCheckList == 0) ? ($('.status-checklist').append(`<span class="badge bg-info"><i class="bi bi-star me-1"></i> Chờ chuyền trưởng xác nhận</span>`))
+                    : ((statusCheckList == 1) ? ($('.status-checklist').append(`<span class="badge bg-warning"><i class="bi bi-star me-1"></i> Chờ IPQC xác nhận</span>`))
+                        : ((statusCheckList == 2) ? ($('.status-checklist').append(`<span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> IPQC đã xác nhận</span>`))
+                            : ((statusCheckList == 3) ? ($('.status-checklist').append(`<span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i> Chuyền trưởng đã từ chối đơn</span>`))
+                                : ($('.status-checklist').append(`<span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i> IPQC đã từ chối đơn</span>`)))));
+
+                //binding lineleaderCheck
+                var arrLineLeaderCheck = $('.lineLeaderCheck');
+                for (const item of arrLineLeaderCheck) {
+                    if (statusCheckList == 1 || statusCheckList == 2 || statusCheckList == 4) {
+                        $(item).empty();
+                        $(item).append(`<span class="text-success"><i class="bi bi-check-lg"></i></span>`);
+                    }
+                    else if (statusCheckList == 3) {
+                        {
+                            $(item).empty();
+                            $(item).append(`<span class="text-danger"><i class="bi bi-x-lg"></i></span>`);
                         }
                     }
+                    else {
+                        $(item).empty();
+                    }
+                }
+                $('.lineLeaderCheckName').empty();
+                (jsonCheckList.LineLeaderConfirmByName) ? ($('.lineLeaderCheckName').append(`<span class="text-success">${jsonCheckList.LineLeaderConfirmByName}</span>`)) : ((jsonCheckList.LineLeaderRejectByName) ? ($('.lineLeaderCheckName').append(`<span class="text-danger"><b>Người từ chối đơn:</b> ${jsonCheckList.LineLeaderRejectByName}</span><br/><span><b>Lý do:</b> ${jsonCheckList.LineLeaderReasonReject}</span>`)) : ``);
 
-                    //bindting status checklist
-                    var statusCheckList = jsonCheckList.StatusConfirm;
-                    $('.status-checklist').empty();
+                //binding iPQCCheck
+                var arrIPQCCheck = $('.iPQCCheck');
+                for (const item of arrIPQCCheck) {
+                    if (statusCheckList == 2) {
+                        $(item).empty();
+                        $(item).append(`<span class="text-success"><i class="bi bi-check-lg"></i></span>`);
+                    }
 
-                    (statusCheckList == 0) ? ($('.status-checklist').append(`Trạng thái đơn: <label class="badge badge-inverse-info">Chờ chuyền trưởng xác nhận</label>`))
-                        : ((statusCheckList == 1) ? ($('.status-checklist').append(`Trạng thái đơn: <label class="badge badge-inverse-warning">Chờ IPQC xác nhận</label>`))
-                            : ((statusCheckList == 2) ? ($('.status-checklist').append(`Trạng thái đơn: <label class="badge badge-success">IPQC đã xác nhận</label>`))
-                                : ((statusCheckList == 3) ? ($('.status-checklist').append(`Trạng thái đơn: <label class="badge badge-danger">Chuyền trưởng đã từ chối đơn</label>`))
-                                    : ($('.status-checklist').append(`Trạng thái đơn: <label class="badge badge-danger">IPQC đã từ chối đơn</label>`)))));
-
-                    //binding lineleaderCheck
-                    var arrLineLeaderCheck = $('.lineLeaderCheck');
-                    for (const item of arrLineLeaderCheck) {
-                        if (statusCheckList == 1 || statusCheckList == 2 || statusCheckList == 4) {
-                            $(item).empty();
-                            $(item).append(`<span class="text-success"><i class="icofont icofont-check f-20"></i></span>`);
-                        }
-                        else if (statusCheckList == 3) {
+                    else
+                        if (statusCheckList == 4) {
                             {
                                 $(item).empty();
-                                $(item).append(`<span class="text-danger"><i class="icofont icofont-close"></i></span>`);
+                                $(item).append(`<span class="text-danger"><i class="bi bi-x-lg"></i></span>`);
                             }
                         }
                         else {
                             $(item).empty();
                         }
-                    }
-                    $('.lineLeaderCheckName').empty();
-                    (jsonCheckList.LineLeaderConfirmByName) ? ($('.lineLeaderCheckName').append(`<span class="text-success">${jsonCheckList.LineLeaderConfirmByName}</span>`)) : ((jsonCheckList.LineLeaderRejectByName) ? ($('.lineLeaderCheckName').append(`<span class="text-danger"><b>Người từ chối đơn:</b> ${jsonCheckList.LineLeaderRejectByName}</span><br/><span><b>Lý do:</b> ${jsonCheckList.LineLeaderReasonReject}</span>`)) : ``);
+                }
+                $('.iPQCCheckName').empty();
+                (jsonCheckList.IPQCConfirmByName) ? ($('.iPQCCheckName').append(`<span class="text-success">${jsonCheckList.IPQCConfirmByName}</span>`)) : ((jsonCheckList.IPQCRejectByName) ? ($('.iPQCCheckName').append(`<span class="text-danger"><b>Người từ chối đơn:</b> ${jsonCheckList.IPQCRejectByName}</span><br/><span><b>Lý do:</b> ${jsonCheckList.IPQCReasonReject}</span>`)) : ``);
 
-                    //binding iPQCCheck
-                    var arrIPQCCheck = $('.iPQCCheck');
-                    for (const item of arrIPQCCheck) {
-                        if (statusCheckList == 2) {
-                            $(item).empty();
-                            $(item).append(`<span class="text-success"><i class="icofont icofont-check f-20"></i></span>`);
-                        }
-
-                        else
-                            if (statusCheckList == 4) {
-                                {
-                                    $(item).empty();
-                                    $(item).append(`<span class="text-danger"><i class="icofont icofont-close"></i></span>`);
-                                }
-                            }
-                            else {
-                                $(item).empty();
-                            }
-                    }
-                    $('.iPQCCheckName').empty();
-                    (jsonCheckList.IPQCConfirmByName) ? ($('.iPQCCheckName').append(`<span class="text-success">${jsonCheckList.IPQCConfirmByName}</span>`)) : ((jsonCheckList.IPQCRejectByName) ? ($('.iPQCCheckName').append(`<span class="text-danger"><b>Người từ chối đơn:</b> ${jsonCheckList.IPQCRejectByName}</span><br/><span><b>Lý do:</b> ${jsonCheckList.IPQCReasonReject}</span>`)) : ``);
-                    
-                    //binding nút bấm
-                    if (statusCheckList == 0) {
-                        //xóa form thời gian rút kiểm:
-                        $("#modalCheckList .modal-body #formCheckListOnTime").remove();
-                        //xóa hết các nút bấm:
-                        $('#modalCheckList .modal-footer').children().remove();
-                        //append lại các nút bấm cần thiết:
-                        $('#modalCheckList .modal-footer').append(`<button type="button" class="btn btn-primary waves-effect waves-light btn_Confirm_Checklist"><i class="icofont icofont-check-circled"></i>Xác nhận</button>`);
-                        $('#modalCheckList .modal-footer').append(`<button type="button" class="btn btn-danger waves-effect waves-light btn_Reject_Checklist"><i class="icofont icofont-close-line"></i>Không xác nhận</button>`);
-                        $('#modalCheckList .modal-footer').append(`<button type="button" class="btn btn-inverse waves-effect " data-dismiss="modal">Đóng</button>`);
+                //binding nút bấm
+                if (statusCheckList == 0) {
+                    //xóa form thời gian rút kiểm:
+                    $("#modalCheckList .modal-body #formCheckListOnTime").remove();
+                    //xóa hết các nút bấm:
+                    $('#modalCheckList .modal-footer').children().remove();
+                    //xóa hết các nút bấm:
+                    $('#modalCheckList .modal-footer').append(`<button title="Xác nhận" data-id=${checkListId} class="btn btn-success" onclick="ConfirmCheckList(this, event, ${index})">Xác nhận</button>`);
+                    $('#modalCheckList .modal-footer').append(`<button title="Không xác nhận" data-id=${checkListId} class="btn btn-danger"  onclick="RejectCheckList(this, event, ${index})">Không xác nhận</button>`);
+                    $('#modalCheckList .modal-footer').append(`<button title = "Đóng" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`);
 
 
-                        //show modal:
-                        $("#modalCheckList").modal('show');
+                    //show modal:
+                    $("#modalCheckList").modal('show');
 
-                    } else
-                        if (statusCheckList == 2) {
+                }
+                else
+                    if (statusCheckList == 2) {
 
-                            //binding form thời gian rút kiểm:
-                            $.ajax({
-                                type: "GET",
-                                url: "/Home/GetAllCheckListOnTime",
-                                data: {
-                                    checkListFirstId : checkListId_global
-                                },
-                                dataType: "text",//Kieu du lieu tra ve
-                                contentType: "application/json",
-                                success: function (response) {
-                                    try {
-                                        var jsonCLOnTimes = JSON.parse(response);
-                                        var formCheckListOnTimeHTML = $(`<div id="formCheckListOnTime">
+                        //binding form thời gian rút kiểm:
+                        $.ajax({
+                            type: "GET",
+                            url: "/Home/GetAllCheckListOnTime",
+                            contentType: "application/json;charset=utf-8",
+                            data: {
+                                checkListFirstId: checkListId
+                            },
+                            dataType: "text",//Kieu du lieu tra ve
+                            contentType: "application/json",
+                            success: function (response) {
+                                try {
+                                    var jsonCLOnTimes = JSON.parse(response);
+
+                                    //form thời gian rut kiem
+                                    var formCheckListOnTimeHTML = $(`<div id="formCheckListOnTime">
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         <!-- Thời gian rút kiểm -->
@@ -1133,7 +1191,7 @@ function btnDetailCheckListOnclick() {
                                                                                             </td>
                                                                                             <td class="text-center">
                                                                                                 <!-- Tổng số hàng lỗi-->
-                                                                                                <span class="sumOfFailQuantity"><label class="badge badge-danger">0</label></span>
+                                                                                                <span class="sumOfFailQuantity"><label class="badge bg-danger">0</label></span>
                                                                                                 
                                                                                                 <!-- End Tổng số hàng lỗi -->
                                                                                             </td>
@@ -1170,272 +1228,276 @@ function btnDetailCheckListOnclick() {
                                                                     </div>
                                                                 </div>
                                                             </div>`);
-                                        $("#modalCheckList .modal-body #formCheckListOnTime").remove();
-                                        $("#modalCheckList .modal-body").append(formCheckListOnTimeHTML);
+                                    $("#modalCheckList .modal-body #formCheckListOnTime").remove();
+                                    $("#modalCheckList .modal-body").append(formCheckListOnTimeHTML);
 
-                                        var stt = 0;
-                                        
-                                        //binding chữ ký hoặc nút ký
-                                        var arrTimeLine = $('.timeLine');
-                                        for (var trTimeLine of arrTimeLine) {
-                                            
-                                            stt++;
-                                            var arrInput = $(trTimeLine).parent().siblings().children();
+                                    var stt = 0;
 
-                                            if (jsonCLOnTimes.length <= 0) {
-                                                arrInput.each(function () {
-                                                    if ($(this).data('fieldname') == "LineLeaderConfirmByName") {
-                                                        $(this).empty();
-                                                        //$(this).append(`<button type="button" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="float: none;margin: 5px;"><span class="icofont icofont-ui-edit"></span></button>`);
-                                                        $(this).append(`<button data-checklistid="${checkListId_global}" data-timelineid="${stt}" title="Ký tên" class="btn btn-primary btn-confirm-checklist-ontime"><i class="icofont icofont-pencil"></i>Ký</button>`);
-                                                    }
-                                                })
+                                    //binding chữ ký hoặc nút ký
+                                    var arrTimeLine = $('.timeLine');
+                                    for (var trTimeLine of arrTimeLine) {
 
-                                                //xóa những timeLine không ở trong ca làm việc
-                                                if (shiftWork == 1) {
-                                                    $('.timeLineNight').remove();
+                                        stt++;
+                                        var arrInput = $(trTimeLine).parent().siblings().children();
+
+                                        if (jsonCLOnTimes.length <= 0) {
+                                            arrInput.each(function () {
+                                                if ($(this).data('fieldname') == "LineLeaderConfirmByName") {
+                                                    $(this).empty();
+                                                    //$(this).append(`<button type="button" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="float: none;margin: 5px;"><span class="icofont icofont-ui-edit"></span></button>`);
+                                                    $(this).append(`<button data-checklistid="${checkListId}" data-timelineid="${stt}" title="Ký tên" class="btn btn-primary"><i class="bi bi-pen"></i> Ký</button>`);
                                                 }
-                                                if (shiftWork == 2) {
-                                                    $('.timeLineDay').remove();
-                                                }
+                                            })
+
+                                            //xóa những timeLine không ở trong ca làm việc
+                                            if (shiftWork == 1) {
+                                                $('.timeLineNight').remove();
                                             }
-                                            else {
-                                                for (const item of jsonCLOnTimes) {
-                                                    if (item.StatusCheckListOnTime == 1) { //Chờ IPQC xác nhận
-                                                        if ($(trTimeLine).data('timelineid') == item.TimeLineId) {
-                                                            arrInput.each(function () {
-                                                                if ($(this).data('fieldname') == "PassQuantity") {
-                                                                    $(this).val(item.PassQuantity);
-                                                                }
-                                                                if ($(this).data('fieldname') == "FailQuantity") {
-                                                                    $(this).val(item.FailQuantity);
-                                                                }
-                                                                if ($(this).data('fieldname') == "ReasonAndSolution") {
-                                                                    $(this).val(item.ReasonAndSolution);
-                                                                }
-                                                                if ($(this).data('fieldname') == "LineLeaderTestQuantity") {
-                                                                    $(this).val(item.LineLeaderTestQuantity);
-                                                                }
-                                                                if ($(this).data('fieldname') == "LineLeaderConfirmByName") {
-                                                                    $(this).empty();
-                                                                    ($(this).append(`<span class="text-success">${item.LineLeaderConfirmByName}</span>`))
-                                                                }
-                                                                if ($(this).data('fieldname') == "Checksum") {
-                                                                    $(this).empty();
-                                                                    $(this).val(item.Checksum);
-                                                                }
-                                                                if ($(this).data('fieldname') == "IPQCConfirmByName") {
-                                                                    $(this).empty();
-                                                                    ($(this).append(`<label class="badge badge-inverse-info">Chờ xác nhận</label>`))
-                                                                }
-                                                            })
-                                                            break;
-                                                        }
-                                                        else {
-                                                            arrInput.each(function () {
-                                                                if ($(this).data('fieldname') == "LineLeaderConfirmByName") {
-                                                                    $(this).empty();
-                                                                    $(this).append(`<button data-checklistid="${checkListId_global}" data-timelineid="${stt}" title="Ký tên" class="btn btn-primary btn-confirm-checklist-ontime"><i class="icofont icofont-pencil"></i>Ký</button>`);
-                                                                }
-                                                                if ($(this).data('fieldname') == "IPQCConfirmByName") {
-                                                                    $(this).empty();
-                                                                    $(this).append(`<label class="badge badge-inverse-info">Chờ xác nhận</label>`);
-                                                                }
-                                                            })
-                                                        }
-                                                    }
-                                                    if (item.StatusCheckListOnTime == 2) {//IPQC đã xác nhận
-                                                        if ($(trTimeLine).data('timelineid') == item.TimeLineId) {
-                                                            arrInput.each(function () {
-                                                                if ($(this).data('fieldname') == "PassQuantity") {
-                                                                    $(this).val(item.PassQuantity);
-                                                                }
-                                                                if ($(this).data('fieldname') == "FailQuantity") {
-                                                                    $(this).val(item.FailQuantity);
-                                                                }
-                                                                if ($(this).data('fieldname') == "ReasonAndSolution") {
-                                                                    $(this).val(item.ReasonAndSolution);
-                                                                }
-                                                                if ($(this).data('fieldname') == "LineLeaderTestQuantity") {
-                                                                    $(this).val(item.LineLeaderTestQuantity);
-                                                                }
-                                                                if ($(this).data('fieldname') == "LineLeaderConfirmByName") {
-                                                                    $(this).empty();
-                                                                    $(this).append(`<span class="text-success">${item.LineLeaderConfirmByName}</span>`);
-                                                                }
-                                                                if ($(this).data('fieldname') == "Checksum") {
-                                                                    $(this).empty();
-                                                                    $(this).val(item.Checksum);
-                                                                }
-                                                                if ($(this).data('fieldname') == "IPQCTestQuantity") {
-                                                                    $(this).empty();
-                                                                    $(this).val(item.IPQCTestQuantity);
-                                                                }
-                                                                if ($(this).data('fieldname') == "IPQCConfirmByName") {
-                                                                    $(this).empty();
-                                                                    $(this).append(`<span class="text-success">${item.IPQCConfirmByName}</span>`)
-                                                                }
-                                                                if ($(this).data('fieldname') == "ICStatus") {
-                                                                    $(this).val(item.ICStatus);
-                                                                }
-                                                                if ($(this).data('fieldname') == "PinNG") {
-                                                                    $(this).val(item.PinNG);
-                                                                }
-                                                                if ($(this).data('fieldname') == "Checksum") {
-                                                                    $(this).empty();
-                                                                    $(this).val(item.Checksum);
-                                                                }
-                                                            })
-                                                            break;
-                                                        }
-                                                        else {
-                                                            arrInput.each(function () {
-                                                                if ($(this).data('fieldname') == "LineLeaderConfirmByName") {
-                                                                    $(this).empty();
-                                                                    $(this).append(`<button data-checklistid="${checkListId_global}" data-timelineid="${stt}" title="Ký tên" class="btn btn-primary btn-confirm-checklist-ontime"><i class="icofont icofont-pencil"></i>Ký</button>`);
-                                                                }
-                                                                if ($(this).data('fieldname') == "IPQCConfirmByName") {
-                                                                    $(this).empty();
-                                                                    $(this).append(`<label class="badge badge-inverse-info">Chờ xác nhận</label>`);
-                                                                }
-                                                            })
-                                                        }
-                                                    }
-
-                                                }
-
-                                                //xóa những timeLine không ở trong ca làm việc
-                                                if (shiftWork == 1) {
-                                                    $('.timeLineNight').remove();
-                                                }
-                                                if (shiftWork == 2) {
-                                                    $('.timeLineDay').remove();
-                                                }
+                                            if (shiftWork == 2) {
+                                                $('.timeLineDay').remove();
                                             }
-                                            
-                                            
+                                        }
+                                        else {
+                                            for (const item of jsonCLOnTimes) {
+                                                if (item.StatusCheckListOnTime == 1) { //Chờ IPQC xác nhận
+                                                    if ($(trTimeLine).data('timelineid') == item.TimeLineId) {
+                                                        arrInput.each(function () {
+                                                            if ($(this).data('fieldname') == "PassQuantity") {
+                                                                $(this).val(item.PassQuantity);
+                                                            }
+                                                            if ($(this).data('fieldname') == "FailQuantity") {
+                                                                $(this).val(item.FailQuantity);
+                                                            }
+                                                            if ($(this).data('fieldname') == "ReasonAndSolution") {
+                                                                $(this).val(item.ReasonAndSolution);
+                                                            }
+                                                            if ($(this).data('fieldname') == "LineLeaderTestQuantity") {
+                                                                $(this).val(item.LineLeaderTestQuantity);
+                                                            }
+                                                            if ($(this).data('fieldname') == "LineLeaderConfirmByName") {
+                                                                $(this).empty();
+                                                                ($(this).append(`<span class="text-success">${item.LineLeaderConfirmByName}</span>`))
+                                                            }
+                                                            if ($(this).data('fieldname') == "Checksum") {
+                                                                $(this).empty();
+                                                                $(this).val(item.Checksum);
+                                                            }
+                                                            if ($(this).data('fieldname') == "IPQCConfirmByName") {
+                                                                $(this).empty();
+                                                                ($(this).append(`<label class="badge bg-info">Chờ xác nhận</label>`))
+                                                            }
+                                                        })
+                                                        break;
+                                                    }
+                                                    else {
+                                                        arrInput.each(function () {
+                                                            if ($(this).data('fieldname') == "LineLeaderConfirmByName") {
+                                                                $(this).empty();
+                                                                $(this).append(`<button data-checklistid="${checkListId}" data-timelineid="${stt}" title="Ký tên" class="btn btn-primary"><i class="bi bi-pen"></i> Ký</button>`);
+                                                            }
+                                                            if ($(this).data('fieldname') == "IPQCConfirmByName") {
+                                                                $(this).empty();
+                                                                $(this).append(`<label class="badge bg-info">Chờ xác nhận</label>`);
+                                                            }
+                                                        })
+                                                    }
+                                                }
+                                                if (item.StatusCheckListOnTime == 2) {//IPQC đã xác nhận
+                                                    if ($(trTimeLine).data('timelineid') == item.TimeLineId) {
+                                                        arrInput.each(function () {
+                                                            if ($(this).data('fieldname') == "PassQuantity") {
+                                                                $(this).val(item.PassQuantity);
+                                                            }
+                                                            if ($(this).data('fieldname') == "FailQuantity") {
+                                                                $(this).val(item.FailQuantity);
+                                                            }
+                                                            if ($(this).data('fieldname') == "ReasonAndSolution") {
+                                                                $(this).val(item.ReasonAndSolution);
+                                                            }
+                                                            if ($(this).data('fieldname') == "LineLeaderTestQuantity") {
+                                                                $(this).val(item.LineLeaderTestQuantity);
+                                                            }
+                                                            if ($(this).data('fieldname') == "LineLeaderConfirmByName") {
+                                                                $(this).empty();
+                                                                $(this).append(`<span class="text-success">${item.LineLeaderConfirmByName}</span>`);
+                                                            }
+                                                            if ($(this).data('fieldname') == "Checksum") {
+                                                                $(this).empty();
+                                                                $(this).val(item.Checksum);
+                                                            }
+                                                            if ($(this).data('fieldname') == "IPQCTestQuantity") {
+                                                                $(this).empty();
+                                                                $(this).val(item.IPQCTestQuantity);
+                                                            }
+                                                            if ($(this).data('fieldname') == "IPQCConfirmByName") {
+                                                                $(this).empty();
+                                                                $(this).append(`<span class="text-success">${item.IPQCConfirmByName}</span>`)
+                                                            }
+                                                            if ($(this).data('fieldname') == "ICStatus") {
+                                                                $(this).val(item.ICStatus);
+                                                            }
+                                                            if ($(this).data('fieldname') == "PinNG") {
+                                                                $(this).val(item.PinNG);
+                                                            }
+                                                            if ($(this).data('fieldname') == "Checksum") {
+                                                                $(this).empty();
+                                                                $(this).val(item.Checksum);
+                                                            }
+                                                        })
+                                                        break;
+                                                    }
+                                                    else {
+                                                        arrInput.each(function () {
+                                                            if ($(this).data('fieldname') == "LineLeaderConfirmByName") {
+                                                                $(this).empty();
+                                                                $(this).append(`<button data-checklistid="${checkListId}" data-timelineid="${stt}" title="Ký tên" class="btn btn-primary"><i class="bi bi-pen"></i> Ký</button>`);
+                                                            }
+                                                            if ($(this).data('fieldname') == "IPQCConfirmByName") {
+                                                                var passQty = $(this).closest('tr').find('[data-fieldname="PassQuantity"]').val();
+                                                                $(this).empty();
+                                                                if (passQty > 0) {
+                                                                    $(this).append(`<label class="badge bg-info">Chờ xác nhận</label>`);
+                                                                }                                                               
+                                                            }
+                                                        })
+                                                    }
+                                                }
+
+                                            }
+
+                                            //xóa những timeLine không ở trong ca làm việc
+                                            if (shiftWork == 1) {
+                                                $('.timeLineNight').remove();
+                                            }
+                                            if (shiftWork == 2) {
+                                                $('.timeLineDay').remove();
+                                            }
                                         }
 
-                                        //binding pass/fail quantity => tỉ lệ:
-                                        var sumOfPassQuantity = 0;
-                                        var sumOfFailQuantity = 0;
-                                        sumOfPassQuantity = jsonCLOnTimes.map(a => a.PassQuantity).reduce((a, b) => a + b, 0);
-                                        sumOfFailQuantity = jsonCLOnTimes.map(a => a.FailQuantity).reduce((a, b) => a + b, 0);
-                                        $('.sumOfPassQuantity').empty();
-                                        $('.sumOfPassQuantity').append(`<label class="badge badge-success">${sumOfPassQuantity}</label>`);
-                                        $('.sumOfFailQuantity').empty();
-                                        $('.sumOfFailQuantity').append(`<label class="badge badge-danger">${sumOfFailQuantity}</label>`);
-                                        $('.ratioPass').empty();
-                                        var ratio = parseFloat(((sumOfPassQuantity - sumOfFailQuantity) / sumOfPassQuantity) * 100).toFixed(2);
-                                        (ratio < 80) ? ($('.ratioPass').append(`<label class="badge badge-danger">${ratio}</label>`)) : ((ratio < 95) ? ($('.ratioPass').append(`<label class="badge badge-warning">${ratio}</label>`)) : ($('.ratioPass').append(`<label class="badge badge-success">${ratio}</label>`))); 
-                                    } catch (e) {
 
                                     }
-                                },
-                                error: function (res) {
 
-                                    alert('fail');
+                                    //binding pass/fail quantity => tỉ lệ:
+                                    var sumOfPassQuantity = 0;
+                                    var sumOfFailQuantity = 0;
+                                    sumOfPassQuantity = jsonCLOnTimes.map(a => a.PassQuantity).reduce((a, b) => a + b, 0);
+                                    sumOfFailQuantity = jsonCLOnTimes.map(a => a.FailQuantity).reduce((a, b) => a + b, 0);
+                                    $('.sumOfPassQuantity').empty();
+                                    $('.sumOfPassQuantity').append(`<label class="badge bg-success">${sumOfPassQuantity}</label>`);
+                                    $('.sumOfFailQuantity').empty();
+                                    $('.sumOfFailQuantity').append(`<label class="badge bg-danger">${sumOfFailQuantity}</label>`);
+                                    $('.ratioPass').empty();
+                                    var ratio = parseFloat(((sumOfPassQuantity - sumOfFailQuantity) / sumOfPassQuantity) * 100).toFixed(2);
+                                    (ratio < 80) ? ($('.ratioPass').append(`<label class="badge bg-danger">${ratio}</label>`)) : ((ratio < 95) ? ($('.ratioPass').append(`<label class="badge bg-warning">${ratio}</label>`)) : ($('.ratioPass').append(`<label class="badge bg-success">${ratio}</label>`)));
+                                } catch (e) {
+                                    console.log(e);
                                 }
-                            });
-                            
-                            //xóa hết các nút bấm:
-                            $('#modalCheckList .modal-footer').children().remove();
-                            $('#modalCheckList .modal-footer').append(`<button type="button" class="btn btn-inverse waves-effect " data-dismiss="modal">Đóng</button>`);
-                            //show modal:
-                            $("#modalCheckList").modal('show');
+                            },
+                            error: function (res) {
 
-                        }
-                        else {
-                            //xóa form thời gian rút kiểm:
-                            $("#modalCheckList .modal-body #formCheckListOnTime").remove();
-                            //xóa hết các nút bấm:
-                            $('#modalCheckList .modal-footer').children().remove();
-                            $('#modalCheckList .modal-footer').append(`<button type="button" class="btn btn-inverse waves-effect " data-dismiss="modal">Đóng</button>`);
-                            //show modal:
-                            $("#modalCheckList").modal('show');
-                        }    
-                    
+                                alert('fail');
+                            }
+                        });
 
-                    
+                        //xóa hết các nút bấm:
+                        $('#modalCheckList .modal-footer').children().remove();
+                        $('#modalCheckList .modal-footer').append(`<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`);
+                        //show modal:
+                        $("#modalCheckList").modal('show');
 
-                }
-                catch (ex) {
-                    Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
-                }
+                    }
+                    else {
+                        //xóa form thời gian rút kiểm:
+                        $("#modalCheckList .modal-body #formCheckListOnTime").remove();
+                        //xóa hết các nút bấm:
+                        $('#modalCheckList .modal-footer').children().remove();
+                        $('#modalCheckList .modal-footer').append(`<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`);
+                        //show modal:
+                        $("#modalCheckList").modal('show');
+                    }
 
-            },
-            error: function (err) {
+
+
+
+            }
+            catch (ex) {
                 Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
             }
-        });
-    })
+
+        },
+        error: function (err) {
+            Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
+        }
+    });
 }
+
+
 
 //click btn_Confirm_Checklist
-function btn_Confirm_ChecklistOnClick() {
-    $(document).on('click', '.btn_Confirm_Checklist', function () {
-        if (!checkListId_global) {
-            checkListId_global = $(this).data('id');
-        }
-        Swal.fire({
-            title: 'Chọn mail để gửi đơn:',
-            icon: "warning",
-            //html: "<input id='lineLeaderReasonReject' class='swal2-input' required/>",
-            html: `<select name="select" id="mailSelected" class='swal2-input' required class="form-control form-control-primary">
-                                                                <option value="">select mail</option>
-                                                                <option value="Arlo">Mail to IPQC_ARLO</option>
-                                                                <option value="Netgear">Mail to IPQC_NETGEAR</option>
-                                                            </select>`,
-            confirmButtonText: 'Gửi',
-            showCancelButton: true,
-            cancelButtonText: "Hủy bỏ!",
-            reverseButtons: true,
-            preConfirm: () => {
-                if (document.getElementById('mailSelected').value) {
-                    var mailSelected = document.getElementById('mailSelected').value.trim();
-                    $.ajax({
-                        type: "POST",
-                        url: "/LineLeader/Home/ConfirmCheckList",
-                        data: {
-                            checkListId: checkListId_global,
-                            mailSelected: mailSelected
-                        },
-                        success: function (response) {
-                            try {
-                                if (response == 1) {
-                                    Swal.fire("Thành công", "Đã từ chối đơn !", "success");
-                                    if ($('#modalCheckList').hasClass('show')) {
-                                        //nếu modal đang mở
-                                        $("#modalCheckList").modal('hide');//đóng modal
-                                        loadDataCheckList();
-                                        checkListId_global = null;
-                                    }
-                                    else {
-                                        loadDataCheckList();
-                                        checkListId_global = null;
-                                    }
-                                }
-                                else {
-                                    Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
-                                }
+function ConfirmCheckList(elm, e, index = null) {
+    e.preventDefault();
+
+    var checkListId = $(elm).data('id');
+    if (index == null) {
+        index = $(elm).closest('tr').index();
+    }
+
+    Swal.fire({
+        title: 'Chọn mail để gửi đơn:',
+        icon: "warning",
+        html: `<select name="select" id="mailSelected" class='swal2-input' required class="form-control form-control-primary">
+                   <option value="">select mail</option>
+                   ${($('[data-location]').data('location') == 'F17') ? '<option value="F17_IPQC">Mail to MAIL_IPQC_F17</option>' : '<option value="Arlo">Mail to IPQC_ARLO</option><option value="Netgear">Mail to IPQC_NETGEAR</option>'}
+               </select>`,
+        confirmButtonText: 'Gửi',
+        showCancelButton: true,
+        cancelButtonText: "Hủy bỏ!",
+        reverseButtons: true,
+        preConfirm: () => {
+            if (document.getElementById('mailSelected').value) {
+                var SendData = {
+                    checkListId: checkListId,
+                    mailSelected: document.getElementById('mailSelected').value.trim()
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/LineLeader/Home/ConfirmCheckList",
+                    data: JSON.stringify(SendData),
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    success: function (response) {
+                        try {
+                            if (response.status == 1) {
+
+                                var jsonData = JSON.parse(response.Data);
+
+                                dataTable.rows().updateRow(index, DrawTableRowsLead(jsonData, true));
+
+                                Swal.fire("Thành công", "Đã hoàn thành xác nhận!", "success");
+                                $("#modalCheckList").modal('hide');
                             }
-                            catch (ex) {
+                            else {
                                 Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
                             }
-
-                        },
-                        error: function (err) {
+                        }
+                        catch (ex) {
                             Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
                         }
-                    });
 
-                } else {
-                    Swal.showValidationMessage('Hãy chọn mail!');
-                }
+                    },
+                    error: function (err) {
+                        Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
+                    }
+                });
+
+            } else {
+                Swal.showValidationMessage('Hãy chọn mail!');
             }
-        })
-    })
+        }
+    });
 }
+
+
 
 //click btn_Reject_CheckList
 function btn_Reject_ChecklistOnclick() {
