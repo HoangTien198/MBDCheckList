@@ -1297,3 +1297,13 @@ tbody > tr > td > label {
 .text-center {
     vertical-align: middle;
 }
+
+td span button.btn {
+    width: 65px !important;
+}
+.modal-fii-logo {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    height: 140px;
+}

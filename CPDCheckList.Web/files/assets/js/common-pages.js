@@ -285,15 +285,16 @@ function DrawTableRowsWork(item, isAddInDatatable = false) {
         if (item.StatusConfirm == 0) {
             cButton =
                 `<td class="col_7">
-                    <button title="Chi tiết"       data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>
-                    <button title="Xác nhận"       data-id=${item.CheckListFirstId} class="btn btn-success" onclick="ConfirmCheckList(this, event)"><i class="bi bi-check-lg"></i></button>
-                    <button title="Không xác nhận" data-id=${item.CheckListFirstId} class="btn btn-danger"  onclick="RejectCheckList(this, event)"><i class="bi bi-x"></i></button>
+                    <button title="Chi tiết" data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>
+                    <button title="Sửa"      data-id=${item.CheckListFirstId} class="btn btn-warning" onclick="EditCheckList(this, event)"><i class="bi bi-pen-fill"></i></button>
+                    <button title="Xóa"      data-id=${item.CheckListFirstId} class="btn btn-danger"  onclick="DeleteCheckList(this, event)"><i class="bi bi-trash-fill"></i></button>
                  </td>`;
         }
         else {
             cButton =
                 `<td class="col_7">
-                    <button title="Chi tiết"       data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>
+                    <button title="Chi tiết" data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>
+                   
                  </td>`;
         }
         row.push(cButton);
@@ -309,7 +310,7 @@ function DrawTableRowsWork(item, isAddInDatatable = false) {
 
 var dataTable;
 function CreateCheckListTable() {
-    var scrollHeight = document.querySelector('#sidebar').offsetHeight - 220 + 'px';
+    var scrollHeight = document.querySelector('#sidebar').offsetHeight - 200 + 'px';
     var myTable = document.querySelector('#table_Checklist');
     dataTable = new simpleDatatables.DataTable(myTable, {
         scrollY: scrollHeight,
@@ -319,7 +320,10 @@ function CreateCheckListTable() {
         sortable: false,
         fixedColumns: false,
     });
-    dataTable.rows().remove(0);
     $('#tbody_checklist').show();
+}
+
+function GetDatatable() {
+    return dataTable;
 }
 

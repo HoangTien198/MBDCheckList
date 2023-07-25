@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "Rút kiểm F17";
+    Layout = "~/Areas/Shared/_AreaLayoutShare.cshtml";
+}
+
+@{ 
+    var user = (CPDCheckList.Web.Commons.AccountLogin)Session["USER_SESSION"];
+}
+
+@section styles{
+    <link href="~/files/Content/RutKiem.css" rel="stylesheet" />
+}
+
+<input type="hidden" value="@ViewBag.Location" id="thisLocation"/>
+
+<div class="page-wrapper">
+    <div class="page-body">
+        <div class="card mt-2">
+            <div class="card-body p-0">
+                <table id="table_WithDrawal" class="table table-striped table-bordered nowrap">
+                    <thead class="text-center">
+                        <tr>
+                            <th class="text-center">日期</br>Ngày Tháng</th>
+                            <th class="text-center">工單</br>Công lệnh</th>
+                            <th class="text-center">序列號</br>Mã tem</th>
+                            <th class="text-center">機種</br>Model</th>
+                            <th class="text-center">物料料號</br>Mã liệu</th>
+                            <th class="text-center">Checksum</th>
+                            <th class="text-center">數量</br>Số lượng</th>
+                            <th class="text-center"> 抽檢人</br>Người rút kiểm</th>
+                            <th class="text-center">地位</br>Trạng thái</th>
+                            <th class="text-center">行动</br>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_WithDrawal">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="action_col">
+                                <button class="btn btn-outline-info"><i class="bi bi-info"></i></button>
+                                <button class="btn btn-outline-warning"><i class="bi bi-pen"></i></button>
+                                <button class="btn btn-outline-danger"><i class="bi bi-x"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add modal -->
+<div class="modal fade" id="WithDrawalModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header" style="color: #0d6efd;">
+                <h3 class="modal-title" style="font-weight: bold;">THÊM MỚI BIỂU RÚT KIỂM</h3>
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x" style="font-size: 20px"></i></button>
+            </div>
+            <div class="modal-body row" id="formData">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="form-label">Ngày tháng</label>
+                            <input class="form-control" type="datetime-local" name="CreatedDate" autocomplete="off" />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Công lệnh</label>
+                            <input class="form-control" type="text" name="MO" autocomplete="off" maxlength="50" list="data_MO"/>
+                            <datalist id="data_MO"></datalist>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Mã tem</label>
+                            <input class="form-control" type="text" name="StampCode" autocomplete="off" maxlength="50" list="data_StampCode"/>
+                            <datalist id="data_StampCode"></datalist>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Model</label>
+                            <input class="form-control" type="text" name="Model" autocomplete="off" maxlength="50" list="data_Model"/>
+                            <datalist id="data_Model"></datalist>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Mã liệu</label>
+                            <input class="form-control" type="text" name="MaterialCode" autocomplete="off" maxlength="50" list="data_MaterialCode"/>
+                            <datalist id="data_MaterialCode"></datalist>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Checksum</label>
+                            <input class="form-control" type="text" name="CheckSum" autocomplete="off" maxlength="50" list="data_CheckSum"/>
+                            <datalist id="data_CheckSum"></datalist>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="form-label">Chấm màu</label>
+                            <input class="form-control" type="text" name="Color" autocomplete="off" maxlength="50" list="data_Color"/>
+                            <datalist id="data_Color"></datalist>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Máy sao mã</label>
+                            <input class="form-control" type="text" name="MachineName" autocomplete="off" maxlength="50" list="data_MachineName"/>
+                            <datalist id="data_MachineName"></datalist>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Tuyến trưởng xác nhận</label>
+                            <input class="form-control" type="text" name="LineLeaderId" autocomplete="off" list="data_LineLeaderId" placeholder="Mã thẻ"/>
+                            <datalist id="data_LineLeaderId"></datalist>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Người rút kiểm</label>
+                            <input class="form-control" type="text" name="CreateUserId" autocomplete="off" list="data_CreateUserId" value="@user.Username" disabled/>
+                            <datalist id="data_CreateUserId"></datalist>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Ghi chú</label>
+                            <textarea class="form-control" name="Note" rows="4" style="resize: none;" maxlength="200"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 pt-5">
+                    <div class="row">
+                        <div class="col-3 required">
+                            <label class="form-label">Số lượng</label>
+                            <input class="form-control" type="number" name="TotalNum" autocomplete="off" />
+                        </div>
+                        <div class="col-3 required">
+                            <label class="form-label">Số lượng rút kiểm</label>
+                            <input class="form-control" type="number" name="NumWithDrawals" autocomplete="off" />
+                        </div>
+                        <div class="col-3 required">
+                            <label class="form-label">Số lượng lỗi chương trình</label>
+                            <input class="form-control" type="number" name="NumProgramErrors" autocomplete="off" />
+                        </div>
+                        <div class="col-3 required">
+                            <label class="form-label">Số lượng lỗi ngoại quan</label>
+                            <input class="form-control" type="number" name="NumExternalErrors" autocomplete="off">
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="button" class="btn btn-primary" id="SaveBtn" onclick="SaveWithDrawal()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section render{
+    <script src="~/files/Content/RutKiem.js"></script>
+}

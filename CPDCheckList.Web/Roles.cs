@@ -14,11 +14,20 @@ namespace CPDCheckList.Web
     
     public partial class Roles
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Roles()
+        {
+            this.User = new HashSet<Users>();
+        }
+    
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Users> User { get; set; }
     }
 }

@@ -172,19 +172,6 @@
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\RutKiem\Controllers\RutKiemController.cs" />
     <Compile Include="Areas\RutKiem\RutKiemAreaRegistration.cs" />
-    <Compile Include="CheckListModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CheckListModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CheckListModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CheckListModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="CheckListRutKiem.cs">
-      <DependentUpon>CheckListModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Commons\AccountLogin.cs" />
     <Compile Include="Commons\CheckListAjax.cs" />
     <Compile Include="Commons\CheckListOnTimeAjaxIPQC.cs" />
@@ -198,6 +185,21 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\DAO\CheckListDao.cs" />
     <Compile Include="Models\DAO\CheckListOnTimeDao.cs" />
@@ -219,10 +221,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Roles.cs">
-      <DependentUpon>CheckListModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Users.cs">
-      <DependentUpon>CheckListModel.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Web References\SFCService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -231,16 +233,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CheckListModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CheckListModel.edmx</DependentUpon>
-      <LastGenOutput>CheckListModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="CheckListModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CheckListModel.edmx</DependentUpon>
-      <LastGenOutput>CheckListModel.cs</LastGenOutput>
-    </Content>
+    <Content Include="files\Content\RutKiem.css" />
+    <Content Include="files\Content\RutKiem.js" />
     <Content Include="Content\Image\Backgrounds\1.jpg" />
     <Content Include="Content\Image\Backgrounds\10.jpg" />
     <Content Include="Content\Image\Backgrounds\11.jpg" />
@@ -717,16 +711,8 @@
     <Content Include="files\extra-pages\404\1\fonts\fontawesome-webfont.woff" />
     <Content Include="files\extra-pages\404\1\fonts\fontawesome-webfont.woff2" />
     <Content Include="Database\CheckList.bak" />
-    <EntityDeploy Include="CheckListModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CheckListModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="CheckListModel.edmx.diagram">
-      <DependentUpon>CheckListModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\RutKiem\Views\web.config" />
     <Content Include="Areas\web.config" />
-    <Content Include="Areas\RutKiem\Views\RutKiem\Home.cshtml" />
     <Content Include="Areas\Shared\_AreaLayoutShare.cshtml" />
     <Content Include="Areas\BanDau\Views\web.config" />
     <Content Include="Areas\BanDau\Views\BanDau\BanDau.cshtml" />
@@ -860,10 +846,28 @@
     <Content Include="Content\Template\NiceAdmin\vendor\tinymce\composer.json" />
     <Content Include="Content\Template\NiceAdmin\vendor\tinymce\package.json" />
     <Content Include="Content\Template\NiceAdmin\vendor\tinymce\README.md" />
+    <Content Include="Areas\RutKiem\Views\RutKiem\WithDrawal_F17.cshtml" />
+    <EntityDeploy Include="Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
     <Content Include="Web References\SFCService\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

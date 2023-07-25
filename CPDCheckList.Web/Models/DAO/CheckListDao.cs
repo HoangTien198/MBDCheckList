@@ -127,10 +127,11 @@ namespace CPDCheckList.Web.Models.DAO
         /// <param name="checkList">CheckListAjax -> folder: Common</param>
         /// <param name="userLogin">Người đang đăng nhập</param>
         /// <returns>1: thành công | 0: thất bại</returns>
-        public int SaveCheckListFirst(CheckListAjax checkList, AccountLogin userLogin, string mode)
+        public CheckListFirst SaveCheckListFirst(CheckListAjax checkList, AccountLogin userLogin, string mode)
         {
             try
             {
+                CheckListFirst result = new CheckListFirst();
                 if (mode == "add")
                 {
                     //validate:
@@ -165,6 +166,8 @@ namespace CPDCheckList.Web.Models.DAO
 
                     //gán db:
                     db.CheckListFirsts.Add(newCheckList);
+
+                    result = newCheckList;
                     db.SaveChanges();
 
                     //gửi mail
@@ -217,6 +220,8 @@ namespace CPDCheckList.Web.Models.DAO
                     _checkList.UpdatedBy = userLogin.UserId;
                     db.SaveChanges();
 
+                    result = _checkList;
+
                     //gửi mail
                     var userDao = new UserDao();
                     var user = userDao.GetById((int)checkList.UpdatedBy);
@@ -236,11 +241,11 @@ namespace CPDCheckList.Web.Models.DAO
                 }
 
                 
-                return 1;//thành công, chờ chuyền trưởng và IPQC xác nhận
+                return result;//thành công, chờ chuyền trưởng và IPQC xác nhận
             }
             catch (Exception)
             {
-                return 0;// thất bại
+                return null;// thất bại
             }
 
         }

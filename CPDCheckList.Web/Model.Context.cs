@@ -27,6 +27,5 @@ namespace CPDCheckList.Web
     
         public virtual DbSet<Roles> Roles_ { get; set; }
         public virtual DbSet<Users> Users_ { get; set; }
-        public virtual DbSet<CheckListRutKiem> CheckListRutKiems { get; set; }
     }
 }
