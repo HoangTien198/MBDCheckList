@@ -4,15 +4,16 @@
     Layout = "~/Areas/Shared/_AreaLayoutShare.cshtml";
 }
 
-@{ 
+@{
     var user = (CPDCheckList.Web.Commons.AccountLogin)Session["USER_SESSION"];
 }
 
 @section styles{
-    <link href="~/files/Content/RutKiem.css" rel="stylesheet" />
+    <link href="~/files/RutKiem/Content/Custom/RutKiem.css" rel="stylesheet" />
 }
 
-<input type="hidden" value="@ViewBag.Location" id="thisLocation"/>
+<input type="hidden" value="@ViewBag.Location" id="thisLocation" />
+<input type="hidden" data-role="@user.RoleId" data-id="@user.UserId" id="thisUser" />
 
 <div class="page-wrapper">
     <div class="page-body">
@@ -34,22 +35,6 @@
                         </tr>
                     </thead>
                     <tbody id="tbody_WithDrawal">
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="action_col">
-                                <button class="btn btn-outline-info"><i class="bi bi-info"></i></button>
-                                <button class="btn btn-outline-warning"><i class="bi bi-pen"></i></button>
-                                <button class="btn btn-outline-danger"><i class="bi bi-x"></i></button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -62,11 +47,14 @@
 <div class="modal fade" id="WithDrawalModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
         <div class="modal-content">
-            <div class="modal-header" style="color: #0d6efd;">
+            <div class="modal-header">
                 <h3 class="modal-title" style="font-weight: bold;">THÊM MỚI BIỂU RÚT KIỂM</h3>
                 <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x" style="font-size: 20px"></i></button>
             </div>
             <div class="modal-body row" id="formData">
+                <input type="hidden" name="Id" autocomplete="off" />
+                <input type="hidden" name="Status" autocomplete="off" />
+                <input type="hidden" id="WdIndex" autocomplete="off" />
                 <div class="col-6">
                     <div class="row">
                         <div class="col-12">
@@ -75,27 +63,27 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label">Công lệnh</label>
-                            <input class="form-control" type="text" name="MO" autocomplete="off" maxlength="50" list="data_MO"/>
+                            <input class="form-control" type="text" name="MO" autocomplete="off" maxlength="50" list="data_MO" />
                             <datalist id="data_MO"></datalist>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Mã tem</label>
-                            <input class="form-control" type="text" name="StampCode" autocomplete="off" maxlength="50" list="data_StampCode"/>
+                            <input class="form-control" type="text" name="StampCode" autocomplete="off" maxlength="50" list="data_StampCode" />
                             <datalist id="data_StampCode"></datalist>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Model</label>
-                            <input class="form-control" type="text" name="Model" autocomplete="off" maxlength="50" list="data_Model"/>
+                            <input class="form-control" type="text" name="Model" autocomplete="off" maxlength="50" list="data_Model" />
                             <datalist id="data_Model"></datalist>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Mã liệu</label>
-                            <input class="form-control" type="text" name="MaterialCode" autocomplete="off" maxlength="50" list="data_MaterialCode"/>
+                            <input class="form-control" type="text" name="MaterialCode" autocomplete="off" maxlength="50" list="data_MaterialCode" />
                             <datalist id="data_MaterialCode"></datalist>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Checksum</label>
-                            <input class="form-control" type="text" name="CheckSum" autocomplete="off" maxlength="50" list="data_CheckSum"/>
+                            <input class="form-control" type="text" name="CheckSum" autocomplete="off" maxlength="50" list="data_CheckSum" />
                             <datalist id="data_CheckSum"></datalist>
                         </div>
                     </div>
@@ -104,23 +92,22 @@
                     <div class="row">
                         <div class="col-12">
                             <label class="form-label">Chấm màu</label>
-                            <input class="form-control" type="text" name="Color" autocomplete="off" maxlength="50" list="data_Color"/>
+                            <input class="form-control" type="text" name="Color" autocomplete="off" maxlength="50" list="data_Color" />
                             <datalist id="data_Color"></datalist>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Máy sao mã</label>
-                            <input class="form-control" type="text" name="MachineName" autocomplete="off" maxlength="50" list="data_MachineName"/>
+                            <input class="form-control" type="text" name="MachineName" autocomplete="off" maxlength="50" list="data_MachineName" />
                             <datalist id="data_MachineName"></datalist>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Tuyến trưởng xác nhận</label>
-                            <input class="form-control" type="text" name="LineLeaderId" autocomplete="off" list="data_LineLeaderId" placeholder="Mã thẻ"/>
+                            <input class="form-control" type="text" name="LineLeaderId" autocomplete="off" list="data_LineLeaderId" placeholder="Mã thẻ" />
                             <datalist id="data_LineLeaderId"></datalist>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Người rút kiểm</label>
-                            <input class="form-control" type="text" name="CreateUserId" autocomplete="off" list="data_CreateUserId" value="@user.Username" disabled/>
-                            <datalist id="data_CreateUserId"></datalist>
+                            <input class="form-control" type="text" name="CreatedUserId" autocomplete="off" list="data_CreatedUserId" value="@user.UserCode" data-id="@user.UserId" disabled />
                         </div>
                         <div class="col-12">
                             <label class="form-label">Ghi chú</label>
@@ -147,7 +134,7 @@
                             <input class="form-control" type="number" name="NumExternalErrors" autocomplete="off">
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
             <div class="modal-footer justify-content-end">
@@ -159,5 +146,9 @@
 
 
 @section render{
-    <script src="~/files/Content/RutKiem.js"></script>
+    <!-- Vendor -->
+    <script src="~/files/RutKiem/Content/vendor/MomentJs/moment.js"></script>
+
+    <!-- Custom -->
+    <script src="~/files/RutKiem/Content/Custom/RutKiem.js"></script>
 }

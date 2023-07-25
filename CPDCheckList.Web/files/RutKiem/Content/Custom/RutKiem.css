@@ -1,5 +1,5 @@
 ﻿.action_col{
-    text-align: center !important;
+    text-align: start !important;
     width: 160px;
     min-width: 160px;
 }
@@ -13,8 +13,13 @@
 }
 .modal-body .col-12{
     padding-top: 10px;
+
 }
 .required *:after {
     content: " *";
     color: red;
+}
+tbody > tr > td {
+    vertical-align: middle !important;
+    text-align: center;
 }

@@ -170,8 +170,32 @@
     <Compile Include="Areas\BanDau\Model\CheckListSaveAjax.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\RutKiem\CheckListRutKiem.cs">
+      <DependentUpon>WithDrawalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\RutKiem\Controllers\RutKiemController.cs" />
     <Compile Include="Areas\RutKiem\RutKiemAreaRegistration.cs" />
+    <Compile Include="Areas\RutKiem\WdUser.cs">
+      <DependentUpon>WithDrawalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\RutKiem\WithDrawalData.cs">
+      <DependentUpon>WithDrawalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\RutKiem\WithDrawalModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WithDrawalModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\RutKiem\WithDrawalModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WithDrawalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\RutKiem\WithDrawalModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WithDrawalModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Commons\AccountLogin.cs" />
     <Compile Include="Commons\CheckListAjax.cs" />
     <Compile Include="Commons\CheckListOnTimeAjaxIPQC.cs" />
@@ -233,8 +257,144 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="files\Content\RutKiem.css" />
-    <Content Include="files\Content\RutKiem.js" />
+    <Content Include="files\RutKiem\Content\Custom\RutKiem.css" />
+    <Content Include="files\RutKiem\Content\Custom\RutKiem.js" />
+    <Content Include="files\RutKiem\Content\Image\Double-Ring-loading.gif" />
+    <Content Include="files\RutKiem\Content\Image\favicon.ico" />
+    <Content Include="files\RutKiem\Content\Image\fii-logo.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\1.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\10.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\11.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\12.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\13.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\14.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\15.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\16.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\2.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\3.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\4.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\5.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\6.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\7.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\8.jpg" />
+    <Content Include="files\RutKiem\Content\Image\Login\Backgrounds\9.jpg" />
+    <Content Include="files\RutKiem\Content\template\NiceAdmin\css\style.css" />
+    <Content Include="files\RutKiem\Content\template\NiceAdmin\js\main.js" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\apexcharts.amd.js" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\apexcharts.amd.js.LICENSE.txt" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\apexcharts.common.js" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\apexcharts.css" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\apexcharts.esm.js" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\apexcharts.js" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\apexcharts.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap-icons\bootstrap-icons.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap-icons\index.html" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-grid.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-utilities.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-utilities.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap.rtl.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap.rtl.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\Site.css" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.esm.js" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.esm.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.js" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\confetti-button\script.js" />
+    <Content Include="files\RutKiem\Content\vendor\confetti-button\style.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap4.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap4.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap5.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap5.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bulma.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bulma.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.dataTables.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.dataTables.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.foundation.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.foundation.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.jqueryui.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.jqueryui.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.semanticui.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.semanticui.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\jquery.dataTables.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\css\jquery.dataTables.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\images\sort_asc.png" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\images\sort_asc_disabled.png" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\images\sort_both.png" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\images\sort_desc.png" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\images\sort_desc_disabled.png" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap4.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap4.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap5.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap5.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bulma.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bulma.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.dataTables.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.dataTables.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.foundation.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.foundation.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.jqueryui.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.jqueryui.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.semanticui.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.semanticui.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\jquery.dataTables.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\DataTables-1.13.4\js\jquery.dataTables.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\datatables.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\datatables.js" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\datatables.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\DataTables\datatables.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\css\all.css" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\stylesheet.css" />
+    <None Include="files\RutKiem\Content\vendor\Jquery\jquery-3.4.1.intellisense.js" />
+    <Content Include="files\RutKiem\Content\vendor\Jquery\jquery-3.4.1.js" />
+    <Content Include="files\RutKiem\Content\vendor\Jquery\jquery-3.4.1.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\Jquery\jquery-3.4.1.slim.js" />
+    <Content Include="files\RutKiem\Content\vendor\Jquery\jquery-3.4.1.slim.min.js" />
+    <None Include="files\RutKiem\Content\vendor\Jquery\jquery.validate-vsdoc.js" />
+    <Content Include="files\RutKiem\Content\vendor\Jquery\jquery.validate.js" />
+    <Content Include="files\RutKiem\Content\vendor\Jquery\jquery.validate.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\Jquery\jquery.validate.unobtrusive.js" />
+    <Content Include="files\RutKiem\Content\vendor\Jquery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\Modernizr\modernizr-2.8.3.js" />
+    <Content Include="files\RutKiem\Content\vendor\MomentJs\moment-with-locales.js" />
+    <Content Include="files\RutKiem\Content\vendor\MomentJs\moment.js" />
+    <Content Include="files\RutKiem\Content\vendor\Normalize\normalize.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\Particles\particles.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\Popper\popper.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\QRcode\html5-qrcode.js" />
+    <Content Include="files\RutKiem\Content\vendor\Stepper\bs-stepper.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\Stepper\bs-stepper.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\SweetAlert\swal.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\SweetAlert\swal.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\Viewer JS\viewer.min.css" />
+    <Content Include="files\RutKiem\Content\vendor\Viewer JS\viewer.min.js" />
+    <Content Include="files\RutKiem\Content\vendor\Wave\style.css" />
+    <Content Include="Areas\RutKiem\WithDrawalModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WithDrawalModel.edmx</DependentUpon>
+      <LastGenOutput>WithDrawalModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\RutKiem\WithDrawalModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WithDrawalModel.edmx</DependentUpon>
+      <LastGenOutput>WithDrawalModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Content\Image\Backgrounds\1.jpg" />
     <Content Include="Content\Image\Backgrounds\10.jpg" />
     <Content Include="Content\Image\Backgrounds\11.jpg" />
@@ -854,6 +1014,128 @@
     <Content Include="Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Areas\RutKiem\WithDrawalModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>WithDrawalModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\RutKiem\WithDrawalModel.edmx.diagram">
+      <DependentUpon>WithDrawalModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\ar.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\ca.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\cs.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\de.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\el.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\en.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\es.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\et.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\fa.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\fi.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\fr.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\he.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\hi.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\hr.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\hu.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\hy.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\id.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\it.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\ja.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\ka.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\ko.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\lt.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\lv.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\nb.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\nl.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\pl.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\pt-br.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\pt.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\rs.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\ru.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\se.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\sk.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\sl.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\sq.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\th.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\tr.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\ua.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\zh-cn.json" />
+    <Content Include="files\RutKiem\Content\vendor\ApexChart\locales\zh-tw.json" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap-icons\bootstrap-icons.json" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap-icons\fonts\bootstrap-icons.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap-icons\fonts\bootstrap-icons.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-utilities.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-utilities.min.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap.rtl.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\css\bootstrap.rtl.min.css.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.esm.js.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.esm.min.js.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.js.map" />
+    <Content Include="files\RutKiem\Content\vendor\Bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-brands-400.ttf" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-brands-400.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-duotone-900.ttf" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-duotone-900.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-light-300.ttf" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-light-300.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-regular-400.ttf" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-regular-400.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-light-300.ttf" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-light-300.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-regular-400.ttf" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-regular-400.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-solid-900.ttf" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-solid-900.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-solid-900.ttf" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-solid-900.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-thin-100.ttf" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-thin-100.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-v4compatibility.ttf" />
+    <Content Include="files\RutKiem\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-v4compatibility.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Black.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Black.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-BlackItalic.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-BlackItalic.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Bold.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Bold.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-BoldItalic.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-BoldItalic.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-ExtraBold.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-ExtraBold.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-ExtraBoldItalic.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-ExtraBoldItalic.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Italic.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Italic.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Light.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Light.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-LightItalic.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-LightItalic.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Medium.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Medium.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-MediumItalic.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-MediumItalic.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Regular.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-Regular.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-SemiBold.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-SemiBold.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-SemiBoldItalic.woff" />
+    <Content Include="files\RutKiem\Content\vendor\Font\Rubik\Rubik-SemiBoldItalic.woff2" />
+    <Content Include="files\RutKiem\Content\vendor\Jquery\jquery-3.4.1.min.map" />
+    <Content Include="files\RutKiem\Content\vendor\Jquery\jquery-3.4.1.slim.min.map" />
+    <Content Include="files\RutKiem\Content\vendor\Particles\particles.json" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
