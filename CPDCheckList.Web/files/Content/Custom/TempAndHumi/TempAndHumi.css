@@ -1,0 +1,8 @@
+﻿.wrapper {
+    width: 100%;
+    background: #3494E6;
+    background: -webkit-linear-gradient(90deg, #EC6EAD, #3494E6);
+    background: linear-gradient(90deg, #EC6EAD, #3494E6); 
+    animation: gradient 16s linear infinite;
+    animation-direction: alternate;
+}

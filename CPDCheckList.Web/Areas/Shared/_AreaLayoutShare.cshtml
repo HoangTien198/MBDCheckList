@@ -1,5 +1,5 @@
 ﻿@using CPDCheckList.Web.Commons;
-@{ 
+@{
     var user = (AccountLogin)Session["USER_SESSION"];
 
     var roleName = (user.RoleId == 3) ? "IPQC" : (user.RoleId == 2) ? "LineLeader" : "TE";
@@ -46,9 +46,9 @@
     @RenderSection("styles", required: false)
 
 </head>
-<body >
+<body>
     <!-- ======= Header ======= -->
-    <input type="hidden" value="@ViewBag.Location" id="location"/>
+    <input type="hidden" value="@ViewBag.Location" id="location" />
     <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="d-flex align-items-center justify-content-between">
             <a href="/Dashboard/Home/Home" class="logo d-flex align-items-center">
@@ -140,38 +140,39 @@
                 <ul id="BanDau-nav" class="nav-content @(controllerName.Contains("BanDau") ? "show" : "collapse")" data-bs-parent="#sidebar">
                     <li>
                         <a href="/BanDau/BanDau/F06" class="@((actionName =="F06" ) ? "active" : "")">
-                            <i class="bi bi-circle"></i><span>Bản đầu F06</span>
+                            <i class="bi bi-circle"></i><span>Bản đầu (F06)</span>
                         </a>
                     </li>
                     <li>
                         <a href="/BanDau/BanDau/F17" class="@((actionName == "F17") ? "active" : "")">
-                            <i class="bi bi-circle"></i><span>Bản đầu F17</span>
+                            <i class="bi bi-circle"></i><span>Bản đầu (F17)</span>
                         </a>
                     </li>
                 </ul>
             </li>
             @{
-                if (roleName != "IPQC")
-                {
-                    <li class="nav-item">
-                        <a class="nav-link @((controllerName.Contains("RutKiem")) ? "" : "collapsed")" data-bs-target="#RutKiem-nav" data-bs-toggle="collapse" href="#" aria-expanded="true" aria-controls="collapseTwo">
-                            <i class="bi bi-slack"></i><span>COPYIC F17</span><i class="bi bi-chevron-down ms-auto"></i>
-                        </a>
-                        <ul id="RutKiem-nav" class="nav-content @(controllerName.Contains("RutKiem") ? "show" : "collapse")" data-bs-parent="#sidebar">
+
+                <li class="nav-item">
+                    <a class="nav-link @((controllerName.Contains("RutKiem") || controllerName.Contains("TemperatureHumidity")) ? "" : "collapsed")" data-bs-target="#RutKiem-nav" data-bs-toggle="collapse" href="#" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="bi bi-slack"></i><span>COPYIC</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="RutKiem-nav" class="nav-content @((controllerName.Contains("RutKiem") || controllerName.Contains("TemperatureHumidity")) ? "show" : "collapse")" data-bs-parent="#sidebar">
+                        @if (roleName != "IPQC")
+                        {
                             <li>
                                 <a href="/RutKiem/RutKiem/WithDrawal_F17" class="@((actionName =="WithDrawal_F17" ) ? "active" : "")">
-                                    <i class="bi bi-circle"></i><span>Rút kiểm</span>
+                                    <i class="bi bi-circle"></i><span>Rút kiểm (F17)</span>
                                 </a>
                             </li>
+                        }
+                        <li>
+                            <a href="/TemperatureHumidity/TemperatureHumidity/TH_Monitoring_F17" class="@((actionName =="TH_Monitoring_F17" ) ? "active" : "")">
+                                <i class="bi bi-circle"></i><span>Nhiệt độ & Độ ẩm (F17)</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
-                            <li>
-                                <a href="#" class="@((actionName =="RenderEmployeesQrCode" ) ? "active" : "")">
-                                    <i class="bi bi-circle"></i><span>Biểu nhiệt</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                }
             }
 
 
@@ -215,6 +216,7 @@
     <script src="~/files/assets/js/common-pages.js"></script>
 
     @RenderSection("render", required: false)
+    @RenderSection("scripts", required: false)
 
 </body>
 

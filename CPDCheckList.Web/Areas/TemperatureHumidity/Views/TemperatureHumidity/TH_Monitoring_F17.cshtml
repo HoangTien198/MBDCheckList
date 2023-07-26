@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Nhiệt độ & độ ẩm F17";
+    Layout = "~/Areas/Shared/_AreaLayoutShare.cshtml";
+}
+
+@section styles{
+    <!-- Vendor -->
+    <link href="~/files/Content/vendor/ApexChart/apexcharts.css" rel="stylesheet" />
+    <!-- Custom -->
+    <link href="~/files/Content/Custom/TempAndHumi/TempAndHumi.css" rel="stylesheet" />
+}
+
+<div class="card wrapper mt-2">
+    <div class="card-body p-0 ">
+        <div id="TemperatureHumidityChart"></div>
+    </div>
+</div>
+
+
+@section scripts{
+    <!-- Vendor -->
+    <script src="~/files/Content/vendor/ApexChart/apexcharts.min.js"></script>
+    <!-- Custom -->
+    <script src="~/files/Content/Custom/TempAndHumi/TempAndHumi.js"></script>
+}
