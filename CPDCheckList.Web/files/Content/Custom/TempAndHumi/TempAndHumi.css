@@ -6,3 +6,6 @@
     animation: gradient 16s linear infinite;
     animation-direction: alternate;
 }
+.card{
+    border-radius: 5px;
+}

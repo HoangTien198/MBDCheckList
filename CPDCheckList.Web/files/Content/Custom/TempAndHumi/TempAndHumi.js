@@ -1,26 +1,38 @@
-﻿$(document).ready(function () {
-    $('#page_name').text('Nhiệt độ & Độ ẩm (F17)')
+﻿var chart;
+
+$(document).ready(function () {
+    $('#page_name').text('Nhiệt độ & Độ ẩm tủ khô (F17)')
+
+    
+    CreateChart();  
+    CreateTable();
+});
+
+
+function CreateChart(series) {
+    let height = (window.innerHeight * 0.4).toFixed(0);
+
 
     var options = {
         series: [
             {
                 name: "Temperature",
-                data: [22, 23, 24, 22, 25, 26, 23]
+                data: [22, 23, 24, 29, 25, 26, 23]
             },
             {
                 name: "Humidity",
                 data: [3.5, 4.1, 4.5, 3.5, 3.8, 4, 5]
             }
-        ],              
+        ],
         chart: {
-            height: 350,
+            height: height,
             type: "line",
             dropShadow: {
                 enabled: true,
                 color: "#000",
-                top: 18,
+                top: 5,
                 left: 0,
-                blur: 5,
+                blur: 10,
                 opacity: 0.5
             },
             toolbar: {
@@ -33,10 +45,10 @@
         colors: ["#FF0000", "#0073FF"],
         dataLabels: {
             enabled: false,
-        },       
+        },
         stroke: {
             curve: "smooth"
-        },      
+        },
         grid: {
             borderColor: "#e7e7e7",
             row: {
@@ -49,7 +61,7 @@
             align: "center",
             style: {
                 fontSize: '25px',
-                color: '#fff',               
+                color: '#fff',
             },
         },
         xaxis: {
@@ -75,9 +87,9 @@
                     },
                 },
                 opposite: false,
-                tickAmount: 4,
+                tickAmount: 6,
                 max: 28,
-                min: 15,
+                min: 18,
                 labels: {
                     formatter: function (value) {
                         return value.toFixed(1) + ' °C';
@@ -98,7 +110,7 @@
                     },
                 },
                 opposite: true,
-                tickAmount: 2,
+                tickAmount: 4,
                 min: 0,
                 max: 10,
                 labels: {
@@ -125,5 +137,22 @@
         },
     };
 
-    var chart = new ApexCharts(document.querySelector("#TemperatureHumidityChart"), options).render();
-});
+    chart = new ApexCharts(document.querySelector("#TemperatureHumidityChart"), options).render();
+}
+
+var dataTable;
+function CreateTable() {
+    var scrollHeight = (window.innerHeight * 0.3).toFixed(0) + 'px';
+    var myTable = document.querySelector('#this_table');
+    dataTable = new simpleDatatables.DataTable(myTable, {
+        scrollY: scrollHeight,
+        scrollX: true,
+        scrollCollapse: true,
+        paging: false,
+        sortable: false,
+        fixedColumns: false,
+    });
+
+    $('.dataTable-top').remove();
+    $('.dataTable-bottom').remove();
+}

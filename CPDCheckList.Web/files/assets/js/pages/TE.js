@@ -13,6 +13,8 @@ var isLoadingData = false;
 $(document).ready(function () {
     $('#page_name').text(`Check List - ${$('#location').val()}`);
     loadDataCheckList();
+
+    
 })
 
 //load data
@@ -126,7 +128,9 @@ $(document).on('click', '#btn_AddNew', function () {
 
             //binding thời gian + ca làm việc
             var dateTimeInput = $('#modalCheckList').find('[data-fieldname="DateTECreated"]');
-            $(dateTimeInput).val(new Date().toISOString().slice(0, 16));
+            var now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            $(dateTimeInput).val(now.toISOString().slice(0, 16));
 
             var shiftInput = $('#modalCheckList').find('[data-fieldname="ShiftWork"]');
             if (compareTime(`${new Date().toLocaleTimeString().split(' ')[0]}`, '19:30:00')) {
@@ -277,8 +281,8 @@ function DetailsCheckList(elm, e) {
                     //xóa hết các nút bấm:
                     $('#modalCheckList .modal-footer').children().remove();
                     //xóa hết các nút bấm:
-                    $('#modalCheckList .modal-footer').append(`<button title="Xác nhận" data-id=${checkListId} class="btn btn-success" onclick="ConfirmCheckList(this, event, ${index})">Xác nhận</button>`);
-                    $('#modalCheckList .modal-footer').append(`<button title="Không xác nhận" data-id=${checkListId} class="btn btn-danger"  onclick="RejectCheckList(this, event, ${index})">Không xác nhận</button>`);
+                    //$('#modalCheckList .modal-footer').append(`<button title="Xác nhận" data-id=${checkListId} class="btn btn-success" onclick="ConfirmCheckList(this, event, ${index})">Xác nhận</button>`);
+                    //$('#modalCheckList .modal-footer').append(`<button title="Không xác nhận" data-id=${checkListId} class="btn btn-danger"  onclick="RejectCheckList(this, event, ${index})">Không xác nhận</button>`);
                     $('#modalCheckList .modal-footer').append(`<button title = "Đóng" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`);
 
                     //show modal:

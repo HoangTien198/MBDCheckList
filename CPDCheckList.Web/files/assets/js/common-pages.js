@@ -8,6 +8,7 @@ function endload() {
 }
 
 function login() {
+    $('#loader-page').removeClass('d-none');
     var username = $('#username').val();
     var password = $('#password').val();
     if (username.trim()) {
@@ -27,18 +28,22 @@ function login() {
                 dataType: "script",//Kieu du lieu tra ve
                 contentType: "application/json",
                 success: function (response) {
-
+                    console.log(response);
+                    $('#loader-page').addClass('d-none');
                 },
                 error: function (res) {
+                    $('#loader-page').addClass('d-none');
                     alert('fail');
                 }
             });
         }
         else {
+            $('#loader-page').addClass('d-none');
             Swal.fire("Mật khẩu không được trống!", "Bạn hãy nhập mật khẩu!", "warning");
         }
     }
     else {
+        $('#loader-page').addClass('d-none');
         Swal.fire("Tên đăng nhập không đươc trống!", "Bạn hãy nhập tên đăng nhập!", "warning");
     }
 }

@@ -18,6 +18,73 @@
 </div>
 
 
+<div class="row">
+    <div class="col-8">
+        <div class="card mt-2">
+            <div class="card-header text-center fw-bold">
+                <label>Biểu Kiểm tra nhiệt độ & độ ẩm tủ khô</label>
+                <button type="button" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button>
+            </div>
+
+            <div class="card-body p-0">
+                <table class="m-0 table table-bordered" id="this_table">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Ngày</th>
+                            <th>Nhiệt độ</th>
+                            <th>Độ ẩm</th>
+                            <th>Người ghi chép</th>
+                            <th>IPQC</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr>
+                            <td></td>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card mt-2">
+            <div class="card-header">
+                <label>Ghi chép</label>
+            </div>
+            <div class="card-body py-3">
+                <div class="input-group mb-3 row">
+                    <span class="input-group-text col-5">Ngày</span>
+                    <input type="datetime-local" class="form-control col-7" name="date">
+                </div>
+                <div class="input-group mb-3 row">
+                    <span class="input-group-text  col-5">Nhiệt độ</span>
+                    <input type="datetime-local" class="form-control col-7" name="date">
+                </div>
+                <div class="input-group mb-3 row">
+                    <span class="input-group-text col-5">Độ ẩm</span>
+                    <input type="datetime-local" class="form-control col-7" name="date">
+                </div>
+                <div class="input-group mb-3 row">
+                    <span class="input-group-text col-5">Người ghi chép</span>
+                    <input type="datetime-local" class="form-control col-7" name="date">
+                </div>
+                <div class="input-group mb-3 row">
+                    <span class="input-group-text col-5">IPQC</span>
+                    <input type="datetime-local" class="form-control col-7" name="date">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section scripts{
     <!-- Vendor -->
     <script src="~/files/Content/vendor/ApexChart/apexcharts.min.js"></script>

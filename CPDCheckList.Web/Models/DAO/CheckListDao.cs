@@ -34,7 +34,13 @@ namespace CPDCheckList.Web.Models.DAO
             {
                 startDate = new DateTime(year, month, 1);
             }
+            DateTime endDateTemp = new DateTime(year, month, DateTime.DaysInMonth(year, month));
             DateTime endDate = new DateTime(year, month, DateTime.DaysInMonth(year, month));
+
+            if (day == endDate.Day)
+            {
+                endDate = endDateTemp.AddMonths(1);
+            }
 
             var result = db.CheckListFirsts.Where(c=>c.Location == location && (c.CreatedDate >= startDate && c.CreatedDate <= endDate)).Select(c => new VM_CheckListFirst
             {

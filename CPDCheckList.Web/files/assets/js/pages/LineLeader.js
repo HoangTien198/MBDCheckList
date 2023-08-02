@@ -603,7 +603,7 @@ async function ConfirmCheckListOnTime(elm, e) {
             data.FailQuantity = parseInt($(item).val());
         }
         if ($(item).data('fieldname') == "ReasonAndSolution") {
-            data.ReasonAndSolution = parseInt($(item).val());
+            data.ReasonAndSolution = $(item).val();
         }
         if ($(item).data('fieldname') == "LineLeaderTestQuantity") {
             data.LineLeaderTestQuantity = $(item).val();
