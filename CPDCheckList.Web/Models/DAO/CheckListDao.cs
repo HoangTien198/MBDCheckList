@@ -267,9 +267,9 @@ namespace CPDCheckList.Web.Models.DAO
             {
                 var _checkList = db.CheckListFirsts.FirstOrDefault(cl => cl.CheckListFirstId == checkListId);
                 var listOntime = db.CheckListOnTimes.Where(clo => clo.CheckListFirstId == checkListId);
-                db.CheckListOnTimes.RemoveRange(listOntime);
-                db.CheckListFirsts.Remove(_checkList);
-                db.SaveChanges();
+                //db.CheckListOnTimes.RemoveRange(listOntime);
+                //db.CheckListFirsts.Remove(_checkList);
+                //db.SaveChanges();
                 return 1;
             }
             catch (Exception)

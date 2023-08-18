@@ -109,7 +109,6 @@ function DynamicLoadCheckList() {
 //DetailChecklist
 function DetailsCheckList(elm, e) {
     e.preventDefault();
-    $('#formCheckListOnTime').html('');
 
     var checkListId = $(elm).data('id');
     var index = $(elm).closest('tr').index();

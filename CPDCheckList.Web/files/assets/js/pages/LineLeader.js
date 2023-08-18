@@ -107,8 +107,6 @@ function DynamicLoadCheckList() {
 function DetailsCheckList(elm, e) {
     e.preventDefault();
 
-    $('#formCheckListOnTime').html();
-
     var checkListId = $(elm).data('id');
     var index = $(elm).closest('tr').index();
     //gọi ajax binding form data
@@ -211,7 +209,7 @@ function DetailsCheckList(elm, e) {
                 //binding nút bấm
                 if (statusCheckList == 0) {
                     //xóa form thời gian rút kiểm:
-                    $("#modalCheckList .modal-body #formCheckListOnTime").remove();
+                    $("#modalCheckList .modal-body #formCheckListOnTime").html('');
                     //xóa hết các nút bấm:
                     $('#modalCheckList .modal-footer').children().remove();
                     //xóa hết các nút bấm:
@@ -432,7 +430,7 @@ function DetailsCheckList(elm, e) {
                     }
                 else {
                         //xóa form thời gian rút kiểm:
-                        $("#modalCheckList .modal-body #formCheckListOnTime").remove();
+                        $("#modalCheckList .modal-body #formCheckListOnTime").html('');
                         //xóa hết các nút bấm:
                         $('#modalCheckList .modal-footer').children().remove();
                         $('#modalCheckList .modal-footer').append(`<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`);
@@ -735,4 +733,43 @@ async function ConfirmCheckListOnTime(elm, e) {
             }
         }
     }
+}
+
+// Delete
+function DeleteCheckList(elm, e) {
+    var checkListId = parseInt($(elm).data('id'));
+    var rowIndex = $(elm).closest('tr').index();
+
+    Swal.fire({
+        title: "Success",
+        text: "Bạn có chắc chắn muốn xóa?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Xóa!",
+        cancelButtonText: "Hủy bỏ!",
+        reverseButtons: true
+    }).then(function (result) {
+        if (result.value) {
+            //Xác nhận xóa:
+            $.ajax({
+                type: "POST",
+                url: "/BanDau/BanDau/DeleteCheckList",
+                data: { checkListId: checkListId },
+                success: function (response) {
+                    if (response == 1) {
+                        Swal.fire("Xóa thành công", "Đã xóa!", "success");
+                        GetDatatable().rows().remove(rowIndex);
+                    }
+                    else {
+                        Swal.fire("Có lỗi xảy ra!", "Liên hệ bộ phận CPD-AIOT để được hỗ trợ! SDT: 31746", "error");
+                    }
+                },
+                error: function (res) {
+                    Swal.fire("Server Error!", "Có lỗi xảy ra. Hãy thử bấm 'Ctrl + F5' để tải lại trang hoặc liên hệ bộ phận CPD-AIOT để được hỗ trợ! SDT: 31746", "error");
+                }
+            });
+        } else if (result.dismiss === "cancel") {
+            //ko làm gì
+        }
+    });
 }

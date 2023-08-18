@@ -160,13 +160,13 @@ function DrawTableRowsLead(item, isAddInDatatable = false) {
     var col_2 = `<td class=""><label>${item.MachineCode}</label></td>`;
     row.push(col_2) // col 2
 
-    var col_3 = `<td class=""><label>${item.TeCreatedByName}</label></td>`;
+    var col_3 = `<td class="" style="width: 200px;"><label>${item.TeCreatedByName}</label></td>`;
     row.push(col_3) // col 3
 
     var col_4 = `<td class="text-center"><label>${(item.ShiftWork == 1) ? "Ngày" : "Đêm"}</label></td>`;
     row.push(col_4) // col 4
 
-    var col_5 = `<td class="text-center"><label>${formatDateyyyyMMdd(item.ChecklistCreateDate)}</label></td>`;
+    var col_5 = `<td class="text-center" style="width: 120px;"><label>${formatDateyyyyMMdd(item.ChecklistCreateDate)}</label></td>`;
     row.push(col_5); //col 5
 
 
@@ -214,10 +214,12 @@ function DrawTableRowsLead(item, isAddInDatatable = false) {
                  </td>`;
         }
         else {
-            cButton =
-                `<td class="col_7">
-                    <button title="Chi tiết"       data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>
-                 </td>`;
+            cButton = `<td class="col_7">`;
+            cButton += ` <button title="Chi tiết"       data-id=${item.CheckListFirstId} class="btn btn-info"    onclick="DetailsCheckList(this, event)"><i class="bi bi-info-lg"></i></button>`;
+            if (item.StatusConfirm == 4 || item.StatusConfirm == 3) {
+                cButton += `<button title="Xóa"            data-id=${item.CheckListFirstId} class="btn btn-danger"  onclick="DeleteCheckList(this, event)"><i class="bi bi-trash-fill"></i></button>`;
+            }
+            cButton += `</td>`;
         }
         row.push(cButton);
     } // col 7

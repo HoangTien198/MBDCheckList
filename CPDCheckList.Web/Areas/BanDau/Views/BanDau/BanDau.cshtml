@@ -10,22 +10,24 @@
     var userSession = (AccountLogin)Session["USER_SESSION"];
 }
 
+<input type="hidden" value="@userSession.UserId" id="UserId" />
+
 <div class="page-wrapper">
     <div class="page-body">
         <div class="card">
             <div class="card-header mb-0 pb-0">
-                <h3 class="text-center" data-typeRole="@userSession.RoleId" data-location="@ViewBag.Location"></h3>              
+                <h3 class="text-center" data-typeRole="@userSession.RoleId" data-location="@ViewBag.Location"></h3>
             </div>
             <div class="card-block">
                 <div class="dt-responsive table-responsive">
-                    <table id="table_Checklist" class="table table-striped table-bordered nowrap">
+                    <table id="table_Checklist" class="table table-striped table-bordered table-hover nowrap">
                         <thead class="text-center">
                             <tr>
                                 <th class="text-center">MO</th>
                                 <th class="text-center">機種 Tên hàng</th>
                                 <th class="text-center">機台編號 Số máy</th>
                                 <th class="text-center">烧码員簽名 Người thực hiện</th>
-                                <th class="text-center">班別 Ca làm việc</th>
+                                <th class="text-center">班別 Ca</th>
                                 <th class="text-center">日期 Thời gian</th>
                                 <th class="text-center">地位 Trạng thái</th>
                                 <th class="text-center">行动 Action</th>
@@ -49,7 +51,7 @@
                     <h3 class="text-center">燒碼首件檢查表&时段抽检表</br>Bảng kiểm tra đầu tiên sao chép & Thời gian rút kiểm</h3>
                     <h4 class="f-w-700 text-center">Copy IC First Article Inspection List & Period of time check list</h4>
                 </div>
-                <img src="~/Content/Image/fii-logo.jpg" class="modal-fii-logo"/>
+                <img src="~/Content/Image/fii-logo.jpg" class="modal-fii-logo" />
             </div>
             <div class="modal-body">
                 <form action="" id="formAddCheckList">
@@ -247,9 +249,9 @@
                                                 <td scope="row"></td>
                                                 <td class="tabledit-view-mode">
                                                     @*<select data-fieldName="TestQuantityFirst" class="form-control">
-                                                <option value="1">OK</option>
-                                                <option value="2">NG</option>
-                                            </select>*@
+                                                            <option value="1">OK</option>
+                                                            <option value="2">NG</option>
+                                                        </select>*@
                                                 </td>
                                                 <!-- end Số lượng bản đầu (5 pcs trở lên) -->
                                                 <!-- Chuyền trưởng kiểm tra -->
@@ -945,18 +947,19 @@
 @section render
 {
     <!-- Page Common -->
+    <script src="~/files/assets/js/common-pages.js"></script>
     @{
         if (userSession.RoleId == 3)
         {
-            <script src="~/files/assets/js/pages/IPQC.js"></script>
+            <script src="~/files/assets/js/pages/IPQC.js?v=@Guid.NewGuid()"></script>
         }
         if (userSession.RoleId == 2)
         {
-            <script src="~/files/assets/js/pages/LineLeader.js"></script>
+            <script src="~/files/assets/js/pages/LineLeader.js?v=@Guid.NewGuid()"></script>
         }
         if (userSession.RoleId == 1)
         {
-            <script src="~/files/assets/js/pages/TE.js"></script>
+            <script src="~/files/assets/js/pages/TE.js?v=@Guid.NewGuid()"></script>
         }
     }
 

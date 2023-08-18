@@ -1,21 +1,25 @@
 ﻿@using CPDCheckList.Web.Commons;
 @{
-    var user = (AccountLogin)Session["USER_SESSION"];
-
-    var roleName = (user.RoleId == 3) ? "IPQC" : (user.RoleId == 2) ? "LineLeader" : "TE";
-
 
     var areaName = "";
     var controllerName = "";
     var actionName = "";
+
+    var user = new AccountLogin();
+    var roleName = "";
     try
     {
         areaName = ViewContext.RouteData.DataTokens["area"].ToString();
         controllerName = ViewContext.RouteData.Values["controller"].ToString();
         actionName = ViewContext.RouteData.Values["action"].ToString();
+
+        user = (AccountLogin)Session["USER_SESSION"];
+
+        roleName = (user.RoleId == 3) ? "IPQC" : (user.RoleId == 2) ? "LineLeader" : "TE";
     }
     catch
     {
+
     }
 }
 
@@ -64,30 +68,31 @@
             <ul class="d-flex align-items-center">
                 <li class="nav-item dropdown pe-3">
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        @{
-                            if (user.RoleId == 3)
-                            {
-                                <span class="badge bg-danger">
-                                    <i class="bi bi-check-circle me-1"></i>
-                                    <label>IPQC</label>
-                                </span>
-                            }
-                            if (user.RoleId == 2)
-                            {
-                                <span class="badge bg-warning">
-                                    <i class="bi bi-check-circle me-1"></i>
-                                    <label>Leader</label>
-                                </span>
-                            }
-                            if (user.RoleId == 1)
-                            {
-                                <span class="badge bg-success">
-                                    <i class="bi bi-check-circle me-1"></i>
-                                    <label>Employee</label>
-                                </span>
-                            }
-                        }
-                        <span class="d-none d-md-block dropdown-toggle ps-2" data-typeRole="@user.RoleId">@user.Username</span>
+                        @*@{
+            if (user.RoleId == 3)
+            {
+                <span class="badge bg-danger">
+                    <i class="bi bi-check-circle me-1"></i>
+                    <label>IPQC</label>
+                </span>
+            }
+            if (user.RoleId == 2)
+            {
+                <span class="badge bg-warning">
+                    <i class="bi bi-check-circle me-1"></i>
+                    <label>Leader</label>
+                </span>
+            }
+            if (user.RoleId == 1)
+            {
+                <span class="badge bg-success">
+                    <i class="bi bi-check-circle me-1"></i>
+                    <label>Employee</label>
+                </span>
+            }
+        }
+        <span class="d-none d-md-block dropdown-toggle ps-2" data-typeRole="@user.RoleId">@user.Username</span>*@
+                        <span class="d-none d-md-block dropdown-toggle ps-2" data-typeRole="1">test</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -150,31 +155,40 @@
                     </li>
                 </ul>
             </li>
-            @{
 
-                <li class="nav-item">
-                    <a class="nav-link @((controllerName.Contains("RutKiem") || controllerName.Contains("TemperatureHumidity")) ? "" : "collapsed")" data-bs-target="#RutKiem-nav" data-bs-toggle="collapse" href="#" aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="bi bi-slack"></i><span>COPYIC</span><i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="RutKiem-nav" class="nav-content @((controllerName.Contains("RutKiem") || controllerName.Contains("TemperatureHumidity")) ? "show" : "collapse")" data-bs-parent="#sidebar">
-                        @if (roleName != "IPQC")
-                        {
-                            <li>
-                                <a href="/RutKiem/RutKiem/WithDrawal_F17" class="@((actionName =="WithDrawal_F17" ) ? "active" : "")">
-                                    <i class="bi bi-circle"></i><span>Rút kiểm (F17)</span>
-                                </a>
-                            </li>
-                        }
+            <li class="nav-item">
+                <a class="nav-link @((controllerName.Contains("RutKiem") || controllerName.Contains("TemperatureHumidity")) ? "" : "collapsed")" data-bs-target="#RutKiem-nav" data-bs-toggle="collapse" href="#" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="bi bi-slack"></i><span>COPYIC</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="RutKiem-nav" class="nav-content @((controllerName.Contains("RutKiem") || controllerName.Contains("TemperatureHumidity")) ? "show" : "collapse")" data-bs-parent="#sidebar">
+                    @if (roleName != "IPQC")
+                    {
                         <li>
-                            <a href="/TemperatureHumidity/TemperatureHumidity/TH_Monitoring_F17" class="@((actionName =="TH_Monitoring_F17" ) ? "active" : "")">
-                                <i class="bi bi-circle"></i><span>Nhiệt độ & Độ ẩm (F17)</span>
+                            <a href="/RutKiem/RutKiem/WithDrawal_F17" class="@((actionName =="WithDrawal_F17" ) ? "active" : "")">
+                                <i class="bi bi-circle"></i><span>Rút kiểm (F17)</span>
                             </a>
                         </li>
-                    </ul>
-                </li>
+                    }
+                    <li>
+                        <a href="/TemperatureHumidity/TemperatureHumidity/TH_Monitoring_F17" class="@((actionName =="TH_Monitoring_F17" ) ? "active" : "")">
+                            <i class="bi bi-circle"></i><span>Nhiệt độ & Độ ẩm (F17)</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-            }
-
+            <li class="nav-item">
+                <a class="nav-link @((controllerName.Contains("DataFlow")) ? "" : "collapsed")" data-bs-target="#Lable-nav" data-bs-toggle="collapse" href="#" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="bi bi-slack"></i><span>LABLE</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="Lable-nav" class="nav-content @((controllerName.Contains("DataFlow")) ? "show" : "collapse")" data-bs-parent="#sidebar">
+                    <li>
+                        <a href="/Lable/DataFlow/Index" class="@((actionName =="Index" ) ? "active" : "")">
+                            <i class="bi bi-circle"></i><span>Lưu trình dữ liệu</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
 
             <li class="nav-heading">Pages</li>
@@ -213,7 +227,7 @@
     <script src="~/Content/Template/NiceAdmin/vendor/simple-datatables/simple-datatables.js"></script>
     <!-- Template Main JS File -->
     <script src="~/Content/Template/NiceAdmin/js/main.js"></script>
-    <script src="~/files/assets/js/common-pages.js"></script>
+
 
     @RenderSection("render", required: false)
     @RenderSection("scripts", required: false)

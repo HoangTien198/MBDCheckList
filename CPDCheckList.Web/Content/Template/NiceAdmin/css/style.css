@@ -1307,3 +1307,12 @@ td span button.btn {
     top: 0;
     height: 140px;
 }
+
+.table-hover > tbody > tr:hover > * {
+    --bs-table-accent-bg: rgb(188 215 249);
+    color: var(--bs-table-hover-color);
+}
+
+.dataTable-table > tbody > tr > td {
+    vertical-align: middle;
+}

@@ -159,33 +159,23 @@ namespace CPDCheckList.Web.Areas.RutKiem.Controllers
                         return "Không tìm thấy dữ liệu của tuyến trưởng. Vui lòng liên hệ bộ phận A-IOT để thêm dữ liệu về tuyến trưởng này.";
                     }
 
-                    if (!db.WithDrawalDatas.Any(d => d.Name == data.MO && d.Type == "MO"))
+                    var propertiesToCheck = new List<(string Name, string Type)>
                     {
-                        db.WithDrawalDatas.Add(new WithDrawalData { Name = data.MO, Type = "MO" });
-                    }
-                    if (!db.WithDrawalDatas.Any(d => d.Name == data.StampCode && d.Type == "StampCode"))
+                        (data.MO, "MO"),
+                        (data.StampCode, "StampCode"),
+                        (data.Model, "Model"),
+                        (data.MaterialCode, "MaterialCode"),
+                        (data.CheckSum, "CheckSum"),
+                        (data.Color, "Color"),
+                        (data.MachineName, "MachineName")
+                    };
+
+                    foreach (var property in propertiesToCheck)
                     {
-                        db.WithDrawalDatas.Add(new WithDrawalData { Name = data.StampCode, Type = "StampCode" });
-                    }
-                    if (!db.WithDrawalDatas.Any(d => d.Name == data.Model && d.Type == "Model"))
-                    {
-                        db.WithDrawalDatas.Add(new WithDrawalData { Name = data.Model, Type = "Model" });
-                    }
-                    if (!db.WithDrawalDatas.Any(d => d.Name == data.MaterialCode && d.Type == "MaterialCode"))
-                    {
-                        db.WithDrawalDatas.Add(new WithDrawalData { Name = data.MaterialCode, Type = "MaterialCode" });
-                    }
-                    if (!db.WithDrawalDatas.Any(d => d.Name == data.CheckSum && d.Type == "CheckSum"))
-                    {
-                        db.WithDrawalDatas.Add(new WithDrawalData { Name = data.CheckSum, Type = "CheckSum" });
-                    }
-                    if (!db.WithDrawalDatas.Any(d => d.Name == data.Color && d.Type == "Color"))
-                    {
-                        db.WithDrawalDatas.Add(new WithDrawalData { Name = data.Color, Type = "Color" });
-                    }
-                    if (!db.WithDrawalDatas.Any(d => d.Name == data.MachineName && d.Type == "MachineName"))
-                    {
-                        db.WithDrawalDatas.Add(new WithDrawalData { Name = data.MachineName, Type = "MachineName" });
+                        if (!db.WithDrawalDatas.Any(d => d.Name == property.Name && d.Type == property.Type))
+                        {
+                            db.WithDrawalDatas.Add(new WithDrawalData { Name = property.Name, Type = property.Type });
+                        }
                     }
 
                     db.SaveChanges();

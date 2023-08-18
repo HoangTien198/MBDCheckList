@@ -217,27 +217,20 @@ function UpdateDataList() {
                     $('#data_LineLeaderId').append($(`<option value="${item.UserCode}" data-id="${item.UserId}">${item.UserFullName}</option>`));
                 });
 
+                const typeToIdMap = {
+                    "MO": "#data_MO",
+                    "StampCode": "#data_StampCode",
+                    "Model": "#data_Model",
+                    "MaterialCode": "#data_MaterialCode",
+                    "CheckSum": "#data_CheckSum",
+                    "Color": "#data_Color",
+                    "MachineName": "#data_MachineName"
+                };
+
                 response.listData.forEach(function (item) {
-                    if (item.Type == "MO") {
-                        $('#data_MO').append($(`<option value="${item.Name}">${item.Name}</option>`));
-                    }
-                    else if (item.Type == "StampCode") {
-                        $('#data_StampCode').append($(`<option value="${item.Name}">${item.Name}</option>`));
-                    }
-                    else if (item.Type == "Model") {
-                        $('#data_Model').append($(`<option value="${item.Name}">${item.Name}</option>`));
-                    }
-                    else if (item.Type == "MaterialCode") {
-                        $('#data_MaterialCode').append($(`<option value="${item.Name}">${item.Name}</option>`));
-                    }
-                    else if (item.Type == "CheckSum") {
-                        $('#data_CheckSum').append($(`<option value="${item.Name}">${item.Name}</option>`));
-                    }
-                    else if (item.Type == "Color") {
-                        $('#data_Color').append($(`<option value="${item.Name}">${item.Name}</option>`));
-                    }
-                    else if (item.Type == "MachineName") {
-                        $('#data_MachineName').append($(`<option value="${item.Name}">${item.Name}</option>`));
+                    const id = typeToIdMap[item.Type];
+                    if (id) {
+                        $(id).append($(`<option value="${item.Name}">${item.Name}</option>`));
                     }
                 });
             }

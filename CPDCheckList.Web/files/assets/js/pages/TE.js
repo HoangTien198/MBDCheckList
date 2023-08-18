@@ -110,9 +110,9 @@ function DynamicLoadCheckList() {
 
 // Show modal add new check list
 $(document).on('click', '#btn_AddNew', function () {
-    $("#formCheckListOnTime").remove();
-    $("#formAddCheckList .badge").remove();
-    $("#formAddCheckList span").remove();
+    $("#formCheckListOnTime").html('');
+    $("#formAddCheckList .badge").html('');
+    $("#formAddCheckList span").html('');
 
     //reset form:
     $("#formAddCheckList").trigger('reset');
@@ -169,7 +169,6 @@ $(document).on('click', '#btn_SendFormClose', function () {
 //DetailChecklist
 function DetailsCheckList(elm, e) {
     e.preventDefault();
-    $('#formCheckListOnTime').html('');
 
     var checkListId = $(elm).data('id');
     var index = $(elm).closest('tr').index();
@@ -621,8 +620,8 @@ function EditCheckList(elm, e) {
     $('#btn_SendFormCreate').data('index', rowIndex);
    
     //Delete formCheckListOnTime
-    $("#formCheckListOnTime").remove();
-    $("#formAddCheckList span").remove();
+    $("#formCheckListOnTime").html('');
+    $("#formAddCheckList span").html('');
 
     //Remve and append button
     $('#modalCheckList .modal-footer').children().remove();

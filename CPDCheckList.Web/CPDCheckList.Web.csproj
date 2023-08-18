@@ -170,6 +170,35 @@
     <Compile Include="Areas\BanDau\Model\CheckListSaveAjax.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Lable\Controllers\DataFlowController.cs" />
+    <Compile Include="Areas\Lable\Data\LableDataFlow.cs">
+      <DependentUpon>ModelLableDataFlow.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Lable\Data\LableDataFlow_Data.cs">
+      <DependentUpon>ModelLableDataFlow.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Lable\Data\LableDataFlow_Status.cs">
+      <DependentUpon>ModelLableDataFlow.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Lable\Data\ModelLableDataFlow.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelLableDataFlow.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Lable\Data\ModelLableDataFlow.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelLableDataFlow.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Lable\Data\ModelLableDataFlow.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelLableDataFlow.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Lable\Data\User_Lb.cs">
+      <DependentUpon>ModelLableDataFlow.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Lable\LableAreaRegistration.cs" />
     <Compile Include="Areas\RutKiem\CheckListRutKiem.cs">
       <DependentUpon>WithDrawalModel.tt</DependentUpon>
     </Compile>
@@ -259,6 +288,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Lable\Data\ModelLableDataFlow.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelLableDataFlow.edmx</DependentUpon>
+      <LastGenOutput>ModelLableDataFlow.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\Lable\Data\ModelLableDataFlow.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelLableDataFlow.edmx</DependentUpon>
+      <LastGenOutput>ModelLableDataFlow.cs</LastGenOutput>
+    </Content>
+    <Content Include="files\Content\Custom\DataFlow\DataFlow.css" />
+    <Content Include="files\Content\Custom\DataFlow\DataFlow.js" />
     <Content Include="files\Content\Custom\RutKiem\RutKiem.css" />
     <Content Include="files\Content\Custom\RutKiem\RutKiem.js" />
     <Content Include="files\Content\Custom\TempAndHumi\TempAndHumi.css" />
@@ -367,6 +408,15 @@
     <Content Include="files\Content\vendor\Font\Rubik\stylesheet.css" />
     <Content Include="Areas\TemperatureHumidity\Views\web.config" />
     <Content Include="Areas\TemperatureHumidity\Views\TemperatureHumidity\TH_Monitoring_F17.cshtml" />
+    <Content Include="Areas\Lable\Views\web.config" />
+    <Content Include="Areas\Lable\Views\DataFlow\Index.cshtml" />
+    <EntityDeploy Include="Areas\Lable\Data\ModelLableDataFlow.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelLableDataFlow.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\Lable\Data\ModelLableDataFlow.edmx.diagram">
+      <DependentUpon>ModelLableDataFlow.edmx</DependentUpon>
+    </Content>
     <None Include="files\Content\vendor\Jquery\jquery-3.4.1.intellisense.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.min.js" />
@@ -1179,12 +1229,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\BanDau\Contents\Css\" />
-    <Folder Include="Areas\BanDau\Contents\Image\" />
-    <Folder Include="Areas\BanDau\Contents\Js\" />
-    <Folder Include="Areas\BanDau\Contents\Orther\" />
     <Folder Include="Areas\Dashboard\Data\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
+    <Folder Include="Areas\Lable\Views\Shared\" />
     <Folder Include="Areas\TemperatureHumidity\Views\Shared\" />
     <Folder Include="Views\TemperatureMonitor\" />
   </ItemGroup>

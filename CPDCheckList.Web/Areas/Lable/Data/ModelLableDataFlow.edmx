@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LableDataFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LableDataFlow">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" />
+          <Property Name="Shift" Type="nchar" MaxLength="1" />
+          <Property Name="MO" Type="nvarchar" MaxLength="25" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MO_Num" Type="int" />
+          <Property Name="LableCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="LableTable" Type="nvarchar" MaxLength="10" />
+          <Property Name="BeginCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="EndCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="LablePrintNum" Type="int" />
+          <Property Name="MOPrintNum" Type="int" />
+          <Property Name="IdStatus" Type="int" />
+          <Property Name="Location" Type="nvarchar" MaxLength="5" />
+          <Property Name="BeginCodeImage" Type="nvarchar" MaxLength="120" />
+          <Property Name="EndCodeImage" Type="nchar" MaxLength="120" />
+          <Property Name="Note" Type="nvarchar" MaxLength="120" />
+        </EntityType>
+        <EntityType Name="LableDataFlow_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LableDataFlow_Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="IdUserCreate" Type="int" />
+          <Property Name="IdLineLeader" Type="int" />
+          <Property Name="IdIQPC" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Note" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserCode" Type="varchar" MaxLength="20" />
+          <Property Name="UserFullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <Association Name="FK_LableDataFlow_LableDataFlow_Status">
+          <End Role="LableDataFlow_Status" Type="Self.LableDataFlow_Status" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LableDataFlow" Type="Self.LableDataFlow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LableDataFlow_Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LableDataFlow">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LableDataFlowModelStoreContainer">
+          <EntitySet Name="LableDataFlow" EntityType="Self.LableDataFlow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LableDataFlow_Data" EntityType="Self.LableDataFlow_Data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LableDataFlow_Status" EntityType="Self.LableDataFlow_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_LableDataFlow_LableDataFlow_Status" Association="Self.FK_LableDataFlow_LableDataFlow_Status">
+            <End Role="LableDataFlow_Status" EntitySet="LableDataFlow_Status" />
+            <End Role="LableDataFlow" EntitySet="LableDataFlow" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LableDataFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LableDataFlow_Data">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User_Lb">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="LableDataFlowEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LableDataFlow_Data" EntityType="Self.LableDataFlow_Data" />
+          <EntitySet Name="User_Lb" EntityType="LableDataFlowModel.User_Lb" />
+          <EntitySet Name="LableDataFlows" EntityType="LableDataFlowModel.LableDataFlow" />
+          <EntitySet Name="LableDataFlow_Status" EntityType="LableDataFlowModel.LableDataFlow_Status" />
+          <AssociationSet Name="FK_LableDataFlow_LableDataFlow_Status" Association="LableDataFlowModel.FK_LableDataFlow_LableDataFlow_Status">
+            <End Role="LableDataFlow_Status" EntitySet="LableDataFlow_Status" />
+            <End Role="LableDataFlow" EntitySet="LableDataFlows" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="LableDataFlow">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <Property Name="Shift" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="MO" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MO_Num" Type="Int32" />
+          <Property Name="LableCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="LableTable" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="BeginCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="EndCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="LablePrintNum" Type="Int32" />
+          <Property Name="MOPrintNum" Type="Int32" />
+          <Property Name="IdStatus" Type="Int32" />
+          <NavigationProperty Name="LableDataFlow_Status" Relationship="LableDataFlowModel.FK_LableDataFlow_LableDataFlow_Status" FromRole="LableDataFlow" ToRole="LableDataFlow_Status" />
+          <Property Name="Location" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="BeginCodeImage" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="EndCodeImage" Type="String" MaxLength="120" FixedLength="true" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="LableDataFlow_Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="IdUserCreate" Type="Int32" />
+          <Property Name="IdLineLeader" Type="Int32" />
+          <Property Name="IdIQPC" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_LableDataFlow_LableDataFlow_Status">
+          <End Type="LableDataFlowModel.LableDataFlow_Status" Role="LableDataFlow_Status" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="LableDataFlowModel.LableDataFlow" Role="LableDataFlow" Multiplicity="*" >
+          </End>
+          <ReferentialConstraint>
+            <Principal Role="LableDataFlow_Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LableDataFlow">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LableDataFlowModelStoreContainer" CdmEntityContainer="LableDataFlowEntities">
+          <EntitySetMapping Name="LableDataFlow_Data">
+            <EntityTypeMapping TypeName="LableDataFlowModel.LableDataFlow_Data">
+              <MappingFragment StoreEntitySet="LableDataFlow_Data">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Lb">
+            <EntityTypeMapping TypeName="LableDataFlowModel.User_Lb">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="UserFullName" ColumnName="UserFullName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LableDataFlows">
+            <EntityTypeMapping TypeName="LableDataFlowModel.LableDataFlow">
+              <MappingFragment StoreEntitySet="LableDataFlow">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="EndCodeImage" ColumnName="EndCodeImage" />
+                <ScalarProperty Name="BeginCodeImage" ColumnName="BeginCodeImage" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="MOPrintNum" ColumnName="MOPrintNum" />
+                <ScalarProperty Name="LablePrintNum" ColumnName="LablePrintNum" />
+                <ScalarProperty Name="EndCode" ColumnName="EndCode" />
+                <ScalarProperty Name="BeginCode" ColumnName="BeginCode" />
+                <ScalarProperty Name="LableTable" ColumnName="LableTable" />
+                <ScalarProperty Name="LableCode" ColumnName="LableCode" />
+                <ScalarProperty Name="MO_Num" ColumnName="MO_Num" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="MO" ColumnName="MO" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LableDataFlow_Status">
+            <EntityTypeMapping TypeName="LableDataFlowModel.LableDataFlow_Status">
+              <MappingFragment StoreEntitySet="LableDataFlow_Status">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdIQPC" ColumnName="IdIQPC" />
+                <ScalarProperty Name="IdLineLeader" ColumnName="IdLineLeader" />
+                <ScalarProperty Name="IdUserCreate" ColumnName="IdUserCreate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
