@@ -26,8 +26,8 @@ namespace CPDCheckList.Web.Areas.Lable.Data
         }
     
         public virtual DbSet<LableDataFlow_Data> LableDataFlow_Data { get; set; }
-        public virtual DbSet<User_Lb> User_Lb { get; set; }
-        public virtual DbSet<LableDataFlow> LableDataFlows { get; set; }
         public virtual DbSet<LableDataFlow_Status> LableDataFlow_Status { get; set; }
+        public virtual DbSet<LableDataFlow> LableDataFlows { get; set; }
+        public virtual DbSet<User_Lb> User_Lb { get; set; }
     }
 }

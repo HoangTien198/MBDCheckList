@@ -6,10 +6,13 @@
     <edmx:Diagrams>
       <Diagram DiagramId="a141ef513a284f9a963e5735154840f9" Name="Diagram1">
         <EntityTypeShape EntityType="LableDataFlowModel.LableDataFlow_Data" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LableDataFlowModel.User_Lb" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LableDataFlowModel.LableDataFlow_Status" Width="1.5" PointX="3.375" PointY="5.125" />
         <EntityTypeShape EntityType="LableDataFlowModel.LableDataFlow" Width="1.5" PointX="5.625" PointY="4" />
-        <EntityTypeShape EntityType="LableDataFlowModel.LableDataFlow_Status" Width="1.5" PointX="3.375" PointY="4.75" />
         <AssociationConnector Association="LableDataFlowModel.FK_LableDataFlow_LableDataFlow_Status" />
+        <EntityTypeShape EntityType="LableDataFlowModel.User_Lb" Width="1.5" PointX="1.125" PointY="4.625" />
+        <AssociationConnector Association="LableDataFlowModel.FK_LableDataFlow_Status_Users" />
+        <AssociationConnector Association="LableDataFlowModel.FK_LableDataFlow_Status_Users1" />
+        <AssociationConnector Association="LableDataFlowModel.FK_LableDataFlow_Status_Users2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

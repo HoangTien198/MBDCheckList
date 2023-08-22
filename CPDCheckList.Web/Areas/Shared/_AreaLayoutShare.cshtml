@@ -68,31 +68,30 @@
             <ul class="d-flex align-items-center">
                 <li class="nav-item dropdown pe-3">
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        @*@{
-            if (user.RoleId == 3)
-            {
-                <span class="badge bg-danger">
-                    <i class="bi bi-check-circle me-1"></i>
-                    <label>IPQC</label>
-                </span>
-            }
-            if (user.RoleId == 2)
-            {
-                <span class="badge bg-warning">
-                    <i class="bi bi-check-circle me-1"></i>
-                    <label>Leader</label>
-                </span>
-            }
-            if (user.RoleId == 1)
-            {
-                <span class="badge bg-success">
-                    <i class="bi bi-check-circle me-1"></i>
-                    <label>Employee</label>
-                </span>
-            }
-        }
-        <span class="d-none d-md-block dropdown-toggle ps-2" data-typeRole="@user.RoleId">@user.Username</span>*@
-                        <span class="d-none d-md-block dropdown-toggle ps-2" data-typeRole="1">test</span>
+                        @{
+                            if (user.RoleId == 3)
+                            {
+                                <span class="badge bg-danger">
+                                    <i class="bi bi-check-circle me-1"></i>
+                                    <label>IPQC</label>
+                                </span>
+                            }
+                            if (user.RoleId == 2)
+                            {
+                                <span class="badge bg-warning">
+                                    <i class="bi bi-check-circle me-1"></i>
+                                    <label>Leader</label>
+                                </span>
+                            }
+                            if (user.RoleId == 1)
+                            {
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle me-1"></i>
+                                    <label>Employee</label>
+                                </span>
+                            }
+                        }
+                        <span class="d-none d-md-block dropdown-toggle ps-2" data-typeRole="@user.RoleId">@user.Username</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -140,7 +139,7 @@
 
             <li class="nav-item">
                 <a class="nav-link @((controllerName.Contains("BanDau")) ? "" : "collapsed")" data-bs-target="#BanDau-nav" data-bs-toggle="collapse" href="#" aria-expanded="true" aria-controls="collapseOne">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Check List Bản đầu</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-layout-text-window-reverse"></i><span>Bản đầu</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="BanDau-nav" class="nav-content @(controllerName.Contains("BanDau") ? "show" : "collapse")" data-bs-parent="#sidebar">
                     <li>

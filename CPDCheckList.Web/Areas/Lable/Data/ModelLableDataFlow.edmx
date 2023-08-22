@@ -21,11 +21,11 @@
           <Property Name="EndCode" Type="nvarchar" MaxLength="25" />
           <Property Name="LablePrintNum" Type="int" />
           <Property Name="MOPrintNum" Type="int" />
-          <Property Name="IdStatus" Type="int" />
           <Property Name="Location" Type="nvarchar" MaxLength="5" />
-          <Property Name="BeginCodeImage" Type="nvarchar" MaxLength="120" />
-          <Property Name="EndCodeImage" Type="nchar" MaxLength="120" />
           <Property Name="Note" Type="nvarchar" MaxLength="120" />
+          <Property Name="BeginCodeImage" Type="nvarchar" MaxLength="250" />
+          <Property Name="EndCodeImage" Type="nvarchar" MaxLength="250" />
+          <Property Name="IdStatus" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="LableDataFlow_Data">
           <Key>
@@ -39,12 +39,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="IdUserCreate" Type="int" />
           <Property Name="IdLineLeader" Type="int" />
-          <Property Name="IdIQPC" Type="int" />
+          <Property Name="IdIPQC" Type="int" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="Note" Type="nvarchar" MaxLength="100" />
+          <Property Name="Note" Type="nvarchar" MaxLength="120" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -75,6 +75,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LableDataFlow_Status_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="LableDataFlow_Status" Type="Self.LableDataFlow_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="LableDataFlow_Status">
+              <PropertyRef Name="IdUserCreate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LableDataFlow_Status_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="LableDataFlow_Status" Type="Self.LableDataFlow_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="LableDataFlow_Status">
+              <PropertyRef Name="IdLineLeader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LableDataFlow_Status_Users2">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="LableDataFlow_Status" Type="Self.LableDataFlow_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="LableDataFlow_Status">
+              <PropertyRef Name="IdIPQC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="LableDataFlowModelStoreContainer">
           <EntitySet Name="LableDataFlow" EntityType="Self.LableDataFlow" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LableDataFlow_Data" EntityType="Self.LableDataFlow_Data" Schema="dbo" store:Type="Tables" />
@@ -83,6 +119,18 @@
           <AssociationSet Name="FK_LableDataFlow_LableDataFlow_Status" Association="Self.FK_LableDataFlow_LableDataFlow_Status">
             <End Role="LableDataFlow_Status" EntitySet="LableDataFlow_Status" />
             <End Role="LableDataFlow" EntitySet="LableDataFlow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LableDataFlow_Status_Users" Association="Self.FK_LableDataFlow_Status_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LableDataFlow_Status" EntitySet="LableDataFlow_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LableDataFlow_Status_Users1" Association="Self.FK_LableDataFlow_Status_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LableDataFlow_Status" EntitySet="LableDataFlow_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LableDataFlow_Status_Users2" Association="Self.FK_LableDataFlow_Status_Users2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LableDataFlow_Status" EntitySet="LableDataFlow_Status" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -97,31 +145,42 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="User_Lb">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="UserFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="RoleId" Type="Int32" />
-        </EntityType>
         <EntityContainer Name="LableDataFlowEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="LableDataFlow_Data" EntityType="Self.LableDataFlow_Data" />
-          <EntitySet Name="User_Lb" EntityType="LableDataFlowModel.User_Lb" />
-          <EntitySet Name="LableDataFlows" EntityType="LableDataFlowModel.LableDataFlow" />
           <EntitySet Name="LableDataFlow_Status" EntityType="LableDataFlowModel.LableDataFlow_Status" />
+          <EntitySet Name="LableDataFlows" EntityType="LableDataFlowModel.LableDataFlow" />
           <AssociationSet Name="FK_LableDataFlow_LableDataFlow_Status" Association="LableDataFlowModel.FK_LableDataFlow_LableDataFlow_Status">
             <End Role="LableDataFlow_Status" EntitySet="LableDataFlow_Status" />
             <End Role="LableDataFlow" EntitySet="LableDataFlows" />
           </AssociationSet>
+          <EntitySet Name="User_Lb" EntityType="LableDataFlowModel.User_Lb" />
+          <AssociationSet Name="FK_LableDataFlow_Status_Users" Association="LableDataFlowModel.FK_LableDataFlow_Status_Users">
+            <End Role="User" EntitySet="User_Lb" />
+            <End Role="LableDataFlow_Status" EntitySet="LableDataFlow_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LableDataFlow_Status_Users1" Association="LableDataFlowModel.FK_LableDataFlow_Status_Users1">
+            <End Role="User" EntitySet="User_Lb" />
+            <End Role="LableDataFlow_Status" EntitySet="LableDataFlow_Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LableDataFlow_Status_Users2" Association="LableDataFlowModel.FK_LableDataFlow_Status_Users2">
+            <End Role="User" EntitySet="User_Lb" />
+            <End Role="LableDataFlow_Status" EntitySet="LableDataFlow_Status" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="LableDataFlow_Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="IdUserCreate" Type="Int32" />
+          <Property Name="IdLineLeader" Type="Int32" />
+          <Property Name="IdIPQC" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserCreate" Relationship="LableDataFlowModel.FK_LableDataFlow_Status_Users" FromRole="LableDataFlow_Status" ToRole="User" />
+          <NavigationProperty Name="LineLeader" Relationship="LableDataFlowModel.FK_LableDataFlow_Status_Users1" FromRole="LableDataFlow_Status" ToRole="User" />
+          <NavigationProperty Name="IPQC" Relationship="LableDataFlowModel.FK_LableDataFlow_Status_Users2" FromRole="LableDataFlow_Status" ToRole="User" />
+          <Property Name="Note" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="LableDataFlow">
           <Key>
             <PropertyRef Name="Id" />
@@ -138,36 +197,68 @@
           <Property Name="EndCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="LablePrintNum" Type="Int32" />
           <Property Name="MOPrintNum" Type="Int32" />
-          <Property Name="IdStatus" Type="Int32" />
-          <NavigationProperty Name="LableDataFlow_Status" Relationship="LableDataFlowModel.FK_LableDataFlow_LableDataFlow_Status" FromRole="LableDataFlow" ToRole="LableDataFlow_Status" />
           <Property Name="Location" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="BeginCodeImage" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
-          <Property Name="EndCodeImage" Type="String" MaxLength="120" FixedLength="true" Unicode="true" />
           <Property Name="Note" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="LableDataFlow_Status">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="IdUserCreate" Type="Int32" />
-          <Property Name="IdLineLeader" Type="Int32" />
-          <Property Name="IdIQPC" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Note" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BeginCodeImage" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="EndCodeImage" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IdStatus" Type="Guid" />
+          <NavigationProperty Name="LableDataFlow_Status" Relationship="LableDataFlowModel.FK_LableDataFlow_LableDataFlow_Status" FromRole="LableDataFlow" ToRole="LableDataFlow_Status" />
         </EntityType>
         <Association Name="FK_LableDataFlow_LableDataFlow_Status">
-          <End Type="LableDataFlowModel.LableDataFlow_Status" Role="LableDataFlow_Status" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="LableDataFlowModel.LableDataFlow" Role="LableDataFlow" Multiplicity="*" >
-          </End>
+          <End Type="LableDataFlowModel.LableDataFlow_Status" Role="LableDataFlow_Status" Multiplicity="0..1" />
+          <End Type="LableDataFlowModel.LableDataFlow" Role="LableDataFlow" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LableDataFlow_Status">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="LableDataFlow">
               <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User_Lb">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_LableDataFlow_Status_Users">
+          <End Type="LableDataFlowModel.User_Lb" Role="User" Multiplicity="0..1" />
+          <End Type="LableDataFlowModel.LableDataFlow_Status" Role="LableDataFlow_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="LableDataFlow_Status">
+              <PropertyRef Name="IdUserCreate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LableDataFlow_Status_Users1">
+          <End Type="LableDataFlowModel.User_Lb" Role="User" Multiplicity="0..1" />
+          <End Type="LableDataFlowModel.LableDataFlow_Status" Role="LableDataFlow_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="LableDataFlow_Status">
+              <PropertyRef Name="IdLineLeader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LableDataFlow_Status_Users2">
+          <End Type="LableDataFlowModel.User_Lb" Role="User" Multiplicity="0..1" />
+          <End Type="LableDataFlowModel.LableDataFlow_Status" Role="LableDataFlow_Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="LableDataFlow_Status">
+              <PropertyRef Name="IdIPQC" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -186,30 +277,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="User_Lb">
-            <EntityTypeMapping TypeName="LableDataFlowModel.User_Lb">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
-                <ScalarProperty Name="UserFullName" ColumnName="UserFullName" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <EntitySetMapping Name="LableDataFlow_Status">
+            <EntityTypeMapping TypeName="LableDataFlowModel.LableDataFlow_Status">
+              <MappingFragment StoreEntitySet="LableDataFlow_Status">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdIPQC" ColumnName="IdIPQC" />
+                <ScalarProperty Name="IdLineLeader" ColumnName="IdLineLeader" />
+                <ScalarProperty Name="IdUserCreate" ColumnName="IdUserCreate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LableDataFlows">
             <EntityTypeMapping TypeName="LableDataFlowModel.LableDataFlow">
               <MappingFragment StoreEntitySet="LableDataFlow">
-                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
                 <ScalarProperty Name="EndCodeImage" ColumnName="EndCodeImage" />
                 <ScalarProperty Name="BeginCodeImage" ColumnName="BeginCodeImage" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
                 <ScalarProperty Name="MOPrintNum" ColumnName="MOPrintNum" />
                 <ScalarProperty Name="LablePrintNum" ColumnName="LablePrintNum" />
                 <ScalarProperty Name="EndCode" ColumnName="EndCode" />
@@ -225,15 +312,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LableDataFlow_Status">
-            <EntityTypeMapping TypeName="LableDataFlowModel.LableDataFlow_Status">
-              <MappingFragment StoreEntitySet="LableDataFlow_Status">
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="IdIQPC" ColumnName="IdIQPC" />
-                <ScalarProperty Name="IdLineLeader" ColumnName="IdLineLeader" />
-                <ScalarProperty Name="IdUserCreate" ColumnName="IdUserCreate" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <EntitySetMapping Name="User_Lb">
+            <EntityTypeMapping TypeName="LableDataFlowModel.User_Lb">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserFullName" ColumnName="UserFullName" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

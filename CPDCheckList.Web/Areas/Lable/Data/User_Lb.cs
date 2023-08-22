@@ -18,11 +18,6 @@ namespace CPDCheckList.Web.Areas.Lable.Data
         public string UserCode { get; set; }
         public string UserFullName { get; set; }
         public string Username { get; set; }
-        public string Password { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public Nullable<int> UpdatedBy { get; set; }
         public Nullable<int> RoleId { get; set; }
     }
 }

@@ -26,11 +26,11 @@ namespace CPDCheckList.Web.Areas.Lable.Data
         public string EndCode { get; set; }
         public Nullable<int> LablePrintNum { get; set; }
         public Nullable<int> MOPrintNum { get; set; }
-        public Nullable<int> IdStatus { get; set; }
         public string Location { get; set; }
+        public string Note { get; set; }
         public string BeginCodeImage { get; set; }
         public string EndCodeImage { get; set; }
-        public string Note { get; set; }
+        public Nullable<System.Guid> IdStatus { get; set; }
     
         public virtual LableDataFlow_Status LableDataFlow_Status { get; set; }
     }

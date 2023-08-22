@@ -14,11 +14,15 @@ namespace CPDCheckList.Web.Areas.Lable.Data
     
     public partial class LableDataFlow_Status
     {
-        public int Id { get; set; }
+        public System.Guid Id { get; set; }
         public Nullable<int> IdUserCreate { get; set; }
         public Nullable<int> IdLineLeader { get; set; }
-        public Nullable<int> IdIQPC { get; set; }
+        public Nullable<int> IdIPQC { get; set; }
         public string Status { get; set; }
         public string Note { get; set; }
+    
+        public virtual User_Lb UserCreate { get; set; }
+        public virtual User_Lb LineLeader { get; set; }
+        public virtual User_Lb IPQC { get; set; }
     }
 }

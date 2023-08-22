@@ -284,6 +284,7 @@ function DetailsCheckList(elm, e) {
                     //$('#modalCheckList .modal-footer').append(`<button title="Không xác nhận" data-id=${checkListId} class="btn btn-danger"  onclick="RejectCheckList(this, event, ${index})">Không xác nhận</button>`);
                     $('#modalCheckList .modal-footer').append(`<button title = "Đóng" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`);
 
+                    $("#formCheckListOnTime").html('');
                     //show modal:
                     $("#modalCheckList").modal('show');
 
@@ -511,11 +512,13 @@ function DetailsCheckList(elm, e) {
 
                 }
                 else {
-                        //xóa hết các nút bấm:
-                        $('#modalCheckList .modal-footer').children().remove();
-                        $('#modalCheckList .modal-footer').append(`<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`);
-                        //show modal:
-                        $("#modalCheckList").modal('show');
+                    //xóa hết các nút bấm:
+                    $('#modalCheckList .modal-footer').children().remove();
+                    $('#modalCheckList .modal-footer').append(`<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`);
+
+                    $("#formCheckListOnTime").html('');
+                    //show modal:
+                    $("#modalCheckList").modal('show');
                     }
 
             }

@@ -211,6 +211,7 @@ function DetailsCheckList(elm, e) {
 
                 //binding nút bấm
                 if (statusCheckList == 1) {
+                    $("#formCheckListOnTime").html('');
                     //xóa hết các nút bấm:
                     $('#modalCheckList .modal-footer').children().remove();
                     //xóa hết các nút bấm:
@@ -425,6 +426,7 @@ function DetailsCheckList(elm, e) {
                     }
 
                     else {
+                        $("#formCheckListOnTime").html('');
                         //xóa hết các nút bấm:
                         $('#modalCheckList .modal-footer').children().remove();
                         $('#modalCheckList .modal-footer').append(`<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`);

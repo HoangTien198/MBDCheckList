@@ -19,21 +19,16 @@
     border-color: #7b7b7b;
 }
 .table-form{
-    margin: 0;
     border-bottom: 0 !important;
 }
-.table-form thead > * {
-    background-color: rgb(255 232 0 / 13%);
-}
-.table-form tbody tr td{
-    width: 20%;
-}
+
+
 
 .child-col {
     background-color: rgb(255 255 255 / 50%) !important;
 }
 
-.approved {
+.confirm {
     color: green !important;
     background-color: rgba(39, 245, 80, 0.24) !important;
 }
@@ -75,21 +70,36 @@
 .previewContainer {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .previewImage {
     width: 100%;
     object-fit: cover;
-    border-radius: 15px;
+    border-radius: 6px;
+    height: 140px;
 }
 .deleteButton {
     position: absolute;
-    top: 20%;
-    right: 4%;
+    top: 2%;
+    right: 2%;
 
     color: red;
     background-color: transparent;
     border: none;
     border-radius: 100%;
     width: auto;
+}
+[status] {
+    height: 60px;
+    vertical-align: middle;
+    line-height: 3;
+    font-size: 1rem;
+}
+.action_col{
+    width: 160px;
+}
+div.form-control p{
+    margin: 0;
+    text-align: center;
 }
