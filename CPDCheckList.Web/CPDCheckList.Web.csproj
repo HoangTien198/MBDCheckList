@@ -288,6 +288,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Lable\Data\fii-logo.jpg" />
+    <Content Include="Areas\Lable\Data\ImageData\3384a629-3d92-4880-9f33-4913e69cf7b6\Begin.png" />
+    <Content Include="Areas\Lable\Data\ImageData\3384a629-3d92-4880-9f33-4913e69cf7b6\End.png" />
+    <Content Include="Areas\Lable\Data\ImageData\35db5dde-5aed-4c39-8179-75a14ebf91fd\Begin.png" />
+    <Content Include="Areas\Lable\Data\ImageData\35db5dde-5aed-4c39-8179-75a14ebf91fd\End.png" />
+    <Content Include="Areas\Lable\Data\ImageData\3bf0e8c7-a248-465e-9d9e-c80542672e30\Begin.png" />
+    <Content Include="Areas\Lable\Data\ImageData\3bf0e8c7-a248-465e-9d9e-c80542672e30\End.png" />
+    <Content Include="Areas\Lable\Data\ImageData\4e13b454-7a39-4ed3-a196-dccf6c8c2c4b\Begin.png" />
+    <Content Include="Areas\Lable\Data\ImageData\4e13b454-7a39-4ed3-a196-dccf6c8c2c4b\End.png" />
+    <Content Include="Areas\Lable\Data\ImageData\779064ee-c476-4fb0-ab22-72e6fcbba619\Begin.png" />
+    <Content Include="Areas\Lable\Data\ImageData\779064ee-c476-4fb0-ab22-72e6fcbba619\End.png" />
+    <Content Include="Areas\Lable\Data\ImageData\c7bc1d33-5a3a-4b3e-b0eb-c6df24832386\Begin.png" />
+    <Content Include="Areas\Lable\Data\ImageData\c7bc1d33-5a3a-4b3e-b0eb-c6df24832386\End.png" />
+    <Content Include="Areas\Lable\Data\ImageData\ed814cef-662a-47ce-aade-399df1752d56\Begin.png" />
+    <Content Include="Areas\Lable\Data\ImageData\fa915b94-9be0-4c07-825d-5acc13fb3e17\Begin.jpg" />
+    <Content Include="Areas\Lable\Data\ImageData\fa915b94-9be0-4c07-825d-5acc13fb3e17\End.jpg" />
     <Content Include="Areas\Lable\Data\ModelLableDataFlow.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelLableDataFlow.edmx</DependentUpon>
@@ -408,7 +424,6 @@
     <Content Include="files\Content\vendor\Font\Rubik\stylesheet.css" />
     <Content Include="Areas\TemperatureHumidity\Views\web.config" />
     <Content Include="Areas\TemperatureHumidity\Views\TemperatureHumidity\TH_Monitoring_F17.cshtml" />
-    <Content Include="Areas\Lable\Views\web.config" />
     <Content Include="Areas\Lable\Views\DataFlow\Index.cshtml" />
     <EntityDeploy Include="Areas\Lable\Data\ModelLableDataFlow.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -417,6 +432,8 @@
     <Content Include="Areas\Lable\Data\ModelLableDataFlow.edmx.diagram">
       <DependentUpon>ModelLableDataFlow.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Shared\web.config" />
+    <Content Include="Areas\Lable\Views\web.config" />
     <None Include="files\Content\vendor\Jquery\jquery-3.4.1.intellisense.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.min.js" />
@@ -928,7 +945,6 @@
     <Content Include="files\extra-pages\404\1\fonts\fontawesome-webfont.woff2" />
     <Content Include="Database\CheckList.bak" />
     <Content Include="Areas\RutKiem\Views\web.config" />
-    <Content Include="Areas\web.config" />
     <Content Include="Areas\Shared\_AreaLayoutShare.cshtml" />
     <Content Include="Areas\BanDau\Views\web.config" />
     <Content Include="Areas\BanDau\Views\BanDau\BanDau.cshtml" />
@@ -1294,7 +1310,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50315</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44348/</IISUrl>
+          <IISUrl>https://localhost:44343/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

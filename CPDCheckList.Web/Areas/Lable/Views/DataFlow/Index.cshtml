@@ -61,7 +61,7 @@
                 <!-- Data -->
                 <div class="row">
                     <div class="col-4">
-                        <label for="inputName5" class="form-label">Infomation</label>
+                        <label for="inputName5" class="form-label">信息 Thông tin</label>
                         <div class="row">
                             <div class="col-7">
                                 <div class="input-group mb-3">
@@ -128,7 +128,7 @@
                     <div class="col-4">
                         <div class="row mb-3">
                             <div class="col-6" id="BeginCell">
-                                <label class="form-label col-12">第一张图片 Ảnh đầu</label>
+                                <label class="form-label col-12">起始图像 Ảnh đầu</label>
                                 <button type="button" class="btn btn-outline-dark col-12" style="height: 140px; font-size: 2rem" id="BeginCodeImageButton"><i class="bi bi-camera-fill"></i></button>
 
                                 <input type="file" class="d-none" id="BeginCodeImageFile" accept="image/*" />
@@ -136,7 +136,7 @@
                                 <button class="deleteButton" style="display: none; right: 18.4%"><i class="bi bi-x-circle"></i></button>
                             </div>
                             <div class="col-6" id="EndCell">
-                                <label class="form-label col-12">最后一张图片 Ảnh cuối</label>
+                                <label class="form-label col-12">結凍图像 Ảnh cuối</label>
                                 <button type="button" class="btn btn-outline-dark col-12" style="height: 140px; font-size: 2rem" id="EndCodeImageButton"><i class="bi bi-camera-fill"></i></button>
 
                                 <input type="file" class="d-none" id="EndCodeImageFile" accept="image/*" />
@@ -162,7 +162,7 @@
                                 <div class="form-control" style="resize:none;" ipqc></div>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
 
@@ -173,12 +173,13 @@
                             <textarea class="form-control" style="resize:none;" name="Note"></textarea>
                         </div>
                     </div>
-                    <div class="col-4 text-center">
-                        @*<p class="badge rounded-pill bg-primary w-75" status>Primary</p>*@
+                    <div class="col-4 text-center" status>
                     </div>
                 </div>
             </div>
             <div class="modal-footer justify-content-end">
+
+
                 <button type="button" class="btn btn-primary" id="SaveBtn" onclick="SaveLableDataFlow()">添新 Thêm mới</button>
             </div>
         </div>

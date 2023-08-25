@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CPDCheckList.Web.Areas.Lable.Data;
@@ -91,16 +94,167 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 return Json(new { status = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        public JsonResult UpdateCheckList(LableDataFlow lableDataFlow, HttpPostedFileBase BeginCodeImage, HttpPostedFileBase EndCodeImage)
+        {
+            // Pending, LineLeader Confirm, LineLeader Reject, IPQC Confirm, IPQC Reject
+            try
+            {
+                string messageCheckData = CheckData(lableDataFlow);
+                if (!string.IsNullOrEmpty(messageCheckData)) return Json(new { status = false, message = messageCheckData });
+
+                // Get old Data and byding path
+                LableDataFlow beforData = db.LableDataFlows.FirstOrDefault(lb => lb.Id ==  lableDataFlow.Id);
+                lableDataFlow.IdStatus = beforData.IdStatus;
+                // Get  root path
+                string rootPath = "";
+                {
+                    if (!string.IsNullOrEmpty(beforData.BeginCodeImage))
+                    {
+                        rootPath = CutStringFromStart(beforData.BeginCodeImage, @"\Begin");
+                        lableDataFlow.BeginCodeImage = beforData.BeginCodeImage;
+                    }
+                    else if (!string.IsNullOrEmpty(beforData.EndCodeImage))
+                    {
+                        rootPath = CutStringFromStart(beforData.EndCodeImage, @"\End");
+                        lableDataFlow.EndCodeImage = beforData.EndCodeImage;
+                    }
+                    else
+                    {
+                        rootPath = Server.MapPath($"/Areas/Lable/Data/ImageData/{Guid.NewGuid()}");
+                        Directory.CreateDirectory(rootPath);
+                    }
+                }
+
+                // Save Image
+                {
+                    try
+                    {
+                        if (BeginCodeImage.ContentLength > 0)
+                        {
+                            string savePath = Path.Combine(rootPath, $"Begin{Path.GetExtension(BeginCodeImage.FileName)}");
+                            BeginCodeImage.SaveAs(savePath);
+                            lableDataFlow.BeginCodeImage = savePath;
+                        }
+                    }
+                    catch { }
+
+                    try
+                    {
+                        if (EndCodeImage.ContentLength > 0)
+                        {
+                            string savePath = Path.Combine(rootPath, $"End{Path.GetExtension(EndCodeImage.FileName)}");
+                            EndCodeImage.SaveAs(savePath);
+                            lableDataFlow.EndCodeImage = savePath;
+                        }
+                    }
+                    catch { }
+                }
+
+                User_Lb user = GetSessionUser();
+                if (user == null) return Json(new { status = false, message = "Cannot find login user." });
+
+                db.LableDataFlows.AddOrUpdate(lableDataFlow);
+                db.SaveChanges();
+                
+                lableDataFlow.LableDataFlow_Status = beforData.LableDataFlow_Status;
+
+                return Json(new { status = true, data = lableDataFlow });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
         public JsonResult GetDataFlow(int Id)
         {
             try
             {
                 LableDataFlow lable = db.LableDataFlows.FirstOrDefault(lb => lb.Id == Id);
-                return Json(new { status = true, data = lable}, JsonRequestBehavior.AllowGet);
+                if (lable != null)
+                {
+                    return Json(new { status = true, data = lable }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { status = false, message = "Không tìm thấy dữ liệu." }, JsonRequestBehavior.AllowGet);
+                }
+
             }
             catch (Exception ex)
             {
                 return Json(new { status = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult DeleteCheckList(int Id)
+        {
+            try
+            {
+                var record = db.LableDataFlows.FirstOrDefault(r => r.Id == Id);
+                db.LableDataFlows.Remove(record);
+                //db.SaveChanges();
+                return Json(new { status = true}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult Confirm(int Id, string Mail)
+        {
+            try
+            {
+                User_Lb user = GetSessionUser();
+                LableDataFlow lable = db.LableDataFlows.FirstOrDefault(lb => lb.Id == Id);
+
+                if (user.RoleId == 2) // line leader
+                {
+                    lable.LableDataFlow_Status.IdLineLeader = user.UserId;
+                    lable.LableDataFlow_Status.Status = "LineLeader Confirm";
+                } 
+                else if (user.RoleId == 3)
+                {
+                    lable.LableDataFlow_Status.IdIPQC = user.UserId;
+                    lable.LableDataFlow_Status.Status = "IPQC Confirm";
+                }
+
+                db.LableDataFlows.AddOrUpdate(lable);
+                db.SaveChanges();
+
+                return Json(new { status = true, data = lable });
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = false, message = e.Message });
+            }
+        }
+        public JsonResult Reject(int Id, string Note)
+        {
+            try
+            {
+                User_Lb user = GetSessionUser();
+                LableDataFlow lable = db.LableDataFlows.FirstOrDefault(lb => lb.Id == Id);
+
+                if (user.RoleId == 2) // line leader
+                {
+                    lable.LableDataFlow_Status.IdLineLeader = user.UserId;
+                    lable.LableDataFlow_Status.Status = "LineLeader Reject";
+                }
+                else if (user.RoleId == 3)
+                {
+                    lable.LableDataFlow_Status.IdIPQC = user.UserId;
+                    lable.LableDataFlow_Status.Status = "IPQC Reject";
+                }
+                lable.LableDataFlow_Status.Note = Note;
+
+                db.LableDataFlows.AddOrUpdate(lable);
+                db.SaveChanges();
+
+                return Json(new { status = true, data = lable });
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = false, message = e.Message });
             }
         }
 
@@ -139,6 +293,20 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 };               
             }
             catch
+            {
+                return null;
+            }
+        }
+        private string CutStringFromStart(string input, string search)
+        {
+            int startIndex = input.IndexOf(search);
+
+            if (startIndex != -1)
+            {
+                string result = input.Substring(0, startIndex);
+                return result;
+            }
+            else
             {
                 return null;
             }
