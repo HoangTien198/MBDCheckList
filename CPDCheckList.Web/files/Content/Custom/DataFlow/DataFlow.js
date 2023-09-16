@@ -63,10 +63,13 @@ function DynamicLoadTable() {
         var scrollLenght = parseInt((divElement.scrollTop + divElement.clientHeight));
         var scrollHeight = parseInt(divElement.scrollHeight * 0.9);
 
-        if (!isLoadingData && (scrollLenght > scrollHeight)) {
+        var items = $('#tbody_DataFlow tr');
+
+        if (!isLoadingData && (scrollLenght > scrollHeight) && items.length > 10) {
             isLoadingData = true;
 
             onload();
+            var dateNow = new Date();
 
             var dateData = {
                 Location: $('[name="Location"]').val(),
@@ -91,14 +94,13 @@ function DynamicLoadTable() {
                 contentType: "application/json;charset=utf-8",
                 success: async function (res) {
                     if (res.status) {
-                        //var jsonCheckList = JSON.parse(response);
 
                         await $.each(res.data, async function (k, item) {
                             var row = await DrawTableRows(item, true);
                             dataTable.rows().add(row, true);
                         });
 
-                        if (jsonCheckList.length > 0) {
+                        if (res.data.length > 0) {
                             isLoadingData = false;
                         }
                         endload();
@@ -117,16 +119,31 @@ function DynamicLoadTable() {
     });
 }
 function CreateTable() {
-    var scrollHeight = document.querySelector('#sidebar').offsetHeight - 200 + 'px';
-    var myTable = document.querySelector('#table_DataFlow');
-    dataTable = new simpleDatatables.DataTable(myTable, {
-        scrollY: scrollHeight,
-        scrollX: true,
-        scrollCollapse: true,
-        paging: false,
-        sortable: false,
-        fixedColumns: false,
-    });
+    if ($(window).width() < 500) {
+        var scrollHeight = document.querySelector('#sidebar').offsetHeight - 450 + 'px';
+        var myTable = document.querySelector('#table_DataFlow');
+        dataTable = new simpleDatatables.DataTable(myTable, {
+            scrollY: scrollHeight,
+            paging: false,
+            footer: false,
+            sortable: false,
+            hiddenHeader: true,
+        });
+        dataTable.columns().hide([4,5]);
+    }
+    else {
+        var scrollHeight = document.querySelector('#sidebar').offsetHeight - 200 + 'px';
+        var myTable = document.querySelector('#table_DataFlow');
+        dataTable = new simpleDatatables.DataTable(myTable, {
+            scrollY: scrollHeight,
+            scrollX: true,
+            scrollCollapse: true,
+            paging: false,
+            footer: false,
+            sortable: false,
+            fixedColumns: false,
+        });
+    } 
 };
 function DrawTableRows(item, isAddInDatatable = false) {
     var row = [];
@@ -264,6 +281,9 @@ function DrawTableRows(item, isAddInDatatable = false) {
 $(document).on('click', '#btn_AddNew', function (e) {
     e.preventDefault();
 
+    //Get Fill Data
+    FillSaveData();
+
     // clear data input
     $("#formData [name]").each(function () {
         var elementName = $(this).attr("name");
@@ -271,12 +291,8 @@ $(document).on('click', '#btn_AddNew', function (e) {
     });
 
     // clear user infor
-    $('#UserInfo [user]').html('');
-    $('#UserInfo [user]').removeClass(['confirm', 'reject']);
-    $('#UserInfo [line]').html('');
-    $('#UserInfo [line]').removeClass(['confirm', 'reject']);
-    $('#UserInfo [ipqc]').html('');
-    $('#UserInfo [ipqc]').removeClass(['confirm', 'reject']);
+    $('#UserInfo').hide();
+
 
     // clear image preview
     $('#BeginCell #BeginCodeImageButton').show();
@@ -297,6 +313,9 @@ $(document).on('click', '#btn_AddNew', function (e) {
     $('#SaveBtn').addClass(['btn', 'btn-primary']);
     $('#SaveBtn').text('添新 Thêm mới');
 
+    // status
+    $('#formData [status]').hide();
+
     //set datetime and shift
 
     $('input[name="DateTime"]').val(moment(new Date()).format('YYYY-MM-DDTHH:mm'));
@@ -309,6 +328,9 @@ $(document).on('click', '#btn_AddNew', function (e) {
 //Edit function
 function Edit(elm, e) {
     e.preventDefault();
+
+    // Get Fill data
+    FillSaveData();
 
     const rowId = $(elm).data('id');
     const rowIndex = $(elm).closest('tr').index();
@@ -364,6 +386,9 @@ function Edit(elm, e) {
                         if (elementName == "Note") {
                             $(this).val(data.Note);
                         }
+                        if (elementName == "BarCode") {
+                            $(this).val(data.BarCode);
+                        }
                     });
                 }
                 // clear old status
@@ -372,6 +397,7 @@ function Edit(elm, e) {
                         $(this).html('');
                         $(this).removeClass(['confirm', 'reject']);
                     });
+                    $('#UserInfo').show();
                 }
                 // user
                 {
@@ -453,6 +479,8 @@ function Edit(elm, e) {
                     $('#formData [status]').html(`
                         <span class="d-block badge ${badgeStyle} status-custom">${message}</span>
                     `);
+
+                    $('#formData [status]').show();
                 }
                 // image
                 {
@@ -576,6 +604,9 @@ function Details(elm, e) {
                         if (elementName == "Note") {
                             $(this).val(data.Note);
                         }
+                        if (elementName == "BarCode") {
+                            $(this).val(data.BarCode);
+                        }
                     });
                 }
                 // clear old status
@@ -584,6 +615,7 @@ function Details(elm, e) {
                         $(this).html('');
                         $(this).removeClass(['confirm', 'reject']);
                     });
+                    $('#UserInfo').show();
                 }
                 // user
                 {
@@ -665,6 +697,7 @@ function Details(elm, e) {
                     $('#formData [status]').html(`
                         <p class="badge ${badgeStyle} status-custom">${message}</p>
                     `);
+                    $('#formData [status]').show();
                 }
                 // image
                 {
@@ -751,7 +784,7 @@ function Delete(elm, e) {
                 data: { Id: rowId },
                 success: function (res) {
                     if (res.status) {
-                        Swal.fire("Xóa thành công", "Đã xóa!", "success");
+                        Swal.fire("Xóa thành công", "", "success");
                         dataTable.rows().remove(rowIndex);
                     }
                     else {
@@ -980,6 +1013,50 @@ function SaveLableDataFlow() {
             }
         });
     }
+}
+
+// Fill Save Data
+function FillSaveData() {
+    $.ajax({
+        type: "GET",
+        url: "/Lable/DataFlow/GetSaveData",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (res) {
+            if (res.status) {
+                const list = res.data;
+
+                $('#DataList_MO').html('');
+                $('#DataList_ProductName').html('');
+                $('#DataList_LableCode').html('');
+                $('#DataList_LableTable').html('');
+
+                const typeToIdMap = {
+                    "MO": "#DataList_MO",
+                    "ProductName": "#DataList_ProductName",
+                    "LableCode": "#DataList_LableCode",
+                    "LableTable": "#DataList_LableTable",
+                };
+                $('#DataList_MO').html('');
+
+                list.forEach(function (item) {
+                    const id = typeToIdMap[item.Type];
+                    if (id) {
+                        $(id).append($(`<option value="${item.Name}">${item.Name}</option>`));
+                    }
+                });
+            }
+            else {
+                Swal.fire("Có lỗi xảy ra", res.message, "error");
+            }
+
+            endload();
+        },
+        error: function (err) {
+            Swal.fire("Có lỗi xảy ra", GetInlineString(err.responseText, 'title'), "error");
+            endload();
+        }
+    });
 }
 
 // Sự kiện khi tải lên hình ảnh => thêm nút xoá + preview ảnh

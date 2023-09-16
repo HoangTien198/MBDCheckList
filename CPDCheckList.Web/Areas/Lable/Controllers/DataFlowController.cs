@@ -8,7 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using CPDCheckList.Web.Areas.Lable.Data;
+using CPDCheckList.Web.Areas.RutKiem;
 using CPDCheckList.Web.Commons;
 
 namespace CPDCheckList.Web.Areas.Lable.Controllers
@@ -26,10 +28,12 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
         {
             try
             {
+                #region Validate Date Time for Get Data
                 DateTime startDate;
                 if (Date < 5) startDate = new DateTime(Year, Month - 1, 1);
                 else startDate = new DateTime(Year, Month, 1);
                 DateTime endDate = new DateTime(Year, Month, DateTime.DaysInMonth(Year, Month));
+                #endregion
 
                 List<LableDataFlow> data = db.LableDataFlows.Where(cl => cl.DateTime >= startDate && cl.DateTime <= endDate && cl.Location == Location).OrderByDescending(o => o.DateTime).ToList();
 
@@ -45,10 +49,12 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
             // Pending, LineLeader Confirm, LineLeader Reject, IPQC Confirm, IPQC Reject
             try
             {
+                #region Validate Data
                 string messageCheckData = CheckData(lableDataFlow);
                 if (!string.IsNullOrEmpty(messageCheckData)) return Json(new { status = false, message = messageCheckData });
+                #endregion
 
-
+                #region Save Image
                 string rootPath = Server.MapPath($"/Areas/Lable/Data/ImageData/{Guid.NewGuid()}");
                 if (!Directory.Exists(rootPath)) Directory.CreateDirectory(rootPath);
 
@@ -67,7 +73,9 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                     lableDataFlow.EndCodeImage = savePath;
                 }
                 catch { }
+                #endregion
 
+                #region Making Data
                 User_Lb user = GetSessionUser();
                 if (user == null) return Json(new { status = false, message = "Cannot find login user." });
 
@@ -79,15 +87,20 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 };
 
                 lableDataFlow.IdStatus = lableDataFlow_Status.Id;
+                #endregion
 
+                #region Save Data to DB
                 db.LableDataFlows.Add(lableDataFlow);
                 db.LableDataFlow_Status.Add(lableDataFlow_Status);
                 db.SaveChanges();
+                #endregion
 
+                #region Return Data
                 LableDataFlow returnData = db.LableDataFlows.FirstOrDefault(dt => dt.IdStatus == lableDataFlow.IdStatus);
                 returnData.LableDataFlow_Status.UserCreate = db.User_Lb.FirstOrDefault(us => us.UserId == returnData.LableDataFlow_Status.IdUserCreate);
 
                 return Json(new { status = true, data = returnData });
+                #endregion
             }
             catch (Exception ex)
             {
@@ -99,23 +112,31 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
             // Pending, LineLeader Confirm, LineLeader Reject, IPQC Confirm, IPQC Reject
             try
             {
+                #region Validadte Data
                 string messageCheckData = CheckData(lableDataFlow);
                 if (!string.IsNullOrEmpty(messageCheckData)) return Json(new { status = false, message = messageCheckData });
+                #endregion
 
-                // Get old Data and byding path
+                #region Get Old Data
                 LableDataFlow beforData = db.LableDataFlows.FirstOrDefault(lb => lb.Id ==  lableDataFlow.Id);
+                #endregion
+
+                #region Merge Old & New Data
                 lableDataFlow.IdStatus = beforData.IdStatus;
-                // Get  root path
+                lableDataFlow.LableDataFlow_Status = beforData.LableDataFlow_Status;
+                #endregion
+
+                #region Check & Save New Image
                 string rootPath = "";
                 {
                     if (!string.IsNullOrEmpty(beforData.BeginCodeImage))
                     {
-                        rootPath = CutStringFromStart(beforData.BeginCodeImage, @"\Begin");
+                        rootPath = CutStringFromStartToKey(beforData.BeginCodeImage, @"\Begin");
                         lableDataFlow.BeginCodeImage = beforData.BeginCodeImage;
                     }
                     else if (!string.IsNullOrEmpty(beforData.EndCodeImage))
                     {
-                        rootPath = CutStringFromStart(beforData.EndCodeImage, @"\End");
+                        rootPath = CutStringFromStartToKey(beforData.EndCodeImage, @"\End");
                         lableDataFlow.EndCodeImage = beforData.EndCodeImage;
                     }
                     else
@@ -149,16 +170,16 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                     }
                     catch { }
                 }
+                #endregion
 
-                User_Lb user = GetSessionUser();
-                if (user == null) return Json(new { status = false, message = "Cannot find login user." });
-
+                #region Save New Data to DB
                 db.LableDataFlows.AddOrUpdate(lableDataFlow);
                 db.SaveChanges();
-                
-                lableDataFlow.LableDataFlow_Status = beforData.LableDataFlow_Status;
+                #endregion
 
+                #region Return Data
                 return Json(new { status = true, data = lableDataFlow });
+                #endregion
             }
             catch (Exception ex)
             {
@@ -185,13 +206,26 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 return Json(new { status = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        public JsonResult GetSaveData()
+        {
+            try 
+            {
+                List<LableDataFlow_Data> datas = db.LableDataFlow_Data.ToList();
+
+                return Json(new {status = true, data = datas}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
         public JsonResult DeleteCheckList(int Id)
         {
             try
             {
                 var record = db.LableDataFlows.FirstOrDefault(r => r.Id == Id);
                 db.LableDataFlows.Remove(record);
-                //db.SaveChanges();
+                db.SaveChanges();
                 return Json(new { status = true}, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -212,7 +246,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                     lable.LableDataFlow_Status.IdLineLeader = user.UserId;
                     lable.LableDataFlow_Status.Status = "LineLeader Confirm";
                 } 
-                else if (user.RoleId == 3)
+                else if (user.RoleId == 3) // ipqc
                 {
                     lable.LableDataFlow_Status.IdIPQC = user.UserId;
                     lable.LableDataFlow_Status.Status = "IPQC Confirm";
@@ -240,7 +274,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                     lable.LableDataFlow_Status.IdLineLeader = user.UserId;
                     lable.LableDataFlow_Status.Status = "LineLeader Reject";
                 }
-                else if (user.RoleId == 3)
+                else if (user.RoleId == 3) // ipqc
                 {
                     lable.LableDataFlow_Status.IdIPQC = user.UserId;
                     lable.LableDataFlow_Status.Status = "IPQC Reject";
@@ -263,6 +297,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
         {
             try
             {
+                #region Validate Data
                 if (string.IsNullOrEmpty(lableDataFlow.Location.Trim())) return "[Tên xưởng] chưa được nhập";
                 if (lableDataFlow.DateTime == null) return "[Ngày tạo] chưa được nhập";
                 if (string.IsNullOrEmpty(lableDataFlow.Shift.Trim())) return "[Ca làm việc] chưa được nhập";
@@ -271,9 +306,25 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 if (lableDataFlow.MO_Num == null) return "[Tổng công lệnh] chưa được nhập";
                 if (string.IsNullOrEmpty(lableDataFlow.LableCode)) return "[Mã liệu Lable] chưa được nhập";
                 if (string.IsNullOrEmpty(lableDataFlow.LableTable)) return "[Bảng ghi chép] chưa được nhập";
-                if (string.IsNullOrEmpty(lableDataFlow.BeginCode)) return "[Số đầu] chưa được nhập";
-                if (lableDataFlow.LablePrintNum == null) return "[Số lượng in Lable] chưa được nhập";
-                if (lableDataFlow.MOPrintNum == null) return "[Số lượng in công lệnh] chưa được nhập";
+                #endregion
+
+                #region Save Important Data
+                var propertiesToCheck = new List<(string Name, string Type)>
+                    {
+                        (lableDataFlow.MO, "MO"),
+                        (lableDataFlow.ProductName, "ProductName"),
+                        (lableDataFlow.LableCode, "LableCode"),
+                        (lableDataFlow.LableTable, "LableTable")
+                    };
+
+                foreach (var property in propertiesToCheck)
+                {
+                    if (!db.LableDataFlow_Data.Any(d => d.Name == property.Name && d.Type == property.Type))
+                    {
+                        db.LableDataFlow_Data.Add(new LableDataFlow_Data { Name = property.Name, Type = property.Type });
+                    }
+                }             
+                #endregion
 
                 return string.Empty;
             }
@@ -297,7 +348,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 return null;
             }
         }
-        private string CutStringFromStart(string input, string search)
+        private string CutStringFromStartToKey(string input, string search)
         {
             int startIndex = input.IndexOf(search);
 

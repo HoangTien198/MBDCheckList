@@ -31,6 +31,7 @@ namespace CPDCheckList.Web.Areas.Lable.Data
         public string BeginCodeImage { get; set; }
         public string EndCodeImage { get; set; }
         public Nullable<System.Guid> IdStatus { get; set; }
+        public string BarCode { get; set; }
     
         public virtual LableDataFlow_Status LableDataFlow_Status { get; set; }
     }

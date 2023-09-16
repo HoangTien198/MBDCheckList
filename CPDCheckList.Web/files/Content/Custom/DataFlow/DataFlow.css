@@ -111,3 +111,45 @@ div.form-control p{
     justify-content: center;
     font-size: 1.2rem;
 }
+textarea.form-control{
+    height: 120px;
+}
+
+@media (max-width: 500px) {
+    body {
+        font-size: 0.7rem !important;
+    }
+
+    .btn {
+        font-size: 0.7rem !important;
+    }
+
+    .header-nav span {
+        font-size: 0.7rem !important;
+        text-align: center;
+    }
+
+    .input-group-text, .form-control, .form-select {
+        font-size: 0.7rem !important;
+    }
+
+    div.row div.col-4 {
+        width: 100%;
+    }
+
+    h3, .h3 {
+        font-size: calc(1rem + 0.3vw);
+    }
+
+    h4, .h4 {
+        font-size: calc(1rem + 0.15vw);
+    }
+
+    #BeginCodeImageButton, #EndCodeImageButton {
+        height: 2rem !important;
+    }
+
+    div.row.mb-3 {
+        height: unset !important;
+    }
+}

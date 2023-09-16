@@ -26,12 +26,13 @@
           <Property Name="BeginCodeImage" Type="nvarchar" MaxLength="250" />
           <Property Name="EndCodeImage" Type="nvarchar" MaxLength="250" />
           <Property Name="IdStatus" Type="uniqueidentifier" />
+          <Property Name="BarCode" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="LableDataFlow_Data">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -203,6 +204,7 @@
           <Property Name="EndCodeImage" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="IdStatus" Type="Guid" />
           <NavigationProperty Name="LableDataFlow_Status" Relationship="LableDataFlowModel.FK_LableDataFlow_LableDataFlow_Status" FromRole="LableDataFlow" ToRole="LableDataFlow_Status" />
+          <Property Name="BarCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_LableDataFlow_LableDataFlow_Status">
           <End Type="LableDataFlowModel.LableDataFlow_Status" Role="LableDataFlow_Status" Multiplicity="0..1" />
@@ -292,6 +294,7 @@
           <EntitySetMapping Name="LableDataFlows">
             <EntityTypeMapping TypeName="LableDataFlowModel.LableDataFlow">
               <MappingFragment StoreEntitySet="LableDataFlow">
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
                 <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
                 <ScalarProperty Name="EndCodeImage" ColumnName="EndCodeImage" />
                 <ScalarProperty Name="BeginCodeImage" ColumnName="BeginCodeImage" />
