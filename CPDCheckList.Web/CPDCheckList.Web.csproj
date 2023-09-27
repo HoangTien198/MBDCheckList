@@ -234,6 +234,7 @@
     <Compile Include="Commons\CommonConstant.cs" />
     <Compile Include="Commons\FormatUnicode.cs" />
     <Compile Include="Commons\ListMail.cs" />
+    <Compile Include="Commons\SendMailNew.cs" />
     <Compile Include="Controllers\CheckListController.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

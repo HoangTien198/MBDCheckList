@@ -99,6 +99,10 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 LableDataFlow returnData = db.LableDataFlows.FirstOrDefault(dt => dt.IdStatus == lableDataFlow.IdStatus);
                 returnData.LableDataFlow_Status.UserCreate = db.User_Lb.FirstOrDefault(us => us.UserId == returnData.LableDataFlow_Status.IdUserCreate);
 
+                string[] emptyArray = new string[0];
+                string content = Commons.SendMailNew.NewMail(Commons.LabelMail.CreateChecklistEmail(Commons.ListMail.MAIL_LABEL, returnData));               
+                Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh moi da duoc tao - Check List System", content);
+
                 return Json(new { status = true, data = returnData });
                 #endregion
             }
@@ -245,11 +249,19 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 {
                     lable.LableDataFlow_Status.IdLineLeader = user.UserId;
                     lable.LableDataFlow_Status.Status = "LineLeader Confirm";
+
+                    string[] emptyArray = new string[0];
+                    string content = Commons.SendMailNew.NewMail(Commons.LabelMail.CreateChecklistEmail(Mail, lable));
+                    Commons.SendMailNew.SendMail(Mail, emptyArray, "Bieu luu trinh moi can duoc phe duyet - Check List System", content);
                 } 
                 else if (user.RoleId == 3) // ipqc
                 {
                     lable.LableDataFlow_Status.IdIPQC = user.UserId;
                     lable.LableDataFlow_Status.Status = "IPQC Confirm";
+
+                    string[] emptyArray = new string[0];
+                    string content = Commons.SendMailNew.NewMail(Commons.LabelMail.ConfirmEmail(Commons.ListMail.MAIL_LABEL, lable));
+                    Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da duoc phe duyet - Check List System", content);
                 }
 
                 db.LableDataFlows.AddOrUpdate(lable);
@@ -268,18 +280,26 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
             {
                 User_Lb user = GetSessionUser();
                 LableDataFlow lable = db.LableDataFlows.FirstOrDefault(lb => lb.Id == Id);
+                lable.LableDataFlow_Status.Note = Note;
 
                 if (user.RoleId == 2) // line leader
                 {
                     lable.LableDataFlow_Status.IdLineLeader = user.UserId;
                     lable.LableDataFlow_Status.Status = "LineLeader Reject";
+
+                    string[] emptyArray = new string[0];
+                    string content = Commons.SendMailNew.NewMail(Commons.LabelMail.RejectEmail(Commons.ListMail.MAIL_LABEL, lable));
+                    Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da bi tu choi - Check List System", content);
                 }
                 else if (user.RoleId == 3) // ipqc
                 {
                     lable.LableDataFlow_Status.IdIPQC = user.UserId;
                     lable.LableDataFlow_Status.Status = "IPQC Reject";
-                }
-                lable.LableDataFlow_Status.Note = Note;
+
+                    string[] emptyArray = new string[0];
+                    string content = Commons.SendMailNew.NewMail(Commons.LabelMail.RejectEmail(Commons.ListMail.MAIL_LABEL, lable));
+                    Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da bi tu choi - Check List System", content);
+                }              
 
                 db.LableDataFlows.AddOrUpdate(lable);
                 db.SaveChanges();

@@ -812,6 +812,7 @@ function Confirm(elm, e) {
     if ($('[name="Location"]').val() == "F06") {
         htmlstring = `<select name="select" id="mailSelected" class='swal2-input' required class="form-control form-control-primary">
                                       <option value="No">No send mail</option>
+                                      <option value="cpeii-vn-ipqc-netgear@mail.foxconn.com">IPQC Netgear</option>
                                   </select>`;
     }
     else {
