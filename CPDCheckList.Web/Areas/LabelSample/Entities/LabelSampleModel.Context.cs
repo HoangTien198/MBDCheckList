@@ -27,10 +27,10 @@ namespace CPDCheckList.Web.Areas.LabelSample.Entities
     
         public virtual DbSet<FoxconnLabel> FoxconnLabels { get; set; }
         public virtual DbSet<LabelSample> LabelSamples { get; set; }
-        public virtual DbSet<LabelSampleStatu> LabelSampleStatus { get; set; }
+        public virtual DbSet<LabelSampleStatus> LabelSampleStatus1 { get; set; }
         public virtual DbSet<MacIDLabel> MacIDLabels { get; set; }
         public virtual DbSet<SNLabel> SNLabels { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<CurrentLabel> CurrentLabels { get; set; }
+        public virtual DbSet<User_LS> User_LS { get; set; }
     }
 }

@@ -46,6 +46,7 @@
           <Property Name="IsHasKey" Type="bit" />
           <Property Name="IdLabelSampleStatus" Type="int" />
           <Property Name="Note" Type="nvarchar" MaxLength="255" />
+          <Property Name="Location" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="LabelSampleStatus">
           <Key>
@@ -271,12 +272,13 @@
           <Property Name="IdLabelSampleStatus" Type="Int32" />
           <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FoxconnLabel" Relationship="Self.FK_LabelSample_FoxconnLabel" FromRole="LabelSample" ToRole="FoxconnLabel" />
-          <NavigationProperty Name="LabelSampleStatu" Relationship="Self.FK_LabelSample_LabelSampleStatus" FromRole="LabelSample" ToRole="LabelSampleStatus" />
+          <NavigationProperty Name="LabelSampleStatus" Relationship="Self.FK_LabelSample_LabelSampleStatus" FromRole="LabelSample" ToRole="LabelSampleStatus" />
           <NavigationProperty Name="MacIDLabel" Relationship="Self.FK_LabelSample_MacIDLabel" FromRole="LabelSample" ToRole="MacIDLabel" />
           <NavigationProperty Name="SNLabel" Relationship="Self.FK_LabelSample_SNLabel" FromRole="LabelSample" ToRole="SNLabel" />
           <NavigationProperty Name="CurrentLabel" Relationship="LabelSampleModel.FK_LabelSample_CurrentLabel" FromRole="LabelSample" ToRole="CurrentLabel" />
+          <Property Name="Location" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="LabelSampleStatu">
+        <EntityType Name="LabelSampleStatus">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -287,10 +289,10 @@
           <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Note" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="LabelSamples" Relationship="Self.FK_LabelSample_LabelSampleStatus" FromRole="LabelSampleStatus" ToRole="LabelSample" />
-          <NavigationProperty Name="UserCreated" Relationship="Self.FK_LabelSampleStatus_Users" FromRole="LabelSampleStatus" ToRole="Users" />
-          <NavigationProperty Name="UserTE" Relationship="Self.FK_LabelSampleStatus_Users1" FromRole="LabelSampleStatus" ToRole="Users" />
-          <NavigationProperty Name="UserPQE" Relationship="Self.FK_LabelSampleStatus_Users2" FromRole="LabelSampleStatus" ToRole="Users" />
-        </EntityType>
+          <NavigationProperty Name="UserCreated" Relationship="LabelSampleModel.FK_LabelSampleStatus_Users" FromRole="LabelSampleStatu" ToRole="User" />
+          <NavigationProperty Name="UserTE" Relationship="LabelSampleModel.FK_LabelSampleStatus_Users1" FromRole="LabelSampleStatu" ToRole="User" />
+          <NavigationProperty Name="UserPQE" Relationship="LabelSampleModel.FK_LabelSampleStatus_Users2" FromRole="LabelSampleStatu" ToRole="User" />
+          </EntityType>
         <EntityType Name="MacIDLabel">
           <Key>
             <PropertyRef Name="Id" />
@@ -317,21 +319,6 @@
           <Property Name="DerivedFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LabelImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="UserFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="RoleId" Type="Int32" />
-        </EntityType>
         <Association Name="FK_LabelSample_FoxconnLabel">
           <End Role="FoxconnLabel" Type="Self.FoxconnLabel" Multiplicity="0..1" />
           <End Role="LabelSample" Type="Self.LabelSample" Multiplicity="*" />
@@ -345,7 +332,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_LabelSample_LabelSampleStatus">
-          <End Role="LabelSampleStatus" Type="Self.LabelSampleStatu" Multiplicity="0..1" />
+          <End Role="LabelSampleStatus" Type="LabelSampleModel.LabelSampleStatus" Multiplicity="0..1" />
           <End Role="LabelSample" Type="Self.LabelSample" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LabelSampleStatus">
@@ -380,55 +367,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LabelSampleStatus_Users">
-          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
-          <End Role="LabelSampleStatus" Type="Self.LabelSampleStatu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="LabelSampleStatus">
-              <PropertyRef Name="IdUserCreated" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LabelSampleStatus_Users1">
-          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
-          <End Role="LabelSampleStatus" Type="Self.LabelSampleStatu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="LabelSampleStatus">
-              <PropertyRef Name="IdTE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LabelSampleStatus_Users2">
-          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
-          <End Role="LabelSampleStatus" Type="Self.LabelSampleStatu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="LabelSampleStatus">
-              <PropertyRef Name="IdPQE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="LabelSampleEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="FoxconnLabels" EntityType="Self.FoxconnLabel" />
           <EntitySet Name="LabelSamples" EntityType="Self.LabelSample" />
-          <EntitySet Name="LabelSampleStatus" EntityType="Self.LabelSampleStatu" />
+          <EntitySet Name="LabelSampleStatus1" EntityType="LabelSampleModel.LabelSampleStatus" />
           <EntitySet Name="MacIDLabels" EntityType="Self.MacIDLabel" />
           <EntitySet Name="SNLabels" EntityType="Self.SNLabel" />
-          <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_LabelSample_FoxconnLabel" Association="Self.FK_LabelSample_FoxconnLabel">
             <End Role="FoxconnLabel" EntitySet="FoxconnLabels" />
             <End Role="LabelSample" EntitySet="LabelSamples" />
           </AssociationSet>
           <AssociationSet Name="FK_LabelSample_LabelSampleStatus" Association="Self.FK_LabelSample_LabelSampleStatus">
-            <End Role="LabelSampleStatus" EntitySet="LabelSampleStatus" />
+            <End Role="LabelSampleStatus" EntitySet="LabelSampleStatus1" />
             <End Role="LabelSample" EntitySet="LabelSamples" />
           </AssociationSet>
           <AssociationSet Name="FK_LabelSample_MacIDLabel" Association="Self.FK_LabelSample_MacIDLabel">
@@ -439,22 +389,23 @@
             <End Role="SNLabel" EntitySet="SNLabels" />
             <End Role="LabelSample" EntitySet="LabelSamples" />
           </AssociationSet>
-          <AssociationSet Name="FK_LabelSampleStatus_Users" Association="Self.FK_LabelSampleStatus_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="LabelSampleStatus" EntitySet="LabelSampleStatus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LabelSampleStatus_Users1" Association="Self.FK_LabelSampleStatus_Users1">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="LabelSampleStatus" EntitySet="LabelSampleStatus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LabelSampleStatus_Users2" Association="Self.FK_LabelSampleStatus_Users2">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="LabelSampleStatus" EntitySet="LabelSampleStatus" />
-          </AssociationSet>
           <EntitySet Name="CurrentLabels" EntityType="LabelSampleModel.CurrentLabel" />
           <AssociationSet Name="FK_LabelSample_CurrentLabel" Association="LabelSampleModel.FK_LabelSample_CurrentLabel">
             <End Role="CurrentLabel" EntitySet="CurrentLabels" />
             <End Role="LabelSample" EntitySet="LabelSamples" />
+          </AssociationSet>
+          <EntitySet Name="User_LS" EntityType="LabelSampleModel.User_LS" />
+          <AssociationSet Name="FK_LabelSampleStatus_Users" Association="LabelSampleModel.FK_LabelSampleStatus_Users">
+            <End Role="User" EntitySet="User_LS" />
+            <End Role="LabelSampleStatu" EntitySet="LabelSampleStatus1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabelSampleStatus_Users1" Association="LabelSampleModel.FK_LabelSampleStatus_Users1">
+            <End Role="User" EntitySet="User_LS" />
+            <End Role="LabelSampleStatu" EntitySet="LabelSampleStatus1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LabelSampleStatus_Users2" Association="LabelSampleModel.FK_LabelSampleStatus_Users2">
+            <End Role="User" EntitySet="User_LS" />
+            <End Role="LabelSampleStatu" EntitySet="LabelSampleStatus1" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="CurrentLabel">
@@ -477,6 +428,57 @@
             </Principal>
             <Dependent Role="LabelSample">
               <PropertyRef Name="IdCurrentLabel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User_LS">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_LabelSampleStatus_Users">
+          <End Type="LabelSampleModel.User_LS" Role="User" Multiplicity="0..1" />
+          <End Type="LabelSampleModel.LabelSampleStatus" Role="LabelSampleStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="LabelSampleStatu">
+              <PropertyRef Name="IdUserCreated" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabelSampleStatus_Users1">
+          <End Type="LabelSampleModel.User_LS" Role="User" Multiplicity="0..1" />
+          <End Type="LabelSampleModel.LabelSampleStatus" Role="LabelSampleStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="LabelSampleStatu">
+              <PropertyRef Name="IdTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LabelSampleStatus_Users2">
+          <End Type="LabelSampleModel.User_LS" Role="User" Multiplicity="0..1" />
+          <End Type="LabelSampleModel.LabelSampleStatus" Role="LabelSampleStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="LabelSampleStatu">
+              <PropertyRef Name="IdPQE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -504,6 +506,7 @@
           <EntitySetMapping Name="LabelSamples">
             <EntityTypeMapping TypeName="LabelSampleModel.LabelSample">
               <MappingFragment StoreEntitySet="LabelSample">
+                <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -519,8 +522,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LabelSampleStatus">
-            <EntityTypeMapping TypeName="LabelSampleModel.LabelSampleStatu">
+          <EntitySetMapping Name="LabelSampleStatus1">
+            <EntityTypeMapping TypeName="LabelSampleModel.LabelSampleStatus">
               <MappingFragment StoreEntitySet="LabelSampleStatus">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdUserCreated" ColumnName="IdUserCreated" />
@@ -559,22 +562,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="LabelSampleModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
-                <ScalarProperty Name="UserFullName" ColumnName="UserFullName" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CurrentLabels">
             <EntityTypeMapping TypeName="LabelSampleModel.CurrentLabel">
               <MappingFragment StoreEntitySet="CurrentLabel">
@@ -584,6 +571,22 @@
                 <ScalarProperty Name="LabelCode" ColumnName="LabelCode" />
                 <ScalarProperty Name="LabelName" ColumnName="LabelName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_LS">
+            <EntityTypeMapping TypeName="LabelSampleModel.User_LS">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserFullName" ColumnName="UserFullName" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -13,7 +13,7 @@ namespace CPDCheckList.Web.Areas.LabelSample.Entities
     using System.Collections.Generic;
     using System.Text.Json.Serialization;
 
-    public partial class User
+    public partial class User_LS
     {
         public int UserId { get; set; }
         public string UserCode { get; set; }

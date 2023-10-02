@@ -12,10 +12,10 @@ namespace CPDCheckList.Web.Areas.LabelSample.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class LabelSampleStatu
+    public partial class LabelSampleStatus
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public LabelSampleStatu()
+        public LabelSampleStatus()
         {
             this.LabelSamples = new HashSet<LabelSample>();
         }
@@ -29,8 +29,8 @@ namespace CPDCheckList.Web.Areas.LabelSample.Entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LabelSample> LabelSamples { get; set; }
-        public virtual User UserCreated { get; set; }
-        public virtual User UserTE { get; set; }
-        public virtual User UserPQE { get; set; }
+        public virtual User_LS UserCreated { get; set; }
+        public virtual User_LS UserTE { get; set; }
+        public virtual User_LS UserPQE { get; set; }
     }
 }

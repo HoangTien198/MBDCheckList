@@ -26,9 +26,10 @@ namespace CPDCheckList.Web.Areas.LabelSample.Entities
         public Nullable<bool> IsHasKey { get; set; }
         public Nullable<int> IdLabelSampleStatus { get; set; }
         public string Note { get; set; }
+        public string Location { get; set; }
     
         public virtual FoxconnLabel FoxconnLabel { get; set; }
-        public virtual LabelSampleStatu LabelSampleStatu { get; set; }
+        public virtual LabelSampleStatus LabelSampleStatus { get; set; }
         public virtual MacIDLabel MacIDLabel { get; set; }
         public virtual SNLabel SNLabel { get; set; }
         public virtual CurrentLabel CurrentLabel { get; set; }

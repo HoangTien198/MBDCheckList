@@ -1,0 +1,49 @@
+﻿<input type="hidden" id="Location" value="F06" />
+@{
+    ViewBag.Title = "LabelSample";
+    Layout = "~/Areas/Shared/_AreaLayoutShare.cshtml";
+
+    //var user = (CPDCheckList.Web.Commons.AccountLogin)Session["USER_SESSION"];
+}
+
+@section styles{
+    <!-- Vendor -->
+    <!-- Custom -->
+    <link href="~/Areas/LabelSample/Content/Custom/LabelSample.css" rel="stylesheet" />
+}
+
+<img id="Image_Preview" style="display: none" />
+@*<input type="hidden" data-role="@user.RoleId" data-id="@user.UserId" id="thisUser" />*@
+
+<div class="page-wrapper">
+    <div class="page-body">
+        <div class="card mt-2">
+            <div class="card-body p-0">
+                <table id="table_LabelSample" class="table table-striped table-hover nowrap">
+                    <thead class="text-center">
+                        <tr class="border-top-0">
+                            <th class="text-center border-left-0" rowspan="2">日期<br />Ngày</th>
+                            <th class="text-center" rowspan="2">機種名<br />Tên sản phẩm</th>
+                            <th class="text-center" rowspan="2">制作日期<br />Thời gian làm</th>
+                            <th class="text-center" rowspan="2">生效日期<br />Thời gian có hiệu lực</th>
+                            <th class="text-center" rowspan="2">MO</th>
+                            <th class="text-center" rowspan="2">地位<br />Trạng thái</th>
+                            <th class="text-center border-right-0" rowspan="2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table_LabelSample-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <!-- Vendor -->
+    <script src="~/Areas/LabelSample/Content/vendor/MomentJs/moment.js"></script>
+
+    <!-- Custom -->
+    <script src="~/files/assets/js/common-pages.js?v=@Guid.NewGuid()"></script>
+    <script src="~/Areas/LabelSample/Content/Custom/LabelSample.js"></script>
+}
