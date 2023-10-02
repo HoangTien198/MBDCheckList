@@ -1,6 +1,11 @@
 ﻿$(function () {
     $('#page_name').text('Label 樣品表 Bảng Label mẫu');
     LoadDataCheckList();
+
+    $('#isFoxconnLabel').change();
+    $('#isSNLabel').change();
+    $('#isMacIDLabel').change();
+    $('#isCurrentLabel').change();
 });
 
 // Create Table
@@ -269,6 +274,337 @@ function DrawTableRows(item, isAddInDatatable = false) {
         return row;
     }
 }
+
+// New LableSample
+$(document).on('click', '#btn_AddNew', function (e) {
+    e.preventDefault();
+    $('#AddModel_LabelSample').modal('show');
+});
+
+
+// Custom Cell
+{
+    // CustomerNote
+    $('input[name="FoxconnLabel"][IsCustumerNote]').change(function () {
+        if ($(this).is(':checked')) {
+            $('input[name="FoxconnLabel"][CustumerNote]').val('');
+            $('input[name="FoxconnLabel"][CustumerNote]').attr('disabled', false);
+        }
+        else {
+            $('input[name="FoxconnLabel"][CustumerNote]').val('');
+            $('input[name="FoxconnLabel"][CustumerNote]').attr('disabled', true);
+        }
+    });
+    // DerivedFrom
+    $('input[IsDerivedFrom]').change(function () {
+        var lableType = $(this).attr('name');
+
+        if ($(this).is(':checked')) {
+            $(`input[name="${lableType}"][DerivedFrom]`).val('');
+            $(`input[name="${lableType}"][DerivedFrom]`).attr('disabled', false);
+        }
+        else {
+            $(`input[name="${lableType}"][DerivedFrom]`).val('');
+            $(`input[name="${lableType}"][DerivedFrom]`).attr('disabled', true);
+        }
+        
+    });
+    // MacIDCell
+    $('input[MacID][type="radio"]').change(function (e) {
+        if ($(this).val() === 'Orther') {
+            $('input[MacID][OtherText]').attr('disabled', false);
+            $('input[MacID][OtherText]').val('');
+        }
+        else {
+            $('input[MacID][OtherText]').attr('disabled', true);
+        }
+    });
+    // Form check radio
+    $('.form-check-label').on('click', function () {
+        var formCheck = $(this).parents().first();
+        var radio = formCheck.find('input[type="radio"]');
+        if (!radio.is(':disabled')) {
+            radio.prop('checked', true);
+            radio.change();
+        }
+    });
+}
+
+
+// Checkbox Label
+$('#isFoxconnLabel').change(function () {
+    var tds = $(`#AddModel_LabelSample_Table-tbody td[FoxconnLabel]`);
+
+    if ($(this).is(":checked")) {
+        $(tds).css('background-color', '');
+
+        $(tds).find('input[isBarCode]').attr('disabled', false);
+        $(tds).find('input[isBarCode]').prop('checked', false);
+
+        $(tds).find('input[IsCustumerNote]').attr('disabled', false);
+        $(tds).find('input[IsCustumerNote]').prop('checked', false);
+        $(tds).find('input[CustumerNote]').attr('disabled', true);
+        $(tds).find('input[CustumerNote]').val('');
+
+        $(tds).find('input[MadeIn]').attr('disabled', false);
+        $(tds).find('input[MadeIn]').val('');
+
+        $(tds).find('input[LableRev]').attr('disabled', false);
+        $(tds).find('input[LableRev]').val('');
+
+        $(tds).find('input[LabelCode]').attr('disabled', false);
+        $(tds).find('input[LabelCode]').val('');
+
+        $(tds).find('input[CoalPaperSpec]').attr('disabled', false);
+        $(tds).find('input[CoalPaperSpec]:first').prop('checked', true);
+
+        $(tds).find('input[IsDerivedFrom]').attr('disabled', false);
+        $(tds).find('input[IsDerivedFrom]').prop('checked', false);
+        $(tds).find('input[DerivedFrom]').attr('disabled', true);
+        $(tds).find('input[DerivedFrom]').val('');
+
+        $(tds).find('button[Btn-Image]').attr('disabled', false);
+        $(tds).find('input[LabelImagePath]').val('');
+    }
+    else {
+        $(tds).css('background-color', '#c7c7c7');
+
+        $(tds).find('input[isBarCode]').attr('disabled', true);
+        $(tds).find('input[isBarCode]').prop('checked', false);
+
+        $(tds).find('input[IsCustumerNote]').attr('disabled', true);
+        $(tds).find('input[IsCustumerNote]').prop('checked', false);
+        $(tds).find('input[CustumerNote]').attr('disabled', true);
+        $(tds).find('input[CustumerNote]').val('');
+
+        $(tds).find('input[MadeIn]').attr('disabled', true);
+        $(tds).find('input[MadeIn]').val('');
+
+        $(tds).find('input[LableRev]').attr('disabled', true);
+        $(tds).find('input[LableRev]').val('');
+
+        $(tds).find('input[LabelCode]').attr('disabled', true);
+        $(tds).find('input[LabelCode]').val('');
+
+        $(tds).find('input[CoalPaperSpec]').attr('disabled', true);
+        $(tds).find('input[CoalPaperSpec]:first').prop('checked', true);
+
+        $(tds).find('input[IsDerivedFrom]').attr('disabled', true);
+        $(tds).find('input[IsDerivedFrom]').prop('checked', false);
+        $(tds).find('input[DerivedFrom]').attr('disabled', true);
+        $(tds).find('input[DerivedFrom]').val('');
+
+        $(tds).find('button[Btn-Image]').attr('disabled', true);
+        $(tds).find('input[LabelImagePath]').val('');
+    }   
+});
+$('#isSNLabel').change(function () {
+    var tds = $(`#AddModel_LabelSample_Table-tbody td[SNLabel]`);
+
+    if ($(this).is(":checked")) {
+        $(tds).css('background-color', '');
+
+        $(tds).find('input[isBarCode]').attr('disabled', false);
+        $(tds).find('input[isBarCode]').prop('checked', false);
+
+        $(tds).find('input[TimeChangeMethod]').attr('disabled', false);
+        $(tds).find('input[TimeChangeMethod]:first').prop('checked', true);
+
+        $(tds).find('input[FixedCode]').attr('disabled', false);
+        $(tds).find('input[FixedCode]').val('');
+
+        $(tds).find('input[RangeCode]').attr('disabled', false);
+        $(tds).find('input[RangeCode]').val('');
+
+        $(tds).find('input[LabelCode]').attr('disabled', false);
+        $(tds).find('input[LabelCode]').val('');
+
+        $(tds).find('input[CoalPaperSpec]').attr('disabled', false);
+        $(tds).find('input[CoalPaperSpec]:first').prop('checked', true);
+
+        $(tds).find('input[IsDerivedFrom]').attr('disabled', false);
+        $(tds).find('input[IsDerivedFrom]').prop('checked', false);
+        $(tds).find('input[DerivedFrom]').attr('disabled', true);
+        $(tds).find('input[DerivedFrom]').val('');
+
+        $(tds).find('button[Btn-Image]').attr('disabled', false);
+        $(tds).find('input[LabelImagePath]').val('');
+    }
+    else {
+        $(tds).css('background-color', '#c7c7c7');
+
+        $(tds).find('input[isBarCode]').attr('disabled', true);
+        $(tds).find('input[isBarCode]').prop('checked', false);
+
+        $(tds).find('input[TimeChangeMethod]').attr('disabled', true);
+        $(tds).find('input[TimeChangeMethod]:first').prop('checked', true);
+
+        $(tds).find('input[FixedCode]').attr('disabled', true);
+        $(tds).find('input[FixedCode]').val('');
+
+        $(tds).find('input[RangeCode]').attr('disabled', true);
+        $(tds).find('input[RangeCode]').val('');
+
+        $(tds).find('input[LabelCode]').attr('disabled', true);
+        $(tds).find('input[LabelCode]').val('');
+
+        $(tds).find('input[CoalPaperSpec]').attr('disabled', true);
+        $(tds).find('input[CoalPaperSpec]:first').prop('checked', true);
+
+        $(tds).find('input[IsDerivedFrom]').attr('disabled', true);
+        $(tds).find('input[IsDerivedFrom]').prop('checked', false);
+        $(tds).find('input[DerivedFrom]').attr('disabled', true);
+        $(tds).find('input[DerivedFrom]').val('');
+
+        $(tds).find('button[Btn-Image]').attr('disabled', true);
+        $(tds).find('input[LabelImagePath]').val('');
+    }
+});
+$('#isMacIDLabel').change(function () {
+    var tds = $(`#AddModel_LabelSample_Table-tbody td[MacIDLabel]`);
+
+    if ($(this).is(":checked")) {
+        $(tds).css('background-color', '');
+
+        $(tds).find('input[isBarCode]').attr('disabled', false);
+        $(tds).find('input[isBarCode]').prop('checked', false);
+
+        $(tds).find('input[MacID]').attr('disabled', false);
+        $(tds).find('input[MacID]:first').prop('checked', true);
+        $(tds).find('input[MacID][OtherText]').attr('disabled', true);
+        $(tds).find('input[MacID][OtherText]').val('');
+
+        $(tds).find('input[LabelCode]').attr('disabled', false);
+        $(tds).find('input[LabelCode]').val('');
+
+        $(tds).find('input[CoalPaperSpec]').attr('disabled', false);
+        $(tds).find('input[CoalPaperSpec]:first').prop('checked', true);
+
+        $(tds).find('input[IsDerivedFrom]').attr('disabled', false);
+        $(tds).find('input[IsDerivedFrom]').prop('checked', false);
+        $(tds).find('input[DerivedFrom]').attr('disabled', true);
+        $(tds).find('input[DerivedFrom]').val('');
+
+        $(tds).find('button[Btn-Image]').attr('disabled', false);
+        $(tds).find('input[LabelImagePath]').val('');
+    }
+    else {
+        $(tds).css('background-color', '#c7c7c7');
+
+        $(tds).find('input[isBarCode]').attr('disabled', true);
+        $(tds).find('input[isBarCode]').prop('checked', false);
+
+        $(tds).find('input[MacID]').attr('disabled', true);
+        $(tds).find('input[MacID]:first').prop('checked', true);
+        $(tds).find('input[MacID][OtherText]').attr('disabled', true);
+        $(tds).find('input[MacID][OtherText]').val('');
+
+        $(tds).find('input[LabelCode]').attr('disabled', true);
+        $(tds).find('input[LabelCode]').val('');
+
+        $(tds).find('input[CoalPaperSpec]').attr('disabled', true);
+        $(tds).find('input[CoalPaperSpec]:first').prop('checked', true);
+
+        $(tds).find('input[IsDerivedFrom]').attr('disabled', true);
+        $(tds).find('input[IsDerivedFrom]').prop('checked', false);
+        $(tds).find('input[DerivedFrom]').attr('disabled', true);
+        $(tds).find('input[DerivedFrom]').val('');
+
+        $(tds).find('button[Btn-Image]').attr('disabled', true);
+        $(tds).find('input[LabelImagePath]').val('');
+    }
+});
+$('#isCurrentLabel').change(function (e) {
+    var tds = $(`#AddModel_LabelSample_Table-tbody td[CurrentLabel]`);
+
+    if ($(this).is(":checked")) {
+        $(tds).css('background-color', '');
+
+        $(tds).find('input[LabelName]').attr('disabled', false);
+        $(tds).find('input[LabelName]').val('');
+
+        $(tds).find('input[LabelCode]').attr('disabled', false);
+        $(tds).find('input[LabelCode]').val('');
+
+        $(tds).find('input[CoalPaperSpec]').attr('disabled', false);
+        $(tds).find('input[CoalPaperSpec]:first').prop('checked', true);
+
+        $(tds).find('input[IsDerivedFrom]').attr('disabled', false);
+        $(tds).find('input[IsDerivedFrom]').prop('checked', false);
+        $(tds).find('input[DerivedFrom]').attr('disabled', true);
+        $(tds).find('input[DerivedFrom]').val('');
+
+        $(tds).find('button[Btn-Image]').attr('disabled', false);
+        $(tds).find('input[LabelImagePath]').val('');
+    }
+    else {
+        $(tds).css('background-color', '#c7c7c7');
+
+        $(tds).find('input[LabelName]').attr('disabled', true);
+        $(tds).find('input[LabelName]').val('');
+
+        $(tds).find('input[LabelCode]').attr('disabled', true);
+        $(tds).find('input[LabelCode]').val('');
+
+        $(tds).find('input[CoalPaperSpec]').attr('disabled', true);
+        $(tds).find('input[CoalPaperSpec]:first').prop('checked', true);
+
+        $(tds).find('input[IsDerivedFrom]').attr('disabled', true);
+        $(tds).find('input[IsDerivedFrom]').prop('checked', false);
+        $(tds).find('input[DerivedFrom]').attr('disabled', true);
+        $(tds).find('input[DerivedFrom]').val('');
+
+        $(tds).find('button[Btn-Image]').attr('disabled', true);
+        $(tds).find('input[LabelImagePath]').val('');
+    }
+});
+//});
+//});
+//$('#isMacIDLabel').change(function () {
+//    if ($('#isMacIDLabel').is(":checked")) {
+//        DisableLabelType('MacIDLabel', false);
+//    }
+//    else {
+//        DisableLabelType('MacIDLabel', true);
+//    }
+
+//});
+//$('#isCurrentLabel').change(function (e) {
+//    if ($('#isCurrentLabel').is(":checked")) {
+//        DisableLabelType('CurrentLabel', false);
+//    }
+//    else {
+//        DisableLabelType('CurrentLabel', true);
+//    }
+
+//});
+//function DisableLabelType(type, isDisable) {
+    
+
+//    $.each(tds, function (k, td) {
+//        if (isDisable) {
+//            $(td).css('background-color', '#c7c7c7');
+//            $(td).find('input').attr('disabled', true);
+//            $(td).find('input').val('');
+//            $(td).find('button').attr('disabled', true);
+
+//            if ($(td).is('[manual]')) {
+//                $(td).find('input[type="checkbox"]').prop('checked', false);
+//            }
+//        }
+//        else {
+//            $(td).css('background-color', '');
+//            $(td).find('input').attr('disabled', false)
+//            $(td).find('button').attr('disabled', false);
+
+//            if ($(td).is('[manual]')) {             
+//                $(td).find('input[type="text"]').val('');
+//                $(td).find('input[type="text"]').attr('disabled', true);
+//            }
+//        }
+        
+//    });
+//}
 
 // Orther
 function GetResonseError(htmlString, elementName) {

@@ -195,7 +195,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LabelSampleModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\LabelSample\Entities\LabelSampleStatu.cs">
+    <Compile Include="Areas\LabelSample\Entities\LabelSampleStatus.cs">
       <DependentUpon>LabelSampleModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\LabelSample\Entities\MacIDLabel.cs">
@@ -204,7 +204,7 @@
     <Compile Include="Areas\LabelSample\Entities\SNLabel.cs">
       <DependentUpon>LabelSampleModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\LabelSample\Entities\User.cs">
+    <Compile Include="Areas\LabelSample\Entities\User_LS.cs">
       <DependentUpon>LabelSampleModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\LabelSample\LabelSampleAreaRegistration.cs" />

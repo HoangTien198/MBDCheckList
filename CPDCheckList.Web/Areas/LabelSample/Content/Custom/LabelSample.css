@@ -1,2 +1,10 @@
-﻿body {
+﻿.modal-fullscreen {
+    padding: 30px;
+}
+
+    .modal-fullscreen .modal-content {
+        border-radius: 15px;
+    }
+.table-lablesample tr{
+    vertical-align: middle;
 }
