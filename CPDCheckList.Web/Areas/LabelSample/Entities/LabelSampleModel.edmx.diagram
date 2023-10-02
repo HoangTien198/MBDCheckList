@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4cac7e1567534ca49ac8af048a1f3200" Name="Diagram1" ZoomLevel="87">
+        <EntityTypeShape EntityType="LabelSampleModel.FoxconnLabel" Width="1.5" PointX="8.125" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LabelSampleModel.LabelSample" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="LabelSampleModel.LabelSampleStatu" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LabelSampleModel.MacIDLabel" Width="1.5" PointX="4.625" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LabelSampleModel.SNLabel" Width="1.5" PointX="10.375" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LabelSampleModel.User" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="LabelSampleModel.FK_LabelSample_FoxconnLabel" ManuallyRouted="false" />
+        <AssociationConnector Association="LabelSampleModel.FK_LabelSample_LabelSampleStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="LabelSampleModel.FK_LabelSample_MacIDLabel" ManuallyRouted="false" />
+        <AssociationConnector Association="LabelSampleModel.FK_LabelSample_SNLabel" ManuallyRouted="false" />
+        <AssociationConnector Association="LabelSampleModel.FK_LabelSampleStatus_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="LabelSampleModel.FK_LabelSampleStatus_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="LabelSampleModel.FK_LabelSampleStatus_Users2" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LabelSampleModel.CurrentLabel" Width="1.5" PointX="7.375" PointY="6.25" />
+        <AssociationConnector Association="LabelSampleModel.FK_LabelSample_CurrentLabel" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

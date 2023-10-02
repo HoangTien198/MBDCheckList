@@ -170,6 +170,7 @@
     <Compile Include="Areas\BanDau\Model\CheckListSaveAjax.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\LabelSample\LabelSampleAreaRegistration.cs" />
     <Compile Include="Areas\Lable\Controllers\DataFlowController.cs" />
     <Compile Include="Areas\Lable\Data\LableDataFlow.cs">
       <DependentUpon>ModelLableDataFlow.tt</DependentUpon>
@@ -420,6 +421,7 @@
     </Content>
     <Content Include="Areas\Shared\web.config" />
     <Content Include="Areas\Lable\Views\web.config" />
+    <Content Include="Areas\LabelSample\Views\web.config" />
     <None Include="files\Content\vendor\Jquery\jquery-3.4.1.intellisense.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.min.js" />
@@ -1233,6 +1235,9 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Data\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
+    <Folder Include="Areas\LabelSample\Controllers\" />
+    <Folder Include="Areas\LabelSample\Data\" />
+    <Folder Include="Areas\LabelSample\Views\Shared\" />
     <Folder Include="Areas\Lable\Views\Shared\" />
     <Folder Include="Areas\TemperatureHumidity\Views\Shared\" />
     <Folder Include="Views\TemperatureMonitor\" />
