@@ -170,45 +170,35 @@
     <Compile Include="Areas\BanDau\Model\CheckListSaveAjax.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
-    <Compile Include="Areas\LabelSample\Controllers\LabelSampleController.cs" />
-    <Compile Include="Areas\LabelSample\Entities\CurrentLabel.cs">
+    <Compile Include="Areas\Lable\Controllers\DataFlowController.cs" />
+    <Compile Include="Areas\Lable\Controllers\SampleController.cs" />
+    <Compile Include="Areas\Lable\Data\CurrentLabel.cs">
       <DependentUpon>LabelSampleModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\LabelSample\Entities\FoxconnLabel.cs">
+    <Compile Include="Areas\Lable\Data\FoxconnLabel.cs">
       <DependentUpon>LabelSampleModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\LabelSample\Entities\LabelSample.cs">
+    <Compile Include="Areas\Lable\Data\LabelSample.cs">
       <DependentUpon>LabelSampleModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\LabelSample\Entities\LabelSampleModel.Context.cs">
+    <Compile Include="Areas\Lable\Data\LabelSampleModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LabelSampleModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\LabelSample\Entities\LabelSampleModel.cs">
+    <Compile Include="Areas\Lable\Data\LabelSampleModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LabelSampleModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\LabelSample\Entities\LabelSampleModel.Designer.cs">
+    <Compile Include="Areas\Lable\Data\LabelSampleModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LabelSampleModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\LabelSample\Entities\LabelSampleStatus.cs">
+    <Compile Include="Areas\Lable\Data\LabelSampleStatus.cs">
       <DependentUpon>LabelSampleModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\LabelSample\Entities\MacIDLabel.cs">
-      <DependentUpon>LabelSampleModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\LabelSample\Entities\SNLabel.cs">
-      <DependentUpon>LabelSampleModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\LabelSample\Entities\User_LS.cs">
-      <DependentUpon>LabelSampleModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\LabelSample\LabelSampleAreaRegistration.cs" />
-    <Compile Include="Areas\Lable\Controllers\DataFlowController.cs" />
     <Compile Include="Areas\Lable\Data\LableDataFlow.cs">
       <DependentUpon>ModelLableDataFlow.tt</DependentUpon>
     </Compile>
@@ -217,6 +207,9 @@
     </Compile>
     <Compile Include="Areas\Lable\Data\LableDataFlow_Status.cs">
       <DependentUpon>ModelLableDataFlow.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Lable\Data\MacIDLabel.cs">
+      <DependentUpon>LabelSampleModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Lable\Data\ModelLableDataFlow.Context.cs">
       <AutoGen>True</AutoGen>
@@ -233,8 +226,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelLableDataFlow.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Lable\Data\SNLabel.cs">
+      <DependentUpon>LabelSampleModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Lable\Data\User_Lb.cs">
       <DependentUpon>ModelLableDataFlow.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Lable\Data\User_LS.cs">
+      <DependentUpon>LabelSampleModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Lable\LableAreaRegistration.cs" />
     <Compile Include="Areas\RutKiem\CheckListRutKiem.cs">
@@ -327,119 +326,119 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\LabelSample\Content\Custom\LabelSample.css" />
-    <Content Include="Areas\LabelSample\Content\Custom\LabelSample.js" />
-    <Content Include="Areas\LabelSample\Content\template\NiceAdmin\css\style.css" />
-    <Content Include="Areas\LabelSample\Content\template\NiceAdmin\js\main.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap-icons\bootstrap-icons.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap-icons\index.html" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-grid.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-grid.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-reboot.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-reboot.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-utilities.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-utilities.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap.rtl.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap.rtl.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\Site.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.bundle.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.bundle.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.esm.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.esm.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\confetti-button\script.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\confetti-button\style.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap4.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap4.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap5.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap5.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bulma.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bulma.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.dataTables.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.dataTables.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.foundation.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.foundation.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.jqueryui.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.jqueryui.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.semanticui.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.semanticui.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\jquery.dataTables.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\css\jquery.dataTables.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\images\sort_asc.png" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\images\sort_asc_disabled.png" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\images\sort_both.png" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\images\sort_desc.png" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\images\sort_desc_disabled.png" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap4.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap4.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap5.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap5.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bulma.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bulma.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.dataTables.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.dataTables.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.foundation.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.foundation.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.jqueryui.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.jqueryui.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.semanticui.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.semanticui.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\jquery.dataTables.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\DataTables-1.13.4\js\jquery.dataTables.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\datatables.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\datatables.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\datatables.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\DataTables\datatables.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\css\all.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\stylesheet.css" />
-    <None Include="Areas\LabelSample\Content\vendor\Jquery\jquery-3.4.1.intellisense.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Jquery\jquery-3.4.1.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Jquery\jquery-3.4.1.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Jquery\jquery-3.4.1.slim.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Jquery\jquery-3.4.1.slim.min.js" />
-    <None Include="Areas\LabelSample\Content\vendor\Jquery\jquery.validate-vsdoc.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Jquery\jquery.validate.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Jquery\jquery.validate.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Jquery\jquery.validate.unobtrusive.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Jquery\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Modernizr\modernizr-2.8.3.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\MomentJs\moment-with-locales.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\MomentJs\moment.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Normalize\normalize.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Particles\particles.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Popper\popper.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\QRcode\html5-qrcode.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Stepper\bs-stepper.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Stepper\bs-stepper.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\SweetAlert\swal.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\SweetAlert\swal.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Viewer JS\viewer.min.css" />
-    <Content Include="Areas\LabelSample\Content\vendor\Viewer JS\viewer.min.js" />
-    <Content Include="Areas\LabelSample\Content\vendor\Wave\style.css" />
-    <Content Include="Areas\LabelSample\Entities\LabelSampleModel.Context.tt">
+    <Content Include="Areas\Lable\Content\Custom\LabelSample.css" />
+    <Content Include="Areas\Lable\Content\Custom\LabelSample.js" />
+    <Content Include="Areas\Lable\Content\template\NiceAdmin\css\style.css" />
+    <Content Include="Areas\Lable\Content\template\NiceAdmin\js\main.js" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap-icons\bootstrap-icons.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap-icons\index.html" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-utilities.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-utilities.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap.rtl.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap.rtl.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\Site.css" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.esm.js" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.esm.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.js" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\confetti-button\script.js" />
+    <Content Include="Areas\Lable\Content\vendor\confetti-button\style.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap4.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap5.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bootstrap5.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bulma.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.bulma.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.dataTables.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.dataTables.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.foundation.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.foundation.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.jqueryui.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.jqueryui.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.semanticui.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\dataTables.semanticui.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\jquery.dataTables.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\css\jquery.dataTables.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\images\sort_asc.png" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\images\sort_asc_disabled.png" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\images\sort_both.png" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\images\sort_desc.png" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\images\sort_desc_disabled.png" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap4.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap5.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bootstrap5.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bulma.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.bulma.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.dataTables.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.dataTables.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.foundation.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.foundation.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.jqueryui.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.jqueryui.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.semanticui.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\dataTables.semanticui.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\jquery.dataTables.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\jquery.dataTables.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\datatables.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\datatables.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\datatables.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\datatables.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\css\all.css" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\stylesheet.css" />
+    <None Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.intellisense.js" />
+    <Content Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.js" />
+    <Content Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.slim.js" />
+    <Content Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.slim.min.js" />
+    <None Include="Areas\Lable\Content\vendor\Jquery\jquery.validate-vsdoc.js" />
+    <Content Include="Areas\Lable\Content\vendor\Jquery\jquery.validate.js" />
+    <Content Include="Areas\Lable\Content\vendor\Jquery\jquery.validate.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\Jquery\jquery.validate.unobtrusive.js" />
+    <Content Include="Areas\Lable\Content\vendor\Jquery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\Modernizr\modernizr-2.8.3.js" />
+    <Content Include="Areas\Lable\Content\vendor\MomentJs\moment-with-locales.js" />
+    <Content Include="Areas\Lable\Content\vendor\MomentJs\moment.js" />
+    <Content Include="Areas\Lable\Content\vendor\Normalize\normalize.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Particles\particles.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\Popper\popper.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\QRcode\html5-qrcode.js" />
+    <Content Include="Areas\Lable\Content\vendor\Stepper\bs-stepper.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Stepper\bs-stepper.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\SweetAlert\swal.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\SweetAlert\swal.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\Viewer JS\viewer.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Viewer JS\viewer.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\Wave\style.css" />
+    <Content Include="Areas\Lable\Data\fii-logo.jpg" />
+    <Content Include="Areas\Lable\Data\LabelSampleModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LabelSampleModel.edmx</DependentUpon>
       <LastGenOutput>LabelSampleModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\LabelSample\Entities\LabelSampleModel.tt">
+    <Content Include="Areas\Lable\Data\LabelSampleModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LabelSampleModel.edmx</DependentUpon>
       <LastGenOutput>LabelSampleModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\Lable\Data\fii-logo.jpg" />
     <Content Include="Areas\Lable\Data\ModelLableDataFlow.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelLableDataFlow.edmx</DependentUpon>
@@ -570,91 +569,90 @@
     </Content>
     <Content Include="Areas\Shared\web.config" />
     <Content Include="Areas\Lable\Views\web.config" />
-    <Content Include="Areas\LabelSample\Views\web.config" />
-    <EntityDeploy Include="Areas\LabelSample\Entities\LabelSampleModel.edmx">
+    <EntityDeploy Include="Areas\Lable\Data\LabelSampleModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LabelSampleModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Areas\LabelSample\Entities\LabelSampleModel.edmx.diagram">
+    <Content Include="Areas\Lable\Data\LabelSampleModel.edmx.diagram">
       <DependentUpon>LabelSampleModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\LabelSample\Views\LabelSample\LabelSample.cshtml" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-grid.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-grid.min.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.min.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-reboot.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-reboot.min.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.min.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-utilities.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-utilities.min.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.min.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap.min.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap.rtl.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\css\bootstrap.rtl.min.css.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.bundle.js.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.bundle.min.js.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.esm.js.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.esm.min.js.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.js.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap\js\bootstrap.min.js.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap-icons\bootstrap-icons.json" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap-icons\fonts\bootstrap-icons.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Bootstrap-icons\fonts\bootstrap-icons.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Black.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Black.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-BlackItalic.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-BlackItalic.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Bold.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Bold.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-BoldItalic.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-BoldItalic.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-ExtraBold.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-ExtraBold.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-ExtraBoldItalic.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-ExtraBoldItalic.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Italic.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Italic.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Light.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Light.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-LightItalic.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-LightItalic.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Medium.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Medium.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-MediumItalic.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-MediumItalic.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Regular.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-Regular.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-SemiBold.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-SemiBold.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-SemiBoldItalic.woff" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font\Rubik\Rubik-SemiBoldItalic.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-brands-400.ttf" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-brands-400.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-duotone-900.ttf" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-duotone-900.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-light-300.ttf" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-light-300.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-regular-400.ttf" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-regular-400.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-light-300.ttf" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-light-300.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-regular-400.ttf" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-regular-400.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-solid-900.ttf" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-solid-900.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-solid-900.ttf" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-solid-900.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-thin-100.ttf" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-thin-100.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-v4compatibility.ttf" />
-    <Content Include="Areas\LabelSample\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-v4compatibility.woff2" />
-    <Content Include="Areas\LabelSample\Content\vendor\Jquery\jquery-3.4.1.min.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Jquery\jquery-3.4.1.slim.min.map" />
-    <Content Include="Areas\LabelSample\Content\vendor\Particles\particles.json" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-utilities.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-utilities.min.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap.rtl.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\css\bootstrap.rtl.min.css.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.esm.js.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.esm.min.js.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.js.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap-icons\bootstrap-icons.json" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap-icons\fonts\bootstrap-icons.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Bootstrap-icons\fonts\bootstrap-icons.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Black.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Black.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-BlackItalic.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-BlackItalic.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Bold.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Bold.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-BoldItalic.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-BoldItalic.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-ExtraBold.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-ExtraBold.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-ExtraBoldItalic.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-ExtraBoldItalic.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Italic.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Italic.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Light.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Light.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-LightItalic.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-LightItalic.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Medium.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Medium.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-MediumItalic.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-MediumItalic.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Regular.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-Regular.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-SemiBold.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-SemiBold.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-SemiBoldItalic.woff" />
+    <Content Include="Areas\Lable\Content\vendor\Font\Rubik\Rubik-SemiBoldItalic.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-brands-400.ttf" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-brands-400.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-duotone-900.ttf" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-duotone-900.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-light-300.ttf" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-light-300.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-regular-400.ttf" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-regular-400.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-light-300.ttf" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-light-300.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-regular-400.ttf" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-regular-400.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-solid-900.ttf" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-sharp-solid-900.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-solid-900.ttf" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-solid-900.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-thin-100.ttf" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-thin-100.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-v4compatibility.ttf" />
+    <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\webfonts\fa-v4compatibility.woff2" />
+    <Content Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.min.map" />
+    <Content Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.slim.min.map" />
+    <Content Include="Areas\Lable\Content\vendor\Particles\particles.json" />
+    <Content Include="Areas\Lable\Views\Sample\Index.cshtml" />
     <None Include="files\Content\vendor\Jquery\jquery-3.4.1.intellisense.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.min.js" />
@@ -1468,7 +1466,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Data\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
-    <Folder Include="Areas\LabelSample\Data\" />
     <Folder Include="Areas\Lable\Views\Shared\" />
     <Folder Include="Areas\TemperatureHumidity\Views\Shared\" />
     <Folder Include="Views\TemperatureMonitor\" />

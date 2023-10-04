@@ -177,13 +177,18 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link @((controllerName.Contains("DataFlow")) ? "" : "collapsed")" data-bs-target="#Lable-nav" data-bs-toggle="collapse" href="#" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="bi bi-aspect-ratio"></i><span>LABLE</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link @((controllerName.Contains("DataFlow") || controllerName.Contains("Sample")) ? "" : "collapsed")" data-bs-target="#Lable-nav" data-bs-toggle="collapse" href="#" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="bi bi-aspect-ratio"></i><span>LABEL</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="Lable-nav" class="nav-content @((controllerName.Contains("DataFlow")) ? "show" : "collapse")" data-bs-parent="#sidebar">
+                <ul id="Lable-nav" class="nav-content @((controllerName.Contains("DataFlow") || controllerName.Contains("Sample")) ? "show" : "collapse")" data-bs-parent="#sidebar">
                     <li>
-                        <a href="/Lable/DataFlow/Index" class="@((actionName =="Index" ) ? "active" : "")">
+                        <a href="/Lable/DataFlow/Index" class="@((actionName =="Index" && controllerName.Contains("DataFlow")) ? "active" : "")">
                             <i class="bi bi-circle"></i><span>Lưu trình dữ liệu</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Lable/Sample/Index" class="@((actionName =="Index" && controllerName.Contains("Sample")) ? "active" : "")">
+                            <i class="bi bi-circle"></i><span>Label Mẫu</span>
                         </a>
                     </li>
                 </ul>

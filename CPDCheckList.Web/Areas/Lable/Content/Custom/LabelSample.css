@@ -1,0 +1,31 @@
+﻿.modal-fullscreen {
+    padding: 30px;
+}
+
+    .modal-fullscreen .modal-content {
+        border-radius: 15px;
+    }
+.table-lablesample tr{
+    vertical-align: middle;
+}
+.previewContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.previewImage {
+    width: 50%;
+    object-fit: cover;
+    border-radius: 6px;
+    height: 98px;
+}
+
+.deleteButton {
+    display: none;
+    color: red;
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+    width: auto;
+}
