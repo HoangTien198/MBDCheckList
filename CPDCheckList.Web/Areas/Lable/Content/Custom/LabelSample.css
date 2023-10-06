@@ -29,3 +29,18 @@
     border-radius: 100%;
     width: auto;
 }
+.action_col{
+    width: 160px;
+}
+
+#AddModel_LabelSample-body[data-details] input:disabled {
+    background-color: transparent;
+}
+td.confirm {
+    color: green !important;
+    background-color: rgba(39, 245, 80, 0.24) !important;
+}
+td.reject {
+    color: red !important;
+    background-color: rgba(243, 32, 19, 0.1) !important;
+}

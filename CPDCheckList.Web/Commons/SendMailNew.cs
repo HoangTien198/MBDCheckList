@@ -185,7 +185,7 @@ namespace CPDCheckList.Web.Commons
                 string mailContent = $"Hello, {toEmail}</br>" +
                                      $"</br>" +
                                      $"We hope this email finds you well. We want to inform you that there is a new order creation request in the system that requires your attention.</br>" +
-                                     $"</br>" + 
+                                     $"</br>" +
                                      $"Requester: {checklist.LableDataFlow_Status.UserCreate.UserCode} - {checklist.LableDataFlow_Status.UserCreate.UserFullName}</br>" +
                                      $"Creation Date: {checklist.DateTime}</br>" +
                                      $"Product: {checklist.ProductName}</br>" +
@@ -263,6 +263,91 @@ namespace CPDCheckList.Web.Commons
             }
         }
 
+    }
+
+    public class SampleMail
+    {
+        public static string CreateChecklistEmail(string toEmail, LabelSample label)
+        {
+            try
+            {
+                string mailContent = $"Hello, {toEmail}</br>" +
+                                     $"</br>" +
+                                     $"We hope this email finds you well. We want to inform you that there is a new order creation request in the system that requires your attention.</br>" +
+                                     $"</br>" +
+                                     $"Requester: {label.LabelSampleStatus.UserCreated.UserCode} - {label.LabelSampleStatus.UserCreated.UserFullName}</br>" +
+                                     $"Creation Date: {label.CreatedDate}</br>" +
+                                     $"Product: {label.ProductName}</br>" +
+                                     $"MO: {label.MO}</br>" +
+                                     $"</br>";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System</a>.</br>";
+                mailContent += "After logging in, please navigate to the 'Data Flow' section under 'Label,' where you will find the new request awaiting your action.</br>";
+                mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[cpeii-vn-te-me@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
+                mailContent += "</br>";
+                mailContent += "Thank you and Best Regards!";
+
+                return mailContent;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        public static string ConfirmEmail(string toEmail, LabelSample label)
+        {
+            try
+            {
+                string mailContent = $"Hello, {toEmail}</br>" +
+                                     $"</br>" +
+                                     $"We hope this email finds you well. We are pleased to inform you that your order creation request has been successfully approved.</br>" +
+                                     $"</br>" +
+                                     $"Requester: {label.LabelSampleStatus.UserCreated.UserCode} - {label.LabelSampleStatus.UserCreated.UserFullName}</br>" +
+                                     $"Creation Date: {label.CreatedDate}</br>" +
+                                     $"Product: {label.ProductName}</br>" +
+                                     $"MO: {label.MO}</br>" +
+                                     $"</br>";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System</a>. ";
+                mailContent += "After logging in, please visit the 'Data Flow' section under 'Label,' where you will see the status update of your request.</br>";
+                mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[cpeii-vn-te-me@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
+                mailContent += "</br>";
+                mailContent += "Thank you and Best Regards!";
+
+                return mailContent;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        public static string RejectEmail(string toEmail, LabelSample label)
+        {
+            try
+            {
+                string mailContent = $"Hello, {toEmail}</br>" +
+                                     $"</br>" +
+                                     $"We hope this email finds you well. We regret to inform you that your order creation request has been declined.</br>" +
+                                     $"</br>" +
+                                     $"Requester: {label.LabelSampleStatus.UserCreated.UserCode} - {label.LabelSampleStatus.UserCreated.UserFullName}</br>" +
+                                     $"Creation Date: {label.CreatedDate}</br>" +
+                                     $"Product: {label.ProductName}</br>" +
+                                     $"MO: {label.MO}</br>" +
+                                     $"</br>";
+                mailContent += $"Reason for rejection: {label.LabelSampleStatus.Note}</br></br>";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System</a>. ";
+                mailContent += "After logging in, please visit the 'Data Flow' section under 'Label,' where you will see the status update of your request.</br>";
+                mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[cpeii-vn-te-me@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
+                mailContent += "</br>";
+                mailContent += "Thank you and Best Regards!";
+
+                return mailContent;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
     }
 
 }

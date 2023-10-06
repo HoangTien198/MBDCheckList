@@ -30,54 +30,99 @@ namespace CPDCheckList.Web.Controllers
                 //đã có username và password
                 LoginDao loginDao = new LoginDao();
                 int checkLogin = loginDao.checkLogin(username, password);
-                if (checkLogin == 0)
-                {
-                    return JavaScript("endload();Swal.fire(\"Đăng nhập không thành công!\", \"Kiểm tra lại thông tin tài khoản và mật khẩu!\", \"error\");");
-                }
-                else if (checkLogin == 1)//TE
-                {
-                    var userDao = new UserDao();
-                    var user = userDao.GetByAccount(username, password);
-                    //Gán Session:
-                    var userSession = new AccountLogin();
-                    userSession.Username = user.Username;
-                    userSession.Password = user.Password;
-                    userSession.RoleId = user.RoleId;
-                    userSession.UserId = user.UserId;
-                    userSession.UserCode = user.UserCode;
 
-                    Session.Add(CommonConstant.USER_SESSION, userSession);
-
-                    return JavaScript("endload();Swal.fire(\"Success!\", \"Đang đăng nhập với vai trò TE! Vui lòng chờ trong giây lát...\", \"success\");window.location = '/Dashboard/Home/Home';");
-                }
-                else if (checkLogin == 2)//chuyền trưởng
+                switch (checkLogin)
                 {
-                    var userDao = new UserDao();
-                    var user = userDao.GetByAccount(username, password);
-                    var userSession = new AccountLogin();
-                    userSession.Username = user.Username;
-                    userSession.Password = user.Password;
-                    userSession.RoleId = user.RoleId;
-                    userSession.UserId = user.UserId;
-                    userSession.UserCode = user.UserCode;
-                    Session.Add(CommonConstant.USER_SESSION, userSession);
-                    return JavaScript("endload();Swal.fire(\"Success!\", \"Đang đăng nhập với vai trò Line Leader! Vui lòng chờ trong giây lát...\", \"success\");window.location = '/Dashboard/Home/Home';");
+                    case 0:
+                        {
+                            return JavaScript("endload();Swal.fire(\"Đăng nhập không thành công!\", \"Kiểm tra lại thông tin tài khoản và mật khẩu!\", \"error\");");
+                        }
+                    case 1: //TE
+                        {
+                            var userDao = new UserDao();
+                            var user = userDao.GetByAccount(username, password);
+                            //Gán Session:
+                            var userSession = new AccountLogin();
+                            userSession.Username = user.Username;
+                            userSession.Password = user.Password;
+                            userSession.RoleId = user.RoleId;
+                            userSession.UserId = user.UserId;
+                            userSession.UserCode = user.UserCode;
 
+                            Session.Add(CommonConstant.USER_SESSION, userSession);
+
+                            return JavaScript("endload();Swal.fire(\"Success!\", \"Đang đăng nhập với vai trò TE! Vui lòng chờ trong giây lát...\", \"success\");window.location = '/Dashboard/Home/Home';");
+                        }
+                    case 2: // Line Leader
+                        {
+                            var userDao = new UserDao();
+                            var user = userDao.GetByAccount(username, password);
+                            var userSession = new AccountLogin();
+                            userSession.Username = user.Username;
+                            userSession.Password = user.Password;
+                            userSession.RoleId = user.RoleId;
+                            userSession.UserId = user.UserId;
+                            userSession.UserCode = user.UserCode;
+                            Session.Add(CommonConstant.USER_SESSION, userSession);
+                            return JavaScript("endload();Swal.fire(\"Success!\", \"Đang đăng nhập với vai trò Line Leader! Vui lòng chờ trong giây lát...\", \"success\");window.location = '/Dashboard/Home/Home';");
+                        }
+                    case 3: // IPQC
+                        {
+                            var userDao = new UserDao();
+                            var user = userDao.GetByAccount(username, password);
+                            var userSession = new AccountLogin();
+                            userSession.Username = user.Username;
+                            userSession.Password = user.Password;
+                            userSession.RoleId = user.RoleId;
+                            userSession.UserId = user.UserId;
+                            userSession.UserCode = user.UserCode;
+                            Session.Add(CommonConstant.USER_SESSION, userSession);
+                            return JavaScript("endload();Swal.fire(\"Success!\", \"Đang đăng nhập với vai trò IPQC! Vui lòng chờ trong giây lát...\", \"success\");window.location = '/Dashboard/Home/Home';");
+                        }
+                    case 4:
+                        {
+                            var userDao = new UserDao();
+                            var user = userDao.GetByAccount(username, password);
+                            var userSession = new AccountLogin();
+                            userSession.Username = user.Username;
+                            userSession.Password = user.Password;
+                            userSession.RoleId = user.RoleId;
+                            userSession.UserId = user.UserId;
+                            userSession.UserCode = user.UserCode;
+                            Session.Add(CommonConstant.USER_SESSION, userSession);
+                            return JavaScript("endload();Swal.fire(\"Success!\", \"Đang đăng nhập với vai trò IPQC! Vui lòng chờ trong giây lát...\", \"success\");window.location = '/Dashboard/Home/Home';");
+                        }
+                    case 6: //PQE
+                        {
+                            var userDao = new UserDao();
+                            var user = userDao.GetByAccount(username, password);
+                            var userSession = new AccountLogin();
+                            userSession.Username = user.Username;
+                            userSession.Password = user.Password;
+                            userSession.RoleId = user.RoleId;
+                            userSession.UserId = user.UserId;
+                            userSession.UserCode = user.UserCode;
+                            Session.Add(CommonConstant.USER_SESSION, userSession);
+                            return JavaScript("endload();Swal.fire(\"Success!\", \"Đang đăng nhập với vai trò PQE! Vui lòng chờ trong giây lát...\", \"success\");window.location = '/Dashboard/Home/Home';");
+                        }
+                    case 7: // TE
+                        {
+                            var userDao = new UserDao();
+                            var user = userDao.GetByAccount(username, password);
+                            var userSession = new AccountLogin();
+                            userSession.Username = user.Username;
+                            userSession.Password = user.Password;
+                            userSession.RoleId = user.RoleId;
+                            userSession.UserId = user.UserId;
+                            userSession.UserCode = user.UserCode;
+                            Session.Add(CommonConstant.USER_SESSION, userSession);
+                            return JavaScript("endload();Swal.fire(\"Success!\", \"Đang đăng nhập với vai trò TE! Vui lòng chờ trong giây lát...\", \"success\");window.location = '/Dashboard/Home/Home';");
+                        }
+                    default:
+                        {
+                            return JavaScript("window.location = '/ErrorPage/Error404/Index'");
+                        }
                 }
-                else if (checkLogin == 3)//IPQC
-                {
-                    var userDao = new UserDao();
-                    var user = userDao.GetByAccount(username, password);
-                    var userSession = new AccountLogin();
-                    userSession.Username = user.Username;
-                    userSession.Password = user.Password;
-                    userSession.RoleId = user.RoleId;
-                    userSession.UserId = user.UserId;
-                    userSession.UserCode = user.UserCode;
-                    Session.Add(CommonConstant.USER_SESSION, userSession);
-                    return JavaScript("endload();Swal.fire(\"Success!\", \"Đang đăng nhập với vai trò IPQC! Vui lòng chờ trong giây lát...\", \"success\");window.location = '/Dashboard/Home/Home';");
-                }
-                return JavaScript("window.location = '/ErrorPage/Error404/Index'");
             }
             else
             {

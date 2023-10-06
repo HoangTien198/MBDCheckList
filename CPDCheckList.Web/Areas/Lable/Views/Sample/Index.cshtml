@@ -20,7 +20,7 @@
     <div class="page-body">
         <div class="card mt-2">
             <div class="card-body p-0">
-                <table id="table_LabelSample" class="table table-striped table-hover nowrap">
+                <table id="table_LabelSample" class="table table-bordered table-striped table-hover nowrap">
                     <thead class="text-center">
                         <tr class="border-top-0">
                             <th class="text-center" rowspan="2">機種名<br />Tên sản phẩm</th>
@@ -40,7 +40,7 @@
 </div>
 
 <!-- Add & Edit modal -->
-<div class="modal fade" id="AddModel_LabelSample" data-bs-backdrop="static">
+<div class="modal fade" id="LabelSample" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
         <div class="modal-content">
             <div class="modal-header">
@@ -49,7 +49,7 @@
                 </div>
                 <button type="button" class="btn btn-outline-danger border-0 rounded-circle" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x" style="font-size: 20px"></i></button>
             </div>
-            <div class="modal-body" id="AddModel_LabelSample-body">
+            <div class="modal-body" id="LabelSample-body">
                 <div class="row mb-3">
                     <div class="col-3">
                         <label class="form-label">機種名 (Tên sản phẩm):</label>
@@ -68,7 +68,7 @@
                         <input type="text" class="form-control" placeholder="MO .." data-name="MO">
                     </div>
                 </div>
-                <table class="table table-bordered table-lablesample" id="AddModel_LabelSample_Table">
+                <table class="table table-bordered table-lablesample" id="LabelSample_Table">
                     <thead>
                         <tr style="background-color: blanchedalmond">
                             <th style="width: 75px;">Thứ tự</th>
@@ -110,7 +110,7 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody id="AddModel_LabelSample_Table-tbody">
+                    <tbody id="LabelSample_Table-tbody">
                         <!-- Row 1 -->
                         <tr>
                             <td class="text-center fw-bold">1</td>
@@ -153,11 +153,11 @@
                                 <div class="d-flex justify-content-between">
                                     <label class="form-check-label">Khách hàng:</label>
                                     <div class="form-check form-switch ms-3">
-                                        <input class="form-check-input" type="checkbox" name="FoxconnLabel" IsCustumerNote>
+                                        <input class="form-check-input" type="checkbox" name="FoxconnLabel" IsCustomerNote>
                                         <label class="form-check-label">舞 Không / 有 Có</label>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control form-control-sm" placeholder="Nội dung..." name="FoxconnLabel" CustumerNote>
+                                <input type="text" class="form-control form-control-sm" placeholder="Nội dung..." name="FoxconnLabel" CustomerNote>
                             </td>
                             <td SNLabel>
                                 <label class="form-check-label">Phương thức thay đổi thời gian:</label>
@@ -187,19 +187,19 @@
                             <td rowspan="3" MacIDLabel name="MacIDLabel" MacID>
                                 <label class="form-check-label">MAC ID:</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" value="Liên tục" name="MacIDLabel-MacID" type="radio">
+                                    <input class="form-check-input" value="連續 (Liên tục)" name="MacIDLabel-MacID" type="radio">
                                     <label class="form-check-label">連續 (Liên tục)</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" value="Số lẻ" name="MacIDLabel-MacID" type="radio">
+                                    <input class="form-check-input" value="奇數 (Số lẻ)" name="MacIDLabel-MacID" type="radio">
                                     <label class="form-check-label">奇數 (Số lẻ)</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" value="Số chẵn" name="MacIDLabel-MacID" type="radio">
+                                    <input class="form-check-input" value="偶数 (Số chẵn)" name="MacIDLabel-MacID" type="radio">
                                     <label class="form-check-label">偶数 (Số chẵn)</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" value="Nhảy 3 mã" name="MacIDLabel-MacID" type="radio">
+                                    <input class="form-check-input" value="跳3碼 (Nhảy 3 mã)" name="MacIDLabel-MacID" type="radio">
                                     <label class="form-check-label">跳3碼 (Nhảy 3 mã)</label>
                                 </div>
                                 <div class="d-flex">
@@ -442,10 +442,10 @@
                                 <label class="form-control-label">Người tạo</label>
                             </td>
                             <td style="background-color: blanchedalmond">
-                                <label class="form-control-label">TE xác nhận dải MAC</label>
+                                <label class="form-control-label">PQE xác nhận</label>
                             </td>
                             <td style="background-color: blanchedalmond">
-                                <label class="form-control-label">PQE xác nhận</label>
+                                <label class="form-control-label">TE xác nhận dải MAC</label>
                             </td>
                         </tr>
                         <tr>
@@ -455,15 +455,16 @@
                                     <label class="form-check-label ms-3">舞 Không / 有 Có</label>
                                 </div>
                             </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td UserCreated class="text-center"></td>
+                            <td UserPQE class="text-center"></td>
+                            <td UserTE class="text-center"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer justify-content-end">
-                <button type="button" class="btn btn-sm btn-primary" id="AddModel_LabelSample-btnSave">添新 Thêm mới</button>
+                <button type="button" class="btn btn-sm btn-primary" id="LabelSample-btnSave">添新 Thêm mới</button>
+                <button type="button" class="btn btn-sm btn-primary" style="display: none" id="LabelSample-btnSaveEdit" onclick="SaveEdit(this, event)">Lưu</button>
             </div>
         </div>
     </div>

@@ -942,6 +942,9 @@
                     if ($('[data-typeRole]').data('typerole') == 1) {
                         btnhtml = `<button type="button" class="btn btn-primary waves-effect m-2" id="btn_AddNew">Create New</button>`;
                     }
+                    else {
+                        btnhtml = `<button type="button" class="btn btn-primary waves-effect m-2" style="display: none;" id="btn_AddNew">Create New</button>`;
+                    }
                     if (s.data && r.call(this), this.body = this.dom.tBodies[0], this.head = this.dom.tHead, this.foot = this.dom.tFoot, this.body || (this.body = e("tbody"), this.dom.appendChild(this.body)), this.hasRows = this.body.rows.length > 0, !this.head) {
                         const t = e("thead"),
                             i = e("tr");

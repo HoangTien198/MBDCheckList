@@ -3,6 +3,7 @@ using CPDCheckList.Web.Commons;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -46,6 +47,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
             }
         }
 
+        // POST Add new Label
         public JsonResult NewLabelSample()
         {
             try
@@ -70,15 +72,15 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 if (form.AllKeys.Any(k => k.Contains("FoxconnLabel")))
                 {
                     FoxconnLabel label = new FoxconnLabel();
-                    foreach (string key in form.AllKeys)
+                    foreach (string key in form.AllKeys.Where(k => k.Contains("FoxconnLabel")))
                     {
-                        if (key.Contains("IsBarCode")) label.IsBarCode = bool.Parse(form[key]);
-                        if (key.Contains("CustumerNote")) label.CustomerNote = form[key];
-                        if (key.Contains("MadeIn")) label.MadeIn = form[key];
-                        if (key.Contains("LableRev")) label.LableRev = form[key];
-                        if (key.Contains("LabelCode")) label.LabelCode = form[key];
-                        if (key.Contains("CoalPaperSpec")) label.CoalPaperSpec = form[key];
-                        if (key.Contains("DerivedFrom")) label.DerivedFrom = form[key];
+                        if (key.Contains("[IsBarCode]")) label.IsBarCode = bool.Parse(form[key]);
+                        if (key.Contains("[CustomerNote]")) label.CustomerNote = form[key];
+                        if (key.Contains("[MadeIn]")) label.MadeIn = form[key];
+                        if (key.Contains("[LableRev]")) label.LableRev = form[key];
+                        if (key.Contains("[LabelCode]")) label.LabelCode = form[key];
+                        if (key.Contains("[CoalPaperSpec]")) label.CoalPaperSpec = form[key];
+                        if (key.Contains("[DerivedFrom]")) label.DerivedFrom = form[key];
                     }
                     if (files.AllKeys.Any(k => k.Contains("FoxconnLabel")))
                     {
@@ -107,15 +109,15 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 if (form.AllKeys.Any(k => k.Contains("SNLabel")))
                 {
                     SNLabel label = new SNLabel();
-                    foreach (string key in form.AllKeys)
+                    foreach (string key in form.AllKeys.Where(k => k.Contains("SNLabel")))
                     {
-                        if (key.Contains("IsBarCode")) label.IsBarCode = bool.Parse(form[key]);
-                        if (key.Contains("TimeChangeMethod")) label.TimeChangeMethod = form[key];
-                        if (key.Contains("FixedCode")) label.FixedCode = form[key];
-                        if (key.Contains("RangeCode")) label.RangeCode = form[key];
-                        if (key.Contains("LabelCode")) label.LabelCode = form[key];
-                        if (key.Contains("CoalPaperSpec")) label.CoalPaperSpec = form[key];
-                        if (key.Contains("DerivedFrom")) label.DerivedFrom = form[key];
+                        if (key.Contains("[IsBarCode]")) label.IsBarCode = bool.Parse(form[key]);
+                        if (key.Contains("[TimeChangeMethod]")) label.TimeChangeMethod = form[key];
+                        if (key.Contains("[FixedCode]")) label.FixedCode = form[key];
+                        if (key.Contains("[RangeCode]")) label.RangeCode = form[key];
+                        if (key.Contains("[LabelCode]")) label.LabelCode = form[key];
+                        if (key.Contains("[CoalPaperSpec]")) label.CoalPaperSpec = form[key];
+                        if (key.Contains("[DerivedFrom]")) label.DerivedFrom = form[key];
                     }
                     if (files.AllKeys.Any(k => k.Contains("SNLabel")))
                     {
@@ -144,13 +146,13 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 if (form.AllKeys.Any(k => k.Contains("MacIDLabel")))
                 {
                     MacIDLabel label = new MacIDLabel();
-                    foreach (string key in form.AllKeys)
+                    foreach (string key in form.AllKeys.Where(k => k.Contains("MacIDLabel")))
                     {
-                        if (key.Contains("IsBarCode")) label.IsBarCode = bool.Parse(form[key]);
-                        if (key.Contains("MacID")) label.MacID = form[key];
-                        if (key.Contains("LabelCode")) label.LabelCode = form[key];
-                        if (key.Contains("CoalPaperSpec")) label.CoalPaperSpec = form[key];
-                        if (key.Contains("DerivedFrom")) label.DerivedFrom = form[key];
+                        if (key.Contains("[IsBarCode]")) label.IsBarCode = bool.Parse(form[key]);
+                        if (key.Contains("[MacID]")) label.MacID = form[key];
+                        if (key.Contains("[LabelCode]")) label.LabelCode = form[key];
+                        if (key.Contains("[CoalPaperSpec]")) label.CoalPaperSpec = form[key];
+                        if (key.Contains("[DerivedFrom]")) label.DerivedFrom = form[key];
                     }
                     if (files.AllKeys.Any(k => k.Contains("MacIDLabel")))
                     {
@@ -179,12 +181,12 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 if (form.AllKeys.Any(k => k.Contains("CurrentLabel")))
                 {
                     CurrentLabel label = new CurrentLabel();
-                    foreach (string key in form.AllKeys)
+                    foreach (string key in form.AllKeys.Where(k => k.Contains("CurrentLabel")))
                     {
-                        if (key.Contains("LabelName")) label.LabelName = form[key];
-                        if (key.Contains("LabelCode")) label.LabelCode = form[key];
-                        if (key.Contains("CoalPaperSpec")) label.CoalPaperSpec = form[key];
-                        if (key.Contains("DerivedFrom")) label.DerivedFrom = form[key];
+                        if (key.Contains("[LabelName]")) label.LabelName = form[key];
+                        if (key.Contains("[LabelCode]")) label.LabelCode = form[key];
+                        if (key.Contains("[CoalPaperSpec]")) label.CoalPaperSpec = form[key];
+                        if (key.Contains("[DerivedFrom]")) label.DerivedFrom = form[key];
                     }
                     if (files.AllKeys.Any(k => k.Contains("CurrentLabel")))
                     {
@@ -212,24 +214,357 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 #region Label Sample Status
                 User_LS user = GetSessionUser();
                 LabelSampleStatus status = new LabelSampleStatus();
-                status.IdUserCreated = user.UserId;
-                status.UserCreated = user;
+                status.IdUserCreated = user.UserId;                
                 status.Status = "Pending";
-
                 db.LabelSampleStatus1.Add(status);
+              
                 LabelSample.IdLabelSampleStatus = status.Id;
                 LabelSample.LabelSampleStatus = status;
-                #endregion
 
                 db.LabelSamples.Add(LabelSample);
+                #endregion
 
                 db.SaveChanges();
+                status.UserCreated = user;
 
                 return Json(new { status = true , data = JsonSerializer.Serialize(LabelSample)});
             }
             catch (Exception ex)
             {
                 return Json(new { status = false, message = ex.Message });
+            }
+        }
+
+        // GET Get Label
+        public JsonResult GetLabelSample(int Id)
+        {
+            try
+            {
+                LabelSample label = db.LabelSamples.FirstOrDefault(l => l.Id == Id);
+                if(label != null)
+                {
+                    return Json(new { status = true, label = JsonSerializer.Serialize(label) }, JsonRequestBehavior.AllowGet); 
+                }
+                else
+                {
+                    return Json(new { status = false, message = "Label sample not found." }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, message = ex.Message}, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // POST Update new Label
+        public JsonResult UpdateLabelSample(int Id)
+        {
+            try
+            {
+                var form = Request.Form;
+                var files = Request.Files;
+
+                LabelSample LabelSample = db.LabelSamples.FirstOrDefault(lb => lb.Id == Id);
+
+                LabelSample.ProductName = form["ProductName"];
+                LabelSample.CreatedDate = DateTime.Parse(form["CreatedDate"]);
+                LabelSample.ValidDate = DateTime.Parse(form["ValidDate"]);
+                LabelSample.MO = form["MO"];
+                LabelSample.Note = form["Note[0]"] + "," + form["Note[1]"] + "," + form["Note[2]"];
+                LabelSample.Location = form["Location"];
+                LabelSample.IsHasKey = bool.Parse(form["IsHasKey"]);
+
+                Guid folerName = Guid.NewGuid();
+
+                #region FoxconnLabel
+                if (form.AllKeys.Any(k => k.Contains("FoxconnLabel")))
+                {
+                    FoxconnLabel label = new FoxconnLabel();
+                    if (LabelSample.FoxconnLabel != null) label = LabelSample.FoxconnLabel;
+
+                    // Data
+                    foreach (string key in form.AllKeys.Where(k => k.Contains("FoxconnLabel")))
+                    {
+                        if (key.Contains("[IsBarCode]")) label.IsBarCode = bool.Parse(form[key]);
+                        if (key.Contains("[CustomerNote]")) label.CustomerNote = form[key];
+                        if (key.Contains("[MadeIn]")) label.MadeIn = form[key];
+                        if (key.Contains("[LableRev]")) label.LableRev = form[key];
+                        if (key.Contains("[LabelCode]")) label.LabelCode = form[key];
+                        if (key.Contains("[CoalPaperSpec]")) label.CoalPaperSpec = form[key];
+                        if (key.Contains("[DerivedFrom]")) label.DerivedFrom = form[key];
+
+                        if (key.Contains("[LabelImagePath]") && form[key] == "Remove") label.LabelImagePath = null;
+                    }
+
+                    // File Image
+                    if (files.AllKeys.Any(k => k.Contains("FoxconnLabel")))
+                    {
+                        string fileKey = files.AllKeys.FirstOrDefault(k => k.Contains("FoxconnLabel"));
+                        HttpPostedFileBase file = Request.Files[fileKey];
+
+                        string SavePath = SaveImage("FoxconnLabel", file, folerName.ToString());
+                        if (!string.IsNullOrEmpty(SavePath))
+                        {
+                            label.LabelImagePath = SavePath;
+                        }
+                        else
+                        {
+                            return Json(new { status = false, message = "Save image Foxconn Label failed." });
+                        }
+                    }
+
+                    db.FoxconnLabels.AddOrUpdate(label);
+                }
+                else
+                {
+                    LabelSample.IdFoxconnLabel = null;
+                    LabelSample.FoxconnLabel = null;
+                }
+                #endregion
+
+                #region SNLabel
+                if (form.AllKeys.Any(k => k.Contains("SNLabel")))
+                {
+                    SNLabel label = new SNLabel();
+                    if (LabelSample.SNLabel != null) label = LabelSample.SNLabel;
+
+                    // Data
+                    foreach (string key in form.AllKeys.Where(k => k.Contains("SNLabel")))
+                    {
+                        if (key.Contains("[IsBarCode]")) label.IsBarCode = bool.Parse(form[key]);
+                        if (key.Contains("[TimeChangeMethod]")) label.TimeChangeMethod = form[key];
+                        if (key.Contains("[FixedCode]")) label.FixedCode = form[key];
+                        if (key.Contains("[RangeCode]")) label.RangeCode = form[key];
+                        if (key.Contains("[LabelCode]")) label.LabelCode = form[key];
+                        if (key.Contains("[CoalPaperSpec]")) label.CoalPaperSpec = form[key];
+                        if (key.Contains("[DerivedFrom]")) label.DerivedFrom = form[key];
+
+                        if (key.Contains("[LabelImagePath]") && form[key] == "Remove") label.LabelImagePath = null;
+                    }
+
+                    // File Image
+                    if (files.AllKeys.Any(k => k.Contains("SNLabel")))
+                    {
+                        string fileKey = files.AllKeys.FirstOrDefault(k => k.Contains("SNLabel"));
+                        HttpPostedFileBase file = Request.Files[fileKey];
+
+                        string SavePath = SaveImage("SNLabel", file, folerName.ToString());
+                        if (!string.IsNullOrEmpty(SavePath))
+                        {
+                            label.LabelImagePath = SavePath;
+                        }
+                        else
+                        {
+                            return Json(new { status = false, message = "Save image SN Label failed." });
+                        }
+                    }
+
+                    db.SNLabels.AddOrUpdate(label);
+                }
+                else
+                {
+                    LabelSample.IdSNLabel = null;
+                    LabelSample.SNLabel = null;
+                }
+                #endregion
+
+                #region MacIDLabel
+                if (form.AllKeys.Any(k => k.Contains("MacIDLabel")))
+                {
+                    MacIDLabel label = new MacIDLabel();
+                    if (LabelSample.MacIDLabel != null) label = LabelSample.MacIDLabel;
+
+                    // Data
+                    foreach (string key in form.AllKeys.Where(k => k.Contains("MacIDLabel")))
+                    {
+                        if (key.Contains("[IsBarCode]")) label.IsBarCode = bool.Parse(form[key]);
+                        if (key.Contains("[MacID]")) label.MacID = form[key];
+                        if (key.Contains("[LabelCode]")) label.LabelCode = form[key];
+                        if (key.Contains("[CoalPaperSpec]")) label.CoalPaperSpec = form[key];
+                        if (key.Contains("[DerivedFrom]")) label.DerivedFrom = form[key];
+
+                        if (key.Contains("[LabelImagePath]") && form[key] == "Remove") label.LabelImagePath = null;
+                    }
+                    // File Image
+                    if (files.AllKeys.Any(k => k.Contains("MacIDLabel")))
+                    {
+                        string fileKey = files.AllKeys.FirstOrDefault(k => k.Contains("MacIDLabel"));
+                        HttpPostedFileBase file = Request.Files[fileKey];
+
+                        string SavePath = SaveImage("MacIDLabel", file, folerName.ToString());
+                        if (!string.IsNullOrEmpty(SavePath))
+                        {
+                            label.LabelImagePath = SavePath;
+                        }
+                        else
+                        {
+                            return Json(new { status = false, message = "Save image Mac ID Label failed." });
+                        }
+                    }
+
+                    db.MacIDLabels.AddOrUpdate(label);
+                }
+                else
+                {
+                    LabelSample.IdMacIDLabel = null;
+                    LabelSample.MacIDLabel = null;
+                }
+                #endregion
+
+                #region CurrentLabel
+                if (form.AllKeys.Any(k => k.Contains("CurrentLabel")))
+                {
+                    CurrentLabel label = new CurrentLabel();
+                    if (LabelSample.CurrentLabel != null) label = LabelSample.CurrentLabel;
+
+                    // Data
+                    foreach (string key in form.AllKeys.Where(k => k.Contains("CurrentLabel")))
+                    {
+                        if (key.Contains("[LabelName]")) label.LabelName = form[key];
+                        if (key.Contains("[LabelCode]")) label.LabelCode = form[key];
+                        if (key.Contains("[CoalPaperSpec]")) label.CoalPaperSpec = form[key];
+                        if (key.Contains("[DerivedFrom]")) label.DerivedFrom = form[key];
+
+                        if (key.Contains("[LabelImagePath]") && form[key] == "Remove") label.LabelImagePath = null;
+                    }
+
+                    // File Image
+                    if (files.AllKeys.Any(k => k.Contains("CurrentLabel")))
+                    {
+                        string fileKey = files.AllKeys.FirstOrDefault(k => k.Contains("CurrentLabel"));
+                        HttpPostedFileBase file = Request.Files[fileKey];
+
+                        string SavePath = SaveImage("CurrentLabel", file, folerName.ToString());
+                        if (!string.IsNullOrEmpty(SavePath))
+                        {
+                            label.LabelImagePath = SavePath;
+                        }
+                        else
+                        {
+                            return Json(new { status = false, message = "Save image Current Label failed." });
+                        }
+                    }
+
+                    db.CurrentLabels.AddOrUpdate(label);
+                }
+                else
+                {
+                    LabelSample.IdCurrentLabel = null;
+                    LabelSample.CurrentLabel = null;
+                }
+                #endregion
+
+                db.LabelSamples.AddOrUpdate(LabelSample);
+                db.SaveChanges();
+
+                return Json(new { status = true, data = JsonSerializer.Serialize(LabelSample) });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, message = ex.Message });
+            }
+        }
+
+        // POST Delete Label
+        public JsonResult DeleteLabelSample(int Id)
+        {
+            try
+            {
+                LabelSample label = db.LabelSamples.FirstOrDefault(l => l.Id == Id);
+                if (label != null)
+                {
+                    db.LabelSamples.Remove(label);
+                    db.SaveChanges();
+                    return Json(new { status = true});
+                }
+                else
+                {
+                    return Json(new { status = false, message = "Label sample not found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, messase = ex.Message});
+            }
+        }
+
+        // POST Confirm
+        public JsonResult Confirm(int Id, string Mail)
+        {
+            try
+            {
+                User_LS user = GetSessionUser();
+                LabelSample lable = db.LabelSamples.FirstOrDefault(lb => lb.Id == Id);
+
+                if (user.RoleId == 6) // PQE
+                {
+                    lable.LabelSampleStatus.IdPQE = user.UserId;
+                    lable.LabelSampleStatus.Status = "PQE Confirm";
+
+                    string[] emptyArray = new string[0];
+
+                    //string content = Commons.SendMailNew.NewMail(Commons.SampleMail.CreateChecklistEmail(Mail, lable));
+                    //Commons.SendMailNew.SendMail(Mail, emptyArray, "Bieu luu trinh moi can duoc phe duyet - Check List System", content);
+                }
+                else if (user.RoleId == 7) // TE
+                {
+                    lable.LabelSampleStatus.IdTE = user.UserId;
+                    lable.LabelSampleStatus.Status = "TE Confirm";
+
+                    string[] emptyArray = new string[0];
+
+                    //string content = Commons.SendMailNew.NewMail(Commons.SampleMail.ConfirmEmail(Commons.ListMail.MAIL_LABEL, lable));
+                    //Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da duoc phe duyet - Check List System", content);
+                }
+
+                db.LabelSamples.AddOrUpdate(lable);
+                db.SaveChanges();
+
+                return Json(new { status = true, data = JsonSerializer.Serialize(lable) });
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = false, message = e.Message });
+            }
+        }
+
+        // POST Reject
+        public JsonResult Reject(int Id, string Note)
+        {
+            try
+            {
+                User_LS user = GetSessionUser();
+                LabelSample lable = db.LabelSamples.FirstOrDefault(lb => lb.Id == Id);
+                lable.LabelSampleStatus.Note = Note;
+
+                if (user.RoleId == 6) // PQE
+                {
+                    lable.LabelSampleStatus.IdPQE = user.UserId;
+                    lable.LabelSampleStatus.Status = "PQE Reject";
+
+                    string[] emptyArray = new string[0];
+
+                    //string content = Commons.SendMailNew.NewMail(Commons.SampleMail.RejectEmail(Commons.ListMail.MAIL_LABEL, lable));
+                    //Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da bi tu choi - Check List System", content);
+                }
+                else if (user.RoleId == 7) // TE
+                {
+                    lable.LabelSampleStatus.IdTE = user.UserId;
+                    lable.LabelSampleStatus.Status = "TE Reject";
+
+                    string[] emptyArray = new string[0];
+                    //string content = Commons.SendMailNew.NewMail(Commons.LabelMail.RejectEmail(Commons.ListMail.MAIL_LABEL, lable));
+                    //Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da bi tu choi - Check List System", content);
+                }
+
+                db.LabelSamples.AddOrUpdate(lable);
+                db.SaveChanges();
+
+                return Json(new { status = true, data = JsonSerializer.Serialize(lable) });
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = false, message = e.Message });
             }
         }
 

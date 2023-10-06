@@ -23,17 +23,21 @@ function ForcusInputEvent() {
 //load data
 var dataTable;
 var isLoadingData = false;
+
+var thisYear = new Date().getFullYear();
+var thisMonth = new Date().getMonth() + 1;
+var thisDay = new Date().getDate();
+
 function LoadDataCheckList() {
-    onload();
-    var dateNow = new Date();
+    onload();    
     $.ajax({
         type: "GET",
         url: "/Lable/DataFlow/GetDataFlowList",
         data: {
             Location: $('[name="Location"]').val(),
-            Year: dateNow.getFullYear(),
-            Month: dateNow.getMonth() + 1,
-            Date: dateNow.getDate()
+            Year: thisYear,
+            Month: thisMonth,
+            Date: thisDay
         },
         contentType: "application/json;charset=utf-8",
         dataType: "json",
@@ -69,28 +73,24 @@ function DynamicLoadTable() {
             isLoadingData = true;
 
             onload();
-            var dateNow = new Date();
+
+            thisMonth -= 1;
+            if (thisMonth == 0) {
+                thisYear -= 1;
+                thisMonth = 12;
+            }
 
             var dateData = {
                 Location: $('[name="Location"]').val(),
-                Year: dateNow.getFullYear(),
-                Month: dateNow.getMonth() + 1,
-                Date: dateNow.getDate()
-            }
-            if (dateData.Month == 0) {
-                dateData.Year -= 1;
-                dateData.Month = 12;
+                Year: thisYear,
+                Month: thisMonth,
+                Date: thisDay
             }
 
             $.ajax({
                 type: "GET",
                 url: "/Lable/DataFlow/GetDataFlowList",
-                data: {
-                    Location: dateData.Location,
-                    Year: dateData.Year,
-                    Month: dateData.Month,
-                    Date: dateData.Date
-                },
+                data: dateData,
                 contentType: "application/json;charset=utf-8",
                 success: async function (res) {
                     if (res.status) {
@@ -200,68 +200,74 @@ function DrawTableRows(item, isAddInDatatable = false) {
     } // col 9
 
     {
-        var cButton = "";
-        if ($('#thisUser').data('role') == '1') {
-            if (item.LableDataFlow_Status.Status == 'Pending') {
-                cButton = `<td class="action_col">
-                              <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
-                              <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
-                              <button title="Xóa"      data-id=${item.Id} class="btn btn-danger"  onclick="Delete(this, event)"><i class="bi bi-trash"></i></button>
-                           </td>`;
-            }
-            else {
-                if ((item.LableDataFlow_Status.Status == "LineLeader Confirm" || item.LableDataFlow_Status.Status == "IPQC Confirm")  && (!item.BeginCodeImage || !item.EndCodeImage)) {
+        var cButton = `<td class="action_col">
+                          <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
+                       </td>`;
+
+        var role = parseInt($('#thisUser').data('role'));
+        var Id = parseInt($('#thisUser').data('id'));
+        var status = item.LableDataFlow_Status;
+        
+        switch (role) {
+            case 1: {
+                if (status.Status == 'Pending') {
                     cButton = `<td class="action_col">
-                              <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
-                              <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
-                           </td>`;
-                } else {
-                    cButton = `<td class="action_col">
-                              <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
-                           </td>`;
+                                  <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
+                                  <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
+                                  <button title="Xóa"      data-id=${item.Id} class="btn btn-danger"  onclick="Delete(this, event)"><i class="bi bi-trash"></i></button>
+                               </td>`;
                 }
-                
-            }
-        }
-        else if ($('#thisUser').data('role') == '2') {
-            if (item.LableDataFlow_Status.Status == 'Pending') {
-                cButton = `<td class="action_col">
-                              <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
-                              <button title="Xác nhận" data-id=${item.Id} class="btn btn-warning" onclick="Confirm(this, event)"><i class="bi bi bi-check"></i></button>
-                              <button title="Từ chối"  data-id=${item.Id} class="btn btn-danger"  onclick="Rejects(this, event)"><i class="bi bi bi-x"></i></button>
-                           </td>`
-            }
-            else {
-                if ((item.LableDataFlow_Status.Status == "LineLeader Confirm" || item.LableDataFlow_Status.Status == "IPQC Confirm") && (!item.BeginCodeImage || !item.EndCodeImage)) {
+                else if (!item.BeginCodeImage || !item.EndCodeImage) {
                     cButton = `<td class="action_col">
-                              <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
-                              <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
-                           </td>`;
-                } else {
-                    cButton = `<td class="action_col">
-                              <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
-                           </td>`;
+                                      <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
+                                      <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
+                                   </td>`;
+
                 }
-            }
-        }
-        else if ($('#thisUser').data('role') == '3'){
-            if (item.LableDataFlow_Status.Status == 'LineLeader Confirm') {
-                cButton = `<td class="action_col">
-                              <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
-                              <button title="Xác nhận" data-id=${item.Id} class="btn btn-warning" onclick="Confirm(this, event)"><i class="bi bi bi-check"></i></button>
-                              <button title="Từ chối"  data-id=${item.Id} class="btn btn-danger"  onclick="Rejects(this, event)"><i class="bi bi bi-x"></i></button>
-                           </td>`;
-            }
-            else {
-                if ((item.LableDataFlow_Status.Status == "IPQC Confirm" || item.LableDataFlow_Status.Status == "Pending") && (!item.BeginCodeImage || !item.EndCodeImage)) {
+                else if (status.IdUserCreate == Id && status.Status != "IPQC Confirm"){
                     cButton = `<td class="action_col">
-                              <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
-                              <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
-                           </td>`;
-                } else {
+                                  <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
+                                  <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
+                               </td>`;
+                }
+                break;
+            }
+            case 2: {
+                if (status.Status == 'Pending') {
                     cButton = `<td class="action_col">
-                              <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
-                           </td>`;
+                                  <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
+                                  <button title="Xác nhận" data-id=${item.Id} class="btn btn-warning" onclick="Confirm(this, event)"><i class="bi bi bi-check"></i></button>
+                                  <button title="Từ chối"  data-id=${item.Id} class="btn btn-danger"  onclick="Rejects(this, event)"><i class="bi bi bi-x"></i></button>
+                               </td>`
+                }
+                else if (status.Status != "IPQC Confirm") {
+                    cButton = `<td class="action_col">
+                                  <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
+                                  <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
+                                  <button title="Xóa"      data-id=${item.Id} class="btn btn-danger"  onclick="Delete(this, event)"><i class="bi bi-trash"></i></button>
+                               </td>`;
+                }
+                break
+            }
+            case 3: {
+                if (status.Status == 'LineLeader Confirm') {
+                    cButton = `<td class="action_col">
+                                  <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
+                                  <button title="Xác nhận" data-id=${item.Id} class="btn btn-warning" onclick="Confirm(this, event)"><i class="bi bi bi-check"></i></button>
+                                  <button title="Từ chối"  data-id=${item.Id} class="btn btn-danger"  onclick="Rejects(this, event)"><i class="bi bi bi-x"></i></button>
+                               </td>`;
+                }
+                else {
+                    if (!item.BeginCodeImage || !item.EndCodeImage) {
+                        cButton = `<td class="action_col">
+                                      <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
+                                      <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
+                                   </td>`;
+                    } else {
+                        cButton = `<td class="action_col">
+                                      <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>                                      
+                                   </td>`;
+                    }
                 }
             }
         }
