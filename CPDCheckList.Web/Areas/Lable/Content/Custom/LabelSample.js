@@ -562,6 +562,8 @@ function ClearModal() {
 $(document).on('click', '#btn_AddNew', function (e) {
     e.preventDefault();
 
+    if ($('#thisUser').data('id') != 119) return;
+
     $('input[data-name="CreatedDate"]').val(moment().format('YYYY-MM-DDTHH:mm'));
     $('input[data-name="ValidDate"]').val(moment().format('YYYY-MM-DDTHH:mm'));
 
@@ -866,6 +868,8 @@ function Details(elm, e) {
 
 // Edit
 function Edit(elm, e) {
+    if ($('#thisUser').data('id') != 119) return;
+
     ClearModal();
     e.preventDefault();
 
@@ -890,6 +894,8 @@ function Edit(elm, e) {
 
                 $('#LabelSample-btnSaveEdit').data('id', Id);
                 $('#LabelSample-btnSaveEdit').data('index', Index);
+
+                $('#UploadFilesInput').val('');
 
                 // show
                 $('#LabelSample').modal('show');
@@ -945,6 +951,8 @@ function SaveEdit(elm, e) {
 
 // Delete
 function Delete(elm, e) {
+    if ($('#thisUser').data('id') != 119) return;
+
     e.preventDefault();
 
     const Id = $(elm).data('id');
@@ -1134,6 +1142,7 @@ function FillDataToModal(label, isEditModal = false) {
         FillSNLabel(label.SNLabel);
         FillMacIDLabel(label.MacIDLabel);
         FillCurrentLabel(label.CurrentLabel);
+        FillPdfFile(label);
         // Footer
         const note = label.Note.split(',');
         $('input[data-name="note_1"]').val(note[0]);
@@ -1411,6 +1420,13 @@ function FillUserLabel(status) {
         }
     }
 }
+function FillPdfFile(label) {
+
+    var fileName = $(label.FilePath.split('\\')).last();
+
+    $('#FilesPreview').empty();
+    $('#FilesPreview').append(`<a href="${label.FilePath.replace(/^.*\\Areas/, "/Areas")}" style="border: 1px solid; width: fit-content; padding: 5px;" target="_blank">${fileName[0]}<a>`);
+}
 
 // Image Event
 var viewPreview;
@@ -1554,8 +1570,9 @@ $('#ImagePreview').on('click', function () {
         $('input[name="CurrentLabel"][LabelImagePath]').click();
     });
     // Upload Pdf
-    $('#UploadFiles').click(function (e) {
-        e.preventDefault();
+    $(document).on('click', '#UploadFiles', function (e) {
+        if ($('#thisUser').data('id') != 119) return;
+
         $(this).next().click();
     });
     $('#UploadFilesInput').change(function (e) {
@@ -1563,7 +1580,7 @@ $('#ImagePreview').on('click', function () {
         var fileName = $($(this).val().split('\\')).last();
 
         $('#FilesPreview').empty();
-        $('#FilesPreview').append(`<a href="javascript:;" style="border: 1px solid; width: fit-content; padding: 5px;">${fileName[0]}<a>`);
+        $('#FilesPreview').append(`<a href="javascript:;" style="border: 1px solid; width: fit-content; padding: 5px;" target="_blank">${fileName[0]}<a>`);
     });
 }
 

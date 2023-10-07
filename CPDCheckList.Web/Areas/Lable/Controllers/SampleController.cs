@@ -489,6 +489,25 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 }
                 #endregion
 
+                #region Pdf
+                if (files.AllKeys.Any(k => k.Contains("PdfFile")))
+                {
+                    string fileKey = files.AllKeys.FirstOrDefault(k => k.Contains("PdfFile"));
+                    HttpPostedFileBase file = Request.Files[fileKey];
+
+                    string SavePath = SavePfd(file, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+                    if (!string.IsNullOrEmpty(SavePath))
+                    {
+                        
+                        LabelSample.FilePath = SavePath;
+                    }
+                    else
+                    {
+                        return Json(new { status = false, message = "Save image Current Label failed." });
+                    }
+                }
+                #endregion
+
                 db.LabelSamples.AddOrUpdate(LabelSample);
                 db.SaveChanges();
 

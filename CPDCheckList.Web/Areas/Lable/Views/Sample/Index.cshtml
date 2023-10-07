@@ -429,7 +429,20 @@
                                 </div>
                             </td>
                             <td colspan="2">
-                                <textarea class="form-control" rows="3" style="resize: none;" data-name="note_3"></textarea>
+                                <div class="row">
+                                    <div class="col-7">
+                                        <textarea class="form-control" rows="3" style="resize: none;" data-name="note_3"></textarea>
+                                    </div>
+                                    <div class="col-5">
+                                        <div style="width: fit-content" id="UploadFiles" class="border">
+                                            <button class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></button>
+                                            <label>Upload <span class="text-danger">*.pdf</span> file.</label>
+                                        </div>
+                                        <input type="file" class="d-none" accept="application/pdf" id="UploadFilesInput" />
+                                        <div id="FilesPreview" class="d-flex flex-column mt-2 overflow-hidden">
+                                        </div>
+                                    </div>
+                                </div>                              
                             </td>
                         </tr>
                         <!-- Row 10 -->
@@ -445,7 +458,7 @@
                                 <label class="form-control-label">PQE xác nhận</label>
                             </td>
                             <td style="background-color: blanchedalmond">
-                                <label class="form-control-label">PE xác nhận dải MAC</label>
+                                <label class="form-control-label">PE xác nhận</label>
                             </td>
                         </tr>
                         <tr>
@@ -464,15 +477,6 @@
 
                 <div class="col-12 row">
                     <div class="col-6">
-                        <div class="ms-5">
-                            <div style="width: fit-content" id="UploadFiles">
-                                <button class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></button>
-                                <label>Upload <span class="text-danger">*.pdf</span> file.</label>
-                            </div>                            
-                            <input type="file" class="d-none" accept="application/pdf" id="UploadFilesInput"/>
-                            <div id="FilesPreview" class="d-flex flex-column mt-2">
-                            </div>
-                        </div>
                     </div>
                     <div class="col-6 text-end">
                         <p class="mb-1">表單編號: FD3NVB005001B</p>
