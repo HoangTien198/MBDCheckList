@@ -60,11 +60,11 @@
                         <input type="datetime-local" class="form-control" data-name="CreatedDate">
                     </div>
                     <div class="col-3">
-                        <label class="form-label">生效日期 (Thời gian có hiệu lực)</label>
+                        <label class="form-label">生效日期 (Thời gian có hiệu lực)/MO</label>
                         <input type="datetime-local" class="form-control" data-name="ValidDate">
                     </div>
                     <div class="col-3">
-                        <label class="form-label">生效日期 (MO)</label>
+                        <label class="form-label" style="margin-bottom: 1.6rem"></label>
                         <input type="text" class="form-control" placeholder="MO .." data-name="MO">
                     </div>
                 </div>
@@ -445,7 +445,7 @@
                                 <label class="form-control-label">PQE xác nhận</label>
                             </td>
                             <td style="background-color: blanchedalmond">
-                                <label class="form-control-label">TE xác nhận dải MAC</label>
+                                <label class="form-control-label">PE xác nhận dải MAC</label>
                             </td>
                         </tr>
                         <tr>
@@ -461,6 +461,26 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <div class="col-12 row">
+                    <div class="col-6">
+                        <div class="ms-5">
+                            <div style="width: fit-content" id="UploadFiles">
+                                <button class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></button>
+                                <label>Upload <span class="text-danger">*.pdf</span> file.</label>
+                            </div>                            
+                            <input type="file" class="d-none" accept="application/pdf" id="UploadFilesInput"/>
+                            <div id="FilesPreview" class="d-flex flex-column mt-2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-1">表單編號: FD3NVB005001B</p>
+                        <p class="mb-1">Mã bảng biểu: FD3NVB005001B</p>
+                    </div>
+                    
+                </div>
+                
             </div>
             <div class="modal-footer justify-content-end">
                 <button type="button" class="btn btn-sm btn-primary" id="LabelSample-btnSave">添新 Thêm mới</button>

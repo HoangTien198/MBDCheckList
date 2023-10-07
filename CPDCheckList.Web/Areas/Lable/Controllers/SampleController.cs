@@ -1,6 +1,7 @@
 ﻿using CPDCheckList.Web.Areas.Lable.Data;
 using CPDCheckList.Web.Commons;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
@@ -211,6 +212,25 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 }
                 #endregion
 
+                #region Pdf
+                if (files.AllKeys.Any(k => k.Contains("PdfFile")))
+                {
+                    string fileKey = files.AllKeys.FirstOrDefault(k => k.Contains("PdfFile"));
+                    HttpPostedFileBase file = Request.Files[fileKey];
+
+                    string SavePath = SavePfd(file, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+                    if (!string.IsNullOrEmpty(SavePath))
+                    {
+                        
+                        LabelSample.FilePath = SavePath;
+                    }
+                    else
+                    {
+                        return Json(new { status = false, message = "Save image Current Label failed." });
+                    }
+                }
+                #endregion
+
                 #region Label Sample Status
                 User_LS user = GetSessionUser();
                 LabelSampleStatus status = new LabelSampleStatus();
@@ -222,6 +242,21 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 LabelSample.LabelSampleStatus = status;
 
                 db.LabelSamples.Add(LabelSample);
+                #endregion
+
+                #region Send Mail
+                string[] ccList = new string[0];
+
+                // PQE
+                string EmailContentPQE = Commons.SampleMail.CreateChecklistEmail("lena.sh.ruan@mail.foxconn.com", LabelSample);
+                string SystemFormPQE = Commons.SendMailNew.NewMail(EmailContentPQE);
+                Commons.SendMailNew.SendMail("lena.sh.ruan@mail.foxconn.com", ccList, "Bieu luu trinh moi da duoc tao - Check List System", SystemFormPQE);
+
+                // PE
+                string EmailContentPE = Commons.SampleMail.CreateChecklistEmail("jax.fw.ruan@mail.foxconn.com", LabelSample);
+                string SystemFormPE = Commons.SendMailNew.NewMail(EmailContentPE);
+                Commons.SendMailNew.SendMail("jax.fw.ruan@mail.foxconn.com", ccList, "Bieu luu trinh moi da duoc tao - Check List System", SystemFormPE);
+
                 #endregion
 
                 db.SaveChanges();
@@ -501,20 +536,34 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                     lable.LabelSampleStatus.IdPQE = user.UserId;
                     lable.LabelSampleStatus.Status = "PQE Confirm";
 
-                    string[] emptyArray = new string[0];
+                    if(lable.LabelSampleStatus.UserTE != null)
+                    {
+                        lable.LabelSampleStatus.Status = "Confirm";
 
-                    //string content = Commons.SendMailNew.NewMail(Commons.SampleMail.CreateChecklistEmail(Mail, lable));
-                    //Commons.SendMailNew.SendMail(Mail, emptyArray, "Bieu luu trinh moi can duoc phe duyet - Check List System", content);
+                        // Label
+                        string[] ccList = new string[0];
+
+                        string EmailContentConfirm = Commons.SampleMail.ConfirmEmail(Commons.ListMail.MAIL_LABEL, lable);
+                        string SystemFormConfirm = Commons.SendMailNew.NewMail(EmailContentConfirm);
+                        Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, ccList, "Bieu luu trinh da duoc ky - Check List System", SystemFormConfirm);
+                    }
                 }
                 else if (user.RoleId == 7) // TE
                 {
                     lable.LabelSampleStatus.IdTE = user.UserId;
                     lable.LabelSampleStatus.Status = "TE Confirm";
 
-                    string[] emptyArray = new string[0];
+                    if (lable.LabelSampleStatus.UserPQE != null)
+                    {
+                        lable.LabelSampleStatus.Status = "Confirm";
 
-                    //string content = Commons.SendMailNew.NewMail(Commons.SampleMail.ConfirmEmail(Commons.ListMail.MAIL_LABEL, lable));
-                    //Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da duoc phe duyet - Check List System", content);
+                        // Label
+                        string[] ccList = new string[0];
+
+                        string EmailContentConfirm = Commons.SampleMail.ConfirmEmail(Commons.ListMail.MAIL_LABEL, lable);
+                        string SystemFormConfirm = Commons.SendMailNew.NewMail(EmailContentConfirm);
+                        Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, ccList, "Bieu luu trinh da duoc ky - Check List System", SystemFormConfirm);
+                    }
                 }
 
                 db.LabelSamples.AddOrUpdate(lable);
@@ -542,20 +591,19 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                     lable.LabelSampleStatus.IdPQE = user.UserId;
                     lable.LabelSampleStatus.Status = "PQE Reject";
 
-                    string[] emptyArray = new string[0];
-
-                    //string content = Commons.SendMailNew.NewMail(Commons.SampleMail.RejectEmail(Commons.ListMail.MAIL_LABEL, lable));
-                    //Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da bi tu choi - Check List System", content);
                 }
                 else if (user.RoleId == 7) // TE
                 {
                     lable.LabelSampleStatus.IdTE = user.UserId;
                     lable.LabelSampleStatus.Status = "TE Reject";
-
-                    string[] emptyArray = new string[0];
-                    //string content = Commons.SendMailNew.NewMail(Commons.LabelMail.RejectEmail(Commons.ListMail.MAIL_LABEL, lable));
-                    //Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da bi tu choi - Check List System", content);
                 }
+
+                // Label
+                string[] ccList = new string[0];
+
+                string EmailContentConfirm = Commons.SampleMail.RejectEmail(Commons.ListMail.MAIL_LABEL, lable);
+                string SystemFormConfirm = Commons.SendMailNew.NewMail(EmailContentConfirm);
+                Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, ccList, "Bieu luu trinh chua duoc thong qua - Check List System", SystemFormConfirm);
 
                 db.LabelSamples.AddOrUpdate(lable);
                 db.SaveChanges();
@@ -577,6 +625,23 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
             try
             {
                 string savePath = Path.Combine(rootPath, $"{type}{Path.GetExtension(file.FileName)}");
+                file.SaveAs(savePath);
+
+                return savePath;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+        private string SavePfd(HttpPostedFileBase file, string folder)
+        {
+            string rootPath = Server.MapPath($"/Areas/Lable/Data/Pdf/Sample/{folder}");
+            if (!Directory.Exists(rootPath)) Directory.CreateDirectory(rootPath);
+
+            try
+            {
+                string savePath = Path.Combine(rootPath, $"{file.FileName}");
                 file.SaveAs(savePath);
 
                 return savePath;

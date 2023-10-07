@@ -27,6 +27,7 @@ namespace CPDCheckList.Web.Areas.Lable.Data
         public Nullable<int> IdLabelSampleStatus { get; set; }
         public string Note { get; set; }
         public string Location { get; set; }
+        public string FilePath { get; set; }
     
         public virtual CurrentLabel CurrentLabel { get; set; }
         public virtual FoxconnLabel FoxconnLabel { get; set; }

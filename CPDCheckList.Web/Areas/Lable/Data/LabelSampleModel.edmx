@@ -47,6 +47,7 @@
           <Property Name="IdLabelSampleStatus" Type="int" />
           <Property Name="Note" Type="nvarchar" MaxLength="255" />
           <Property Name="Location" Type="nvarchar" MaxLength="10" />
+          <Property Name="FilePath" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="LabelSampleStatus">
           <Key>
@@ -101,7 +102,9 @@
           <Property Name="RoleId" Type="int" />
         </EntityType>
         <Association Name="FK_LabelSample_CurrentLabel">
-          <End Role="CurrentLabel" Type="Self.CurrentLabel" Multiplicity="0..1" />
+          <End Role="CurrentLabel" Type="Self.CurrentLabel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="LabelSample" Type="Self.LabelSample" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CurrentLabel">
@@ -113,7 +116,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_LabelSample_FoxconnLabel">
-          <End Role="FoxconnLabel" Type="Self.FoxconnLabel" Multiplicity="0..1" />
+          <End Role="FoxconnLabel" Type="Self.FoxconnLabel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="LabelSample" Type="Self.LabelSample" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FoxconnLabel">
@@ -125,7 +130,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_LabelSample_LabelSampleStatus">
-          <End Role="LabelSampleStatus" Type="Self.LabelSampleStatus" Multiplicity="0..1" />
+          <End Role="LabelSampleStatus" Type="Self.LabelSampleStatus" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="LabelSample" Type="Self.LabelSample" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LabelSampleStatus">
@@ -137,7 +144,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_LabelSample_MacIDLabel">
-          <End Role="MacIDLabel" Type="Self.MacIDLabel" Multiplicity="0..1" />
+          <End Role="MacIDLabel" Type="Self.MacIDLabel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="LabelSample" Type="Self.LabelSample" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MacIDLabel">
@@ -149,7 +158,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_LabelSample_SNLabel">
-          <End Role="SNLabel" Type="Self.SNLabel" Multiplicity="0..1" />
+          <End Role="SNLabel" Type="Self.SNLabel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="LabelSample" Type="Self.LabelSample" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SNLabel">
@@ -288,6 +299,7 @@
           <NavigationProperty Name="LabelSampleStatus" Relationship="Self.FK_LabelSample_LabelSampleStatus" FromRole="LabelSample" ToRole="LabelSampleStatus" />
           <NavigationProperty Name="SNLabel" Relationship="Self.FK_LabelSample_SNLabel" FromRole="LabelSample" ToRole="SNLabel" />
           <NavigationProperty Name="MacIDLabel" Relationship="LabelSampleModel.FK_LabelSample_MacIDLabel" FromRole="LabelSample" ToRole="MacIDLabel" />
+          <Property Name="FilePath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LabelSampleStatus">
           <Key>
@@ -517,6 +529,7 @@
           <EntitySetMapping Name="LabelSamples">
             <EntityTypeMapping TypeName="LabelSampleModel.LabelSample">
               <MappingFragment StoreEntitySet="LabelSample">
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />

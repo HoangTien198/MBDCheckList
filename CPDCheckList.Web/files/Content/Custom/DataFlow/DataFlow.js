@@ -1189,8 +1189,6 @@ $('#Image_Preview').on('click', function () {
     });
 });
 
-
-
 function DayOrNightShift(date) {
     if (date.getHours() >= 7 && date.getHours() <= 19) {
         if (date.getHours() == 7 && date.getMinutes < 30) {

@@ -169,7 +169,7 @@ function DrawTableRows(item, isAddInDatatable = false) {
             }
             case 'TE Confirm': {
                 badgeStyle = "bg-success";
-                message = 'TE đã xác nhận'
+                message = 'PE đã xác nhận'
                 break;
             }
             case 'PQE Reject': {
@@ -179,7 +179,12 @@ function DrawTableRows(item, isAddInDatatable = false) {
             }           
             case 'TE Reject': {
                 badgeStyle = "bg-danger";
-                message = 'TE đã từ chối'
+                message = 'PE đã từ chối'
+                break;
+            }
+            case 'Confirm': {
+                badgeStyle = "bg-success";
+                message = 'Đơn dã xác nhận'
                 break;
             }
             default : {
@@ -217,19 +222,12 @@ function DrawTableRows(item, isAddInDatatable = false) {
                 break;
             }
             case 6: {
-                if (SampleStatus.Status == 'Pending') {
+                if (SampleStatus.Status != 'Confirm' && SampleStatus.Status != 'PQE Confirm' && SampleStatus.Status != 'PQE Reject' && SampleStatus.Status != 'TE Reject') {
                     cButton = `<td class="action_col">
                                   <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
                                   <button title="Xác nhận" data-id=${item.Id} class="btn btn-warning" onclick="Confirm(this, event)"><i class="bi bi bi-check"></i></button>
                                   <button title="Từ chối"  data-id=${item.Id} class="btn btn-danger"  onclick="Rejects(this, event)"><i class="bi bi bi-x"></i></button>
                                </td>`;
-                }
-                else if (SampleStatus.Status == 'PQE Confirm') {
-                     cButton = `<td class="action_col">
-                                  <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
-                                  <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
-                                  <button title="Xóa"      data-id=${item.Id} class="btn btn-danger"  onclick="Delete(this, event)"><i class="bi bi-trash"></i></button>
-                                </td>`;
                 }
                 else {
                      cButton = `<td class="action_col">
@@ -239,7 +237,7 @@ function DrawTableRows(item, isAddInDatatable = false) {
                 break;
             }
             case 7: {
-                if (SampleStatus.Status == 'PQE Confirm') {
+                if (SampleStatus.Status != 'Confirm' && SampleStatus.Status != 'TE Confirm' && SampleStatus.Status != 'PQE Reject' && SampleStatus.Status != 'TE Reject') {
                     cButton = `<td class="action_col">
                                   <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
                                   <button title="Xác nhận" data-id=${item.Id} class="btn btn-warning" onclick="Confirm(this, event)"><i class="bi bi bi-check"></i></button>
@@ -533,8 +531,11 @@ function ClearModal() {
     $('input[data-name="IsHasKey"]').prop('checked', false);
 
     $('td[UserCreated]').empty();
-    $('td[UserPQE]').empty();
-    $('td[UserTE]').empty();
+    $('td[UserPQE]').empty(); $('td[UserPQE]').removeClass();
+    $('td[UserPQE]').empty(); $('td[UserPQE]').addClass('text-center');
+
+    $('td[UserTE]').empty(); $('td[UserTE]').removeClass();
+    $('td[UserTE]').empty(); $('td[UserTE]').addClass('text-center');
 
     $('#LabelSample-body input[type="file"]').attr('disabled', false);
 
@@ -794,6 +795,11 @@ function GetModalFormData() {
     // IsHasKey
     data.IsHasKey = $('#LabelSample_Table-tbody').find('input[data-name="IsHasKey"]').is(':checked') ? true : false;
 
+    // PdfFile
+    if ($('#UploadFilesInput')[0].files[0] != undefined) {
+        data.PdfFile = $('#UploadFilesInput')[0].files[0];
+    }
+
     return data;
 }
 function objectToFormData(obj, formData = null, parentKey = '') {
@@ -1027,19 +1033,9 @@ function Confirm(elm, e) {
     const Index = $(elm).closest('tr').index();
 
     var htmlstring = '';
-    if ($('#Location').val() == "F06") {
-        htmlstring = `<select name="select" id="mailSelected" class='swal2-input' required class="form-control form-control-primary">
-                                      <option value="No">No send mail</option>
-                                  </select>`;
-    }
-    else {
-        htmlstring = `<select name="select" id="mailSelected" class='swal2-input' required class="form-control form-control-primary">
-                                      <option value="No">No send mail</option>
-                                  </select>`;
-    }
 
     Swal.fire({
-        title: 'Chọn mail để gửi đơn:',
+        title: 'Xác nhận đơn này?',
         icon: "warning",
         html: htmlstring,
         confirmButtonText: 'Gửi',
@@ -1047,35 +1043,34 @@ function Confirm(elm, e) {
         cancelButtonText: "Hủy bỏ!",
         reverseButtons: true,
         preConfirm: () => {
-            if ($('#mailSelected').val()) {
-                var SendData = {
-                    Id: Id,
-                    Mail: $('#mailSelected').val()
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "/Lable/Sample/Confirm",
-                    data: JSON.stringify(SendData),
-                    dataType: "json",
-                    contentType: "application/json;charset=utf-8",
-                    success: function (res) {
-                        if (res.status) {
-                            var label = JSON.parse(res.data);
-
-                            dataTable.rows().updateRow(Index, DrawTableRows(label, true));
-                        }
-                        else {
-                            Swal.fire("Sorry, Something went wrong...", res.message, "warning");
-                        }
-                    },
-                    error: function (err) {
-                        Swal.fire("Có lỗi xảy ra", GetResonseError(err.responseText, 'title'), "error");
-                    }
-                });
+            var SendData = {
+                Id: Id,
+                Mail: ''
             }
+            $.ajax({
+                type: "POST",
+                url: "/Lable/Sample/Confirm",
+                data: JSON.stringify(SendData),
+                dataType: "json",
+                contentType: "application/json;charset=utf-8",
+                success: function (res) {
+                    if (res.status) {
+                        var label = JSON.parse(res.data);
+
+                        dataTable.rows().updateRow(Index, DrawTableRows(label, true));
+                    }
+                    else {
+                        Swal.fire("Sorry, Something went wrong...", res.message, "warning");
+                    }
+                },
+                error: function (err) {
+                    Swal.fire("Có lỗi xảy ra", GetResonseError(err.responseText, 'title'), "error");
+                }
+            });
         }
     });
 }
+
 // Rejects
 function Rejects(elm, e) {
     e.preventDefault();
@@ -1391,13 +1386,15 @@ function FillUserLabel(status) {
         $('td[UserPQE]').append(`<label>${uPQE.UserCode}</label>`);
         $('td[UserPQE]').append(`<label class="fw-bold">${uPQE.UserFullName}</label>`);
 
-        if (status.Status === 'PQE Confirm' || status.Status === 'TE Confirm' || status.Status === 'TE Reject') $('td[UserPQE]').addClass('confirm');
-        if (status.Status === 'PQE Reject') {
+        if (status.Status.includes('Confirm')) {
+            $('td[UserPQE]').addClass('confirm');
+        }
+        else if (status.Status.includes('Reject')) {
             $('td[UserPQE]').addClass('reject');
             $('td[UserPQE]').append(`<label>Lý do: ${status.Note}</label>`);
-        } 
+        }
     }
-    // UserTE
+    // UserPE
     $('td[UserTE]').empty();
     if (status.UserTE != null) {
         const uTE = status.UserTE;
@@ -1405,11 +1402,13 @@ function FillUserLabel(status) {
         $('td[UserTE]').append(`<label>${uTE.UserCode}</label>`);
         $('td[UserTE]').append(`<label class="fw-bold">${uTE.UserFullName}</label>`);
 
-        if (status.Status === 'TE Confirm') $('td[UserTE]').addClass('confirm');
-        if (status.Status === 'TE Reject') {
+        if (status.Status.includes('Confirm')) {
+            $('td[UserTE]').addClass('confirm');
+        }
+        else if (status.Status.includes('Reject')) {
             $('td[UserTE]').addClass('reject');
             $('td[UserTE]').append(`<label>Lý do: ${status.Note}</label>`);
-        } 
+        }
     }
 }
 
@@ -1553,6 +1552,18 @@ $('#ImagePreview').on('click', function () {
     });
     $('button[name="CurrentLabel"][Btn-Image]').click(function () {
         $('input[name="CurrentLabel"][LabelImagePath]').click();
+    });
+    // Upload Pdf
+    $('#UploadFiles').click(function (e) {
+        e.preventDefault();
+        $(this).next().click();
+    });
+    $('#UploadFilesInput').change(function (e) {
+        e.preventDefault();
+        var fileName = $($(this).val().split('\\')).last();
+
+        $('#FilesPreview').empty();
+        $('#FilesPreview').append(`<a href="javascript:;" style="border: 1px solid; width: fit-content; padding: 5px;">${fileName[0]}<a>`);
     });
 }
 
