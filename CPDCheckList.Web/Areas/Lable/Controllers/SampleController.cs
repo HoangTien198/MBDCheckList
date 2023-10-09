@@ -245,17 +245,19 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 #endregion
 
                 #region Send Mail
+                LabelSample.LabelSampleStatus.UserCreated = db.User_LS.FirstOrDefault(u => u.UserId == LabelSample.LabelSampleStatus.IdUserCreated);
+
                 string[] ccList = new string[0];
 
                 // PQE
                 string EmailContentPQE = Commons.SampleMail.CreateChecklistEmail("lena.sh.ruan@mail.foxconn.com", LabelSample);
                 string SystemFormPQE = Commons.SendMailNew.NewMail(EmailContentPQE);
-                Commons.SendMailNew.SendMail("lena.sh.ruan@mail.foxconn.com", ccList, "Bieu luu trinh moi da duoc tao - Check List System", SystemFormPQE);
+                Commons.SendMailNew.SendMail("lena.sh.ruan@mail.foxconn.com", ccList, "New Label Sample - Check List System", SystemFormPQE);
 
                 // PE
                 string EmailContentPE = Commons.SampleMail.CreateChecklistEmail("jax.fw.ruan@mail.foxconn.com", LabelSample);
                 string SystemFormPE = Commons.SendMailNew.NewMail(EmailContentPE);
-                Commons.SendMailNew.SendMail("jax.fw.ruan@mail.foxconn.com", ccList, "Bieu luu trinh moi da duoc tao - Check List System", SystemFormPE);
+                Commons.SendMailNew.SendMail("jax.fw.ruan@mail.foxconn.com", ccList, "New Label Sample - Check List System", SystemFormPE);
 
                 #endregion
 

@@ -8,6 +8,8 @@ using System.Web;
 using static System.Collections.Specialized.BitVector32;
 using System.Threading;
 using CPDCheckList.Web.Areas.Lable.Data;
+using System.Globalization;
+using System.Text;
 
 namespace CPDCheckList.Web.Commons
 {
@@ -41,7 +43,7 @@ namespace CPDCheckList.Web.Commons
                                                                                    <tbody>
                                                                                        <tr>
                                                                                             <td class=""v-container-padding-padding"" style=""overflow-wrap:break-word;word-break:break-word;padding: 10px 10px 10px 10px;font-family:arial,helvetica,sans-serif;text-align: center;color: white;font-weight: bold;"" align=""left"">
-                                                                                                <span>Tooling Room Management System</span>
+                                                                                                <span>Check List System</span>
                                                                                             </td>
                                                                                        </tr>
                                                                                    </tbody>
@@ -121,7 +123,7 @@ namespace CPDCheckList.Web.Commons
                 Sendmail md = new Sendmail
                 {
                     MailTo = toEmail,
-                    MailSubject = subject,
+                    MailSubject = subject,                    
                     MailType = "html",
                     MailCC = string.Join(",", ccEmail),
                     MailContent = body
@@ -186,8 +188,8 @@ namespace CPDCheckList.Web.Commons
                                      $"</br>" +
                                      $"We hope this email finds you well. We want to inform you that there is a new order creation request in the system that requires your attention.</br>" +
                                      $"</br>" +
-                                     $"Requester: {checklist.LableDataFlow_Status.UserCreate.UserCode} - {checklist.LableDataFlow_Status.UserCreate.UserFullName}</br>" +
-                                     $"Creation Date: {checklist.DateTime}</br>" +
+                                     $"Created: {checklist.LableDataFlow_Status.UserCreate.UserCode} - {MailCommond.RemoveDiacritics(checklist.LableDataFlow_Status.UserCreate.UserFullName)}</br>" +
+                                     $"Date: {checklist.DateTime}</br>" +
                                      $"Product: {checklist.ProductName}</br>" +
                                      $"Manufacturing Order (MO): {checklist.MO}</br>" +
                                      $"Print Count: {checklist.LablePrintNum}</br>" +
@@ -214,8 +216,8 @@ namespace CPDCheckList.Web.Commons
                                      $"</br>" +
                                      $"We hope this email finds you well. We are pleased to inform you that your order creation request has been successfully approved.</br>" +
                                      $"</br>" +
-                                     $"Requester: {checklist.LableDataFlow_Status.UserCreate.UserCode} - {checklist.LableDataFlow_Status.UserCreate.UserFullName}</br>" +
-                                     $"Creation Date: {checklist.DateTime}</br>" +
+                                     $"Created: {checklist.LableDataFlow_Status.UserCreate.UserCode} - {MailCommond.RemoveDiacritics(checklist.LableDataFlow_Status.UserCreate.UserFullName)}</br>" +
+                                     $"Date: {checklist.DateTime}</br>" +
                                      $"Product: {checklist.ProductName}</br>" +
                                      $"Manufacturing Order (MO): {checklist.MO}</br>" +
                                      $"Print Count: {checklist.LablePrintNum}</br>" +
@@ -242,8 +244,8 @@ namespace CPDCheckList.Web.Commons
                                      $"</br>" +
                                      $"We hope this email finds you well. We regret to inform you that your order creation request has been declined.</br>" +
                                      $"</br>" +
-                                     $"Requester: {checklist.LableDataFlow_Status.UserCreate.UserCode} - {checklist.LableDataFlow_Status.UserCreate.UserFullName}</br>" +
-                                     $"Creation Date: {checklist.DateTime}</br>" +
+                                     $"Created: {checklist.LableDataFlow_Status.UserCreate.UserCode} - {MailCommond.RemoveDiacritics(checklist.LableDataFlow_Status.UserCreate.UserFullName)}</br>" +
+                                     $"Date: {checklist.DateTime}</br>" +
                                      $"Product: {checklist.ProductName}</br>" +
                                      $"Manufacturing Order (MO): {checklist.MO}</br>" +
                                      $"Print Count: {checklist.LablePrintNum}</br>" +
@@ -275,8 +277,8 @@ namespace CPDCheckList.Web.Commons
                                      $"</br>" +
                                      $"We hope this email finds you well. We want to inform you that there is a new order creation request in the system that requires your attention.</br>" +
                                      $"</br>" +
-                                     $"Requester: {label.LabelSampleStatus.UserCreated.UserCode} - {label.LabelSampleStatus.UserCreated.UserFullName}</br>" +
-                                     $"Creation Date: {label.CreatedDate}</br>" +
+                                     $"Created: {label.LabelSampleStatus.UserCreated.UserCode} - {MailCommond.RemoveDiacritics(label.LabelSampleStatus.UserCreated.UserFullName)}</br>" +
+                                     $"Date: {label.CreatedDate}</br>" +
                                      $"Product: {label.ProductName}</br>" +
                                      $"MO: {label.MO}</br>" +
                                      $"</br>";
@@ -302,8 +304,8 @@ namespace CPDCheckList.Web.Commons
                                      $"</br>" +
                                      $"We hope this email finds you well. We are pleased to inform you that your order creation request has been successfully approved.</br>" +
                                      $"</br>" +
-                                     $"Requester: {label.LabelSampleStatus.UserCreated.UserCode} - {label.LabelSampleStatus.UserCreated.UserFullName}</br>" +
-                                     $"Creation Date: {label.CreatedDate}</br>" +
+                                     $"Created: {label.LabelSampleStatus.UserCreated.UserCode} - {MailCommond.RemoveDiacritics(label.LabelSampleStatus.UserCreated.UserFullName)}</br>" +
+                                     $"Date: {label.CreatedDate}</br>" +
                                      $"Product: {label.ProductName}</br>" +
                                      $"MO: {label.MO}</br>" +
                                      $"</br>";
@@ -329,8 +331,8 @@ namespace CPDCheckList.Web.Commons
                                      $"</br>" +
                                      $"We hope this email finds you well. We regret to inform you that your order creation request has been declined.</br>" +
                                      $"</br>" +
-                                     $"Requester: {label.LabelSampleStatus.UserCreated.UserCode} - {label.LabelSampleStatus.UserCreated.UserFullName}</br>" +
-                                     $"Creation Date: {label.CreatedDate}</br>" +
+                                     $"Created: {label.LabelSampleStatus.UserCreated.UserCode} - {MailCommond.RemoveDiacritics(label.LabelSampleStatus.UserCreated.UserFullName)}</br>" +
+                                     $"Date: {label.CreatedDate}</br>" +
                                      $"Product: {label.ProductName}</br>" +
                                      $"MO: {label.MO}</br>" +
                                      $"</br>";
@@ -347,6 +349,25 @@ namespace CPDCheckList.Web.Commons
             {
                 return string.Empty;
             }
+        }
+
+        
+    }
+
+    public static class MailCommond
+    {
+        public static string RemoveDiacritics(string text)
+        {
+            string normalizedString = text.Normalize(NormalizationForm.FormD);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (char c in normalizedString)
+            {
+                if (CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                    stringBuilder.Append(c);
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
     }
 

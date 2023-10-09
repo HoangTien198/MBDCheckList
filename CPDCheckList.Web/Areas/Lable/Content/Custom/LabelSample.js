@@ -207,7 +207,7 @@ function DrawTableRows(item, isAddInDatatable = false) {
             case 2:
             case 3:
             case 4: {
-                if (SampleStatus.IdUserCreated == id) {
+                if (SampleStatus.IdUserCreated == id || id == 119) {
                     cButton = `<td class="action_col">
                                   <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
                                   <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
@@ -1422,10 +1422,16 @@ function FillUserLabel(status) {
 }
 function FillPdfFile(label) {
 
-    var fileName = $(label.FilePath.split('\\')).last();
+    try {
+        var fileName = $(label.FilePath.split('\\')).last();
 
-    $('#FilesPreview').empty();
-    $('#FilesPreview').append(`<a href="${label.FilePath.replace(/^.*\\Areas/, "/Areas")}" style="border: 1px solid; width: fit-content; padding: 5px;" target="_blank">${fileName[0]}<a>`);
+        $('#FilesPreview').empty();
+        $('#FilesPreview').append(`<a href="${label.FilePath.replace(/^.*\\Areas/, "/Areas")}" style="border: 1px solid; width: fit-content; padding: 5px;" target="_blank">${fileName[0]}<a>`);
+    }
+    catch {
+
+    }
+    
 }
 
 // Image Event
@@ -1577,10 +1583,17 @@ $('#ImagePreview').on('click', function () {
     });
     $('#UploadFilesInput').change(function (e) {
         e.preventDefault();
-        var fileName = $($(this).val().split('\\')).last();
 
-        $('#FilesPreview').empty();
-        $('#FilesPreview').append(`<a href="javascript:;" style="border: 1px solid; width: fit-content; padding: 5px;" target="_blank">${fileName[0]}<a>`);
+        try {
+            var fileName = $($(this).val().split('\\')).last();
+
+            $('#FilesPreview').empty();
+            $('#FilesPreview').append(`<a href="javascript:;" style="border: 1px solid; width: fit-content; padding: 5px;" target="_blank">${fileName[0]}<a>`);
+        } catch (e) {
+
+        }
+
+        
     });
 }
 
