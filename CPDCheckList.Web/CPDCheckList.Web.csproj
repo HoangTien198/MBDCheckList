@@ -55,6 +55,18 @@
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=7.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.7.0.3\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=7.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.7.0.3\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=7.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.7.0.3\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=7.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.7.0.3\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -62,6 +74,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=7.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.7.0.3\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -449,6 +464,8 @@
       <DependentUpon>ModelLableDataFlow.edmx</DependentUpon>
       <LastGenOutput>ModelLableDataFlow.cs</LastGenOutput>
     </Content>
+    <Content Include="Content\Image\backgound_auto.jpg" />
+    <Content Include="Content\Image\honhai-logo.png" />
     <Content Include="files\Content\Custom\DataFlow\DataFlow.css" />
     <Content Include="files\Content\Custom\DataFlow\DataFlow.js" />
     <Content Include="files\Content\Custom\RutKiem\RutKiem.css" />
@@ -1225,9 +1242,6 @@
     <Content Include="Content\Front\XRXX3I6Li01BKofIMNaMRs71cA.woff2" />
     <Content Include="Content\Front\XRXX3I6Li01BKofIMNaNRs71cA.woff2" />
     <Content Include="Content\Front\XRXX3I6Li01BKofIMNaORs71cA.woff2" />
-    <Content Include="Content\Particles\particles.json" />
-    <Content Include="Content\Particles\particles_1.json" />
-    <Content Include="Content\Particles\particles_2.json" />
     <Content Include="Content\Template\NiceAdmin\vendor\apexcharts\locales\ar.json" />
     <Content Include="Content\Template\NiceAdmin\vendor\apexcharts\locales\ca.json" />
     <Content Include="Content\Template\NiceAdmin\vendor\apexcharts\locales\cs.json" />

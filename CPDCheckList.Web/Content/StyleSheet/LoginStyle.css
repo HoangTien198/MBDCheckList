@@ -9,6 +9,10 @@
 
 .card {
     border-radius: 10px !important;
+    background: rgb(255 255 255 / 60%);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0.3px 0.7px rgba(0, 0, 0, 0.126), 0 0.9px 1.7px rgba(0, 0, 0, 0.179), 0 1.8px 3.5px rgba(0, 0, 0, 0.224), 0 3.7px 7.3px rgba(0, 0, 0, 0.277), 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 .col-6 > .small {
@@ -44,7 +48,7 @@ canvas {
     position: fixed;
     z-index: -1;
 }
-#particles-js {
+#background {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -52,8 +56,10 @@ canvas {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 50%;
+    filter: brightness(0.5);
+    background-image: url('/Content/Image/backgound_auto.jpg');
 }
-.loginCard{
+.loginCard {
     min-width: 400px;
 }
 
@@ -64,4 +70,29 @@ canvas {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+.btn-smartoffice {
+    color: #fff;
+    background-color: #f4623a;
+    border-color: #f4623a;
+}
+    .btn-smartoffice:hover {
+        color: #fff;
+        background-color: #f4623a;
+        border-color: #f4623a;
+    }
+    .btn-smartoffice:active {
+        color: #fff;
+        background-color: #f4623a;
+        border-color: #f4623a;
+    }
+    .btn-smartoffice:focus {
+        color: #fff;
+        background-color: #f4623a;
+        border-color: #f4623a;
+    }
+.login-subtext{
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
 }

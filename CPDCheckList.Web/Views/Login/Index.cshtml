@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -21,74 +20,13 @@
     <link rel="stylesheet" type="text/css" href="..\files\bower_components\sweetalert\css\sweetalert.css">
 
     <link href="~/Content/StyleSheet/style.css" rel="stylesheet" />
-    <link href="~/Content/StyleSheet/LoginStyle.css" rel="stylesheet" />
+    <link href="~/Content/StyleSheet/LoginStyle.css?v=@Guid.NewGuid()" rel="stylesheet" />
 
 </head>
 
 <body class="fix-menu">
-    <!--<section class="login-block">-->
-    <!-- Container-fluid starts -->
-    <!--<div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">-->
-    <!-- Authentication card start -->
-    <!--<form class="md-float-material form-material">
-        <div class="text-center">
-            <h1 class="text-danger bold">Check List System</h1>
-
-        </div>
-        <div class="auth-box card">
-            <div class="card-block">
-                <div class="row m-b-20">
-                    <div class="col-md-12">
-                        <h3 class="text-center txt-primary">Sign In</h3>
-                    </div>
-                </div>
-                <p class="text-muted text-center p-b-5">Sign in with your regular account</p>
-                <div class="form-group form-primary">
-                    <input id="username" type="text" name="user-name" class="form-control" required=""
-                           placeholder="Username">
-                    <span class="form-bar"></span>
-                </div>
-                <div class="form-group form-primary">
-                    <input id="password" type="password" name="password" class="form-control" required=""
-                           placeholder="Password">
-                    <span class="form-bar"></span>
-                </div>
-                <div class="row m-t-25 text-left">
-                    <div class="col-12">
-                    </div>
-                </div>
-                <div class="row m-t-30">
-                    <div class="col-md-12">
-                        <button id="btnLogin" type="button"
-                                class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">
-                            LOGIN
-                        </button>
-
-                    </div>
-                </div>
-                <div class="forgot-phone text-right f-right">
-                    <a href="#" class="text-right f-w-600">
-                        Do you have an account? <br />
-                        Or Forgot Password?<br />
-                        Please, Contact: MBD-AIOT<br />
-                        Ext: 31746
-                    </a>
-                </div>
-            </div>
-        </div>
-    </form>-->
-    <!-- end of form -->
-    <!--</div>-->
-    <!-- Authentication card end -->
-    <!--</div>-->
-    <!-- end of col-sm-12 -->
-    <!--</div>
-    </section>-->
-
-
-    <div id="particles-js"></div>
+    <div id="background"></div>
+    <canvas class="background"></canvas>
     <main>
         <div class="container" id="container">
             <section class="section register d-flex">
@@ -99,18 +37,17 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-center pt-4">
                                         <!-- Logo -->
-                                        <a href="#" class="logo d-flex align-items-center w-auto">
+                                        <a href="https://10.220.130.116" class="logo d-flex align-items-center w-auto" target="_blank">
                                             <img src="~/Content/Image/fii-logo.jpg" alt="">
-                                            <span class="d-none d-lg-block">Check List</span>
+                                            <span class="d-none d-lg-block">MBD Platform</span>
                                         </a>
                                     </div><!-- End Logo -->
-                                    <div class="pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                                        <p class="text-center small">Enter your Card ID & Password to login</p>
-                                    </div>
+
+                                    <h5 class="card-title text-center pb-3 fs-4">CHECK LIST SYSTEM</h5>
+
                                     <div class="row g-3 needs-validation" id="LoginForm" novalidate>
-                                        <div class="col-12">
-                                            <label for="yourUsername" class="form-label">Card ID</label>
+                                        <div class="col-12 mt-0">
+                                            <label for="yourUsername" class="form-label text-white">Card ID</label>
                                             <div class="input-group has-validation">
                                                 <input id="username" type="text" name="user-name" class="form-control" placeholder="Vxxxxxxx" onkeypress="InputKeyPress(this)">
                                                 <div class="invalid-feedback" id="cardIDFeedback">Please enter your Card ID.</div>
@@ -118,7 +55,7 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="yourPassword" class="form-label">Password</label>
+                                            <label for="yourPassword" class="form-label text-white">Password</label>
                                             <div class="input-group has-validation">
                                                 <input type="password" class="form-control" id="password" maxlength="20" placeholder="password.." onkeypress="InputKeyPress(this)">
                                                 <div class="invalid-feedback" id="passwordFeedback">Please enter your password!</div>
@@ -130,7 +67,7 @@
                                                 <div class="col-6">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-                                                        <label class="form-label" for="rememberMe">Remember</label>
+                                                        <label class="form-label text-white" for="rememberMe">Remember</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-6 d-flex justify-content-end">
@@ -138,12 +75,18 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 pb-2">
-                                            <button class="btn btn-primary w-100" type="button" id="btnLogin">Login</button>
+                                        <div class="col-12 mb-1">
+                                            <button class="btn btn-primary w-100" type="button" id="btnLogin">LOGIN YOUR ACCOUNT</button>
                                         </div>
-                                        @*<div class="col-12">
-                                                <p class="small mb-0">Don't have account? <a href="@Url.Action("Register", "Account", new { area = "" })">Regist now.</a></p>
-                                            </div>*@
+
+                                        <p class="login-subtext text-center">OR</p>
+                                        <div class="col-12 mt-0">
+                                            <a class="btn btn-smartoffice w-100 d-flex justify-content-center mt-1" href="https://mbd-cns.myfiinet.com/Login/LoginSmartOffice?return_url=https://10.220.130.116:8888/Login/LoginCallback">
+                                                <img src="/Content/Image/honhai-logo.png" style="height: 20px;width: 20px; margin-right: 5px;" />
+                                                <span class="d-flex justify-content-center align-items-center">LOGIN SMART OFFICE</span>
+                                            </a>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -169,10 +112,6 @@
     <!-- page login js-->
     <script src="~/files/assets/js/common-pages.js"></script>
     <script src="~/files/assets/js/pages/login.js?v=@Guid.NewGuid()"></script>
-
-
-
-
 </body>
 
 </html>

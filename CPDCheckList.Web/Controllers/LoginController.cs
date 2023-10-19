@@ -1,7 +1,9 @@
 ﻿using CPDCheckList.Web.Commons;
 using CPDCheckList.Web.Models.DAO;
+using CPDCheckList.Web.Models.EF;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,6 +13,7 @@ namespace CPDCheckList.Web.Controllers
     public class LoginController : Controller
     {
         // GET: Login
+        private CheckListDbContext db = null;
         public ActionResult Index()
         {
             return View();
@@ -140,6 +143,40 @@ namespace CPDCheckList.Web.Controllers
         {
             Session[CommonConstant.USER_SESSION] = null;
             return RedirectToAction("Index", "Login");
+        }
+
+        public ActionResult LoginCallback()
+        {
+            try
+            {
+                string code = Request.Params["code"];
+
+                var temp = Request.QueryString.GetValues("q")[0];
+
+                var handler = new JwtSecurityTokenHandler();
+                var jwtSecurityToken = handler.ReadJwtToken(code);
+
+                var username = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == "username").Value;
+
+                Session["OauthCode"] = code;
+                db = new CheckListDbContext();
+                var user = db.Users.FirstOrDefault(u => u.Username == username);
+
+
+                if (user != null)
+                {
+                    CheckLogin(user.Username, user.Password);
+                    return RedirectToAction("Home", "Home", new { area = "Dashboard" });
+                }
+                else
+                {
+                    return JavaScript("endload();Swal.fire(\"Đăng nhập không thành công!\", \"Kiểm tra lại thông tin tài khoản và mật khẩu!\", \"error\");");
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error404", "ErrorPage");
+            }
         }
     }
 }
