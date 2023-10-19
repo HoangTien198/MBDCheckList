@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Label Sample";
     Layout = "~/Areas/Shared/_AreaLayoutShare.cshtml";
-
     var user = (CPDCheckList.Web.Commons.AccountLogin)Session["USER_SESSION"];
 }
 
@@ -10,7 +9,7 @@
     <!-- Vendor -->
     <link href="~/files/Content/vendor/Viewer JS/viewer.min.css" rel="stylesheet" />
     <!-- Custom -->
-    <link href="~/Areas/Lable/Content/Custom/LabelSample.css" rel="stylesheet" />
+    <link href="~/Areas/Lable/Content/Custom/LabelSample.css?v=@Guid.NewGuid()" rel="stylesheet" />
 }
 
 <img id="ImagePreview" style="display: none" />
@@ -498,7 +497,6 @@
     <!-- Vendor -->
     <script src="~/Areas/Lable/Content/vendor/MomentJs/moment.js"></script>
     <script src="~/files/Content/vendor/Viewer JS/viewer.min.js"></script>
-    <!-- Custom -->
-    <script src="~/files/assets/js/common-pages.js?v=@Guid.NewGuid()"></script>
-    <script src="~/Areas/Lable/Content/Custom/LabelSample.js"></script>
+    <!-- Custom -->   
+    <script src="~/Areas/Lable/Content/Custom/LabelSample.js?v=@Guid.NewGuid()"></script>
 }

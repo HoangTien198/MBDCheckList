@@ -183,12 +183,12 @@ namespace CPDCheckList.Web.Models.DAO
                     if (checkList.Location.Trim().ToUpper() == "F06")
                     {
                         string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_LABEL, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Copy IC First Article Inspection List",
-                        $"Please Confirm check list Check List system: http://10.220.130.116:8888 \nMO: {checkList.MO}\nDate: {dateTeCreated}\nShift Work: {(_shiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserFullName}\n-----------------", "");
+                        $"Please Confirm check list Special Data Management system: http://10.220.130.116:8888 \nMO: {checkList.MO}\nDate: {dateTeCreated}\nShift Work: {(_shiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserFullName}\n-----------------", "");
                     }
                     if (checkList.Location.Trim().ToUpper() == "F17")
                     {
                         string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_KITTING_F17, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Copy IC First Article Inspection List",
-                        $"Please Confirm check list Check List system: http://10.220.130.116:8888 \nMO: {checkList.MO}\nDate: {dateTeCreated}\nShift Work: {(_shiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserFullName}\n-----------------", "");
+                        $"Please Confirm check list Special Data Management system: http://10.220.130.116:8888 \nMO: {checkList.MO}\nDate: {dateTeCreated}\nShift Work: {(_shiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserFullName}\n-----------------", "");
                     }
 
                 }
@@ -236,12 +236,12 @@ namespace CPDCheckList.Web.Models.DAO
                     if (checkList.Location.Trim().ToUpper() == "F06")
                     {
                         string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_LABEL, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Copy IC First Article Inspection List",
-                        $"Check list is updated by:{user.UserCode} - {user.UserFullName}. Please Confirm check list on Check List system: http://10.220.130.116:8888 \nMO: {checkList.MO}\nDate: {dateTeCreated}\nShift Work: {(_shiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\n-----------------", "");
+                        $"Check list is updated by:{user.UserCode} - {user.UserFullName}. Please Confirm check list on Special Data Management system: http://10.220.130.116:8888 \nMO: {checkList.MO}\nDate: {dateTeCreated}\nShift Work: {(_shiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\n-----------------", "");
                     }
                     if (checkList.Location.Trim().ToUpper() == "F17")
                     {
                         string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_KITTING_F17, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Copy IC First Article Inspection List",
-                        $"Check list is updated by:{user.UserCode} - {user.UserFullName}. Please Confirm check list on Check List system: http://10.220.130.116:8888 \nMO: {checkList.MO}\nDate: {dateTeCreated}\nShift Work: {(_shiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\n-----------------", "");
+                        $"Check list is updated by:{user.UserCode} - {user.UserFullName}. Please Confirm check list on Special Data Management system: http://10.220.130.116:8888 \nMO: {checkList.MO}\nDate: {dateTeCreated}\nShift Work: {(_shiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\n-----------------", "");
                     }
                     
                 }
@@ -306,19 +306,19 @@ namespace CPDCheckList.Web.Models.DAO
                 {
                     SFCService.Servicepostdata sfcmail = new SFCService.Servicepostdata();
                     string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_IPQC_ARLO, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Copy IC First Article Inspection List",
-                        $"Check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm check list on Check List system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\n-----------------", "");
+                        $"Check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm check list on Special Data Management system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\n-----------------", "");
                 }
                 if (mailSelected.Trim().ToUpper() == "NETGEAR")
                 {
                     SFCService.Servicepostdata sfcmail = new SFCService.Servicepostdata();
                     string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_IPQC_NETGEAR, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Copy IC First Article Inspection List",
-                        $"Check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm check list on Check List system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\n-----------------", "");
+                        $"Check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm check list on Special Data Management system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\n-----------------", "");
                 }
                 if (mailSelected.Trim().ToUpper() == "F17_IPQC")
                 {
                     SFCService.Servicepostdata sfcmail = new SFCService.Servicepostdata();
                     string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_IPQC_F17, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Copy IC First Article Inspection List",
-                        $"Check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm check list on Check List system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\n-----------------", "");
+                        $"Check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm check list on Special Data Management system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\n-----------------", "");
                 }
                 return 1;//thành công
             }

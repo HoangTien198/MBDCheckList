@@ -101,7 +101,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
 
                 string[] emptyArray = new string[0];
                 string content = Commons.SendMailNew.NewMail(Commons.LabelMail.CreateChecklistEmail(Commons.ListMail.MAIL_LABEL, returnData));               
-                Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh moi da duoc tao - Check List System", content);
+                Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh moi da duoc tao - Special Data Management", content);
 
                 return Json(new { status = true, data = returnData });
                 #endregion
@@ -252,7 +252,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
 
                     string[] emptyArray = new string[0];
                     string content = Commons.SendMailNew.NewMail(Commons.LabelMail.CreateChecklistEmail(Mail, lable));
-                    Commons.SendMailNew.SendMail(Mail, emptyArray, "Bieu luu trinh moi can duoc phe duyet - Check List System", content);
+                    Commons.SendMailNew.SendMail(Mail, emptyArray, "Bieu luu trinh moi can duoc phe duyet - Special Data Management System", content);
                 } 
                 else if (user.RoleId == 3) // ipqc
                 {
@@ -261,7 +261,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
 
                     string[] emptyArray = new string[0];
                     string content = Commons.SendMailNew.NewMail(Commons.LabelMail.ConfirmEmail(Commons.ListMail.MAIL_LABEL, lable));
-                    Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da duoc phe duyet - Check List System", content);
+                    Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da duoc phe duyet - Special Data Management System", content);
                 }
 
                 db.LableDataFlows.AddOrUpdate(lable);
@@ -289,7 +289,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
 
                     string[] emptyArray = new string[0];
                     string content = Commons.SendMailNew.NewMail(Commons.LabelMail.RejectEmail(Commons.ListMail.MAIL_LABEL, lable));
-                    Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da bi tu choi - Check List System", content);
+                    Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da bi tu choi - Special Data Management System", content);
                 }
                 else if (user.RoleId == 3) // ipqc
                 {
@@ -298,7 +298,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
 
                     string[] emptyArray = new string[0];
                     string content = Commons.SendMailNew.NewMail(Commons.LabelMail.RejectEmail(Commons.ListMail.MAIL_LABEL, lable));
-                    Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da bi tu choi - Check List System", content);
+                    Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, emptyArray, "Bieu luu trinh da bi tu choi - Special Data Management System", content);
                 }              
 
                 db.LableDataFlows.AddOrUpdate(lable);

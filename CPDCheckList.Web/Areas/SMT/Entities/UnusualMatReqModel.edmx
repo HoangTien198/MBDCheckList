@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="UnusualMatReqModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="UnusualMatReq">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateReq" Type="datetime" />
+          <Property Name="ModelName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MO" Type="nvarchar" MaxLength="50" />
+          <Property Name="MatDesc" Type="nvarchar" MaxLength="50" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="25" />
+          <Property Name="ActReqQty" Type="int" />
+          <Property Name="ExReqQty" Type="int" />
+          <Property Name="DemQty" Type="int" />
+          <Property Name="ActDelQty" Type="int" />
+          <Property Name="TotalLoss" Type="int" />
+          <Property Name="MatCost" Type="float" />
+          <Property Name="TotalLossCost" Type="float" />
+          <Property Name="DemReason" Type="nvarchar" MaxLength="255" />
+          <Property Name="IdStatus" Type="int" />
+          <Property Name="Location" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="UnusualMatReqStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedUserId" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserCode" Type="varchar" MaxLength="20" />
+          <Property Name="UserFullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <Association Name="FK_UnusualMatReq_UnusualMatReqStatus">
+          <End Role="UnusualMatReqStatus" Type="Self.UnusualMatReqStatus" Multiplicity="0..1" />
+          <End Role="UnusualMatReq" Type="Self.UnusualMatReq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnusualMatReqStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnusualMatReq">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UnusualMatReqStatus_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UnusualMatReqStatus" Type="Self.UnusualMatReqStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UnusualMatReqStatus">
+              <PropertyRef Name="CreatedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UnusualMatReqModelStoreContainer">
+          <EntitySet Name="UnusualMatReq" EntityType="Self.UnusualMatReq" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnusualMatReqStatus" EntityType="Self.UnusualMatReqStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_UnusualMatReq_UnusualMatReqStatus" Association="Self.FK_UnusualMatReq_UnusualMatReqStatus">
+            <End Role="UnusualMatReqStatus" EntitySet="UnusualMatReqStatus" />
+            <End Role="UnusualMatReq" EntitySet="UnusualMatReq" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnusualMatReqStatus_Users" Association="Self.FK_UnusualMatReqStatus_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UnusualMatReqStatus" EntitySet="UnusualMatReqStatus" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UnusualMatReqModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="UnusualMatReq">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateReq" Type="DateTime" Precision="3" />
+          <Property Name="ModelName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MatDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="ActReqQty" Type="Int32" />
+          <Property Name="ExReqQty" Type="Int32" />
+          <Property Name="DemQty" Type="Int32" />
+          <Property Name="ActDelQty" Type="Int32" />
+          <Property Name="TotalLoss" Type="Int32" />
+          <Property Name="MatCost" Type="Double" />
+          <Property Name="TotalLossCost" Type="Double" />
+          <Property Name="DemReason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IdStatus" Type="Int32" />
+          <NavigationProperty Name="UnusualMatReqStatus" Relationship="Self.FK_UnusualMatReq_UnusualMatReqStatus" FromRole="UnusualMatReq" ToRole="UnusualMatReqStatus" />
+          <Property Name="Location" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UnusualMatReqStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedUserId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CreatedUser" Relationship="Self.FK_UnusualMatReqStatus_Users" FromRole="UnusualMatReqStatus" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User_MQ">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_UnusualMatReq_UnusualMatReqStatus">
+          <End Role="UnusualMatReqStatus" Type="UnusualMatReqModel.UnusualMatReqStatus" Multiplicity="0..1" />
+          <End Role="UnusualMatReq" Type="Self.UnusualMatReq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnusualMatReqStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UnusualMatReq">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UnusualMatReqStatus_Users">
+          <End Role="Users" Type="UnusualMatReqModel.User_MQ" Multiplicity="0..1" />
+          <End Role="UnusualMatReqStatus" Type="UnusualMatReqModel.UnusualMatReqStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UnusualMatReqStatus">
+              <PropertyRef Name="CreatedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UnusualMatReqEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UnusualMatReqs" EntityType="Self.UnusualMatReq" />
+          <EntitySet Name="UnusualMatReqStatus1" EntityType="UnusualMatReqModel.UnusualMatReqStatus" />
+          <EntitySet Name="User_MQ" EntityType="UnusualMatReqModel.User_MQ" />
+          <AssociationSet Name="FK_UnusualMatReq_UnusualMatReqStatus" Association="Self.FK_UnusualMatReq_UnusualMatReqStatus">
+            <End Role="UnusualMatReqStatus" EntitySet="UnusualMatReqStatus1" />
+            <End Role="UnusualMatReq" EntitySet="UnusualMatReqs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnusualMatReqStatus_Users" Association="Self.FK_UnusualMatReqStatus_Users">
+            <End Role="Users" EntitySet="User_MQ" />
+            <End Role="UnusualMatReqStatus" EntitySet="UnusualMatReqStatus1" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UnusualMatReqModelStoreContainer" CdmEntityContainer="UnusualMatReqEntities">
+          <EntitySetMapping Name="UnusualMatReqs">
+            <EntityTypeMapping TypeName="UnusualMatReqModel.UnusualMatReq">
+              <MappingFragment StoreEntitySet="UnusualMatReq">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DateReq" ColumnName="DateReq" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="MO" ColumnName="MO" />
+                <ScalarProperty Name="MatDesc" ColumnName="MatDesc" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="ActReqQty" ColumnName="ActReqQty" />
+                <ScalarProperty Name="ExReqQty" ColumnName="ExReqQty" />
+                <ScalarProperty Name="DemQty" ColumnName="DemQty" />
+                <ScalarProperty Name="ActDelQty" ColumnName="ActDelQty" />
+                <ScalarProperty Name="TotalLoss" ColumnName="TotalLoss" />
+                <ScalarProperty Name="MatCost" ColumnName="MatCost" />
+                <ScalarProperty Name="TotalLossCost" ColumnName="TotalLossCost" />
+                <ScalarProperty Name="DemReason" ColumnName="DemReason" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnusualMatReqStatus1">
+            <EntityTypeMapping TypeName="UnusualMatReqModel.UnusualMatReqStatus">
+              <MappingFragment StoreEntitySet="UnusualMatReqStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedUserId" ColumnName="CreatedUserId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_MQ">
+            <EntityTypeMapping TypeName="UnusualMatReqModel.User_MQ">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="UserFullName" ColumnName="UserFullName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

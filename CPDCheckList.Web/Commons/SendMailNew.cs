@@ -43,7 +43,7 @@ namespace CPDCheckList.Web.Commons
                                                                                    <tbody>
                                                                                        <tr>
                                                                                             <td class=""v-container-padding-padding"" style=""overflow-wrap:break-word;word-break:break-word;padding: 10px 10px 10px 10px;font-family:arial,helvetica,sans-serif;text-align: center;color: white;font-weight: bold;"" align=""left"">
-                                                                                                <span>Check List System</span>
+                                                                                                <span>Special Data Management System</span>
                                                                                             </td>
                                                                                        </tr>
                                                                                    </tbody>

@@ -1,0 +1,89 @@
+﻿<input type="hidden" id="Location" value="F06" />
+@{
+    ViewBag.Title = "Đơn xin nhu cầu vật liệu bất thường";
+    Layout = "~/Areas/Shared/_AreaLayoutShare.cshtml";
+}
+
+@section styles{
+    <!-- Vendor -->
+    <link href="~/files/Content/vendor/Viewer JS/viewer.min.css" rel="stylesheet" />
+    <!-- Custom -->
+    <link href="~/Areas/SMT/Content/UnusualMatReq/UnusualMatReq.css" rel="stylesheet" />
+}
+
+<div class="page-wrapper">
+    <div class="page-body">
+        <div class="card mt-2">
+            <div class="card-body p-0">
+                <table id="table_MatReq" class="table table-bordered table-striped table-hover nowrap">
+                    <thead class="text-center">
+                        <tr>
+                            <th>日期<br />Ngày</th><!-- 0 DaterReq -->
+                            <th>機種<br />Tên hàng</th><!-- 1 ModelName-->
+                            <th>單<br />Công lệnh</th><!-- 2 MO -->
+                            <th>物料描述<br /> Mô tả vật liệu</th><!-- 3 MatDesc -->
+                            <th>物料料號<br /> Mã vật liệu</th><!-- 4 MatCode -->
+                            <th>單位<br />Đơn vị</th><!--5 Unit -->
+                            <th>本次超發申請<br />Số lượng xin phát</th><!-- 6 ActReqQty -->
+                            <th>地位<br />Trạng thái</th><!-- 7 Status -->
+                            <th>行动<br />Action</th><!-- 8 Action -->
+                        </tr>
+                    </thead>
+                    <tbody id="table_MatReq-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add & Edit modal -->
+<div class="modal fade" id="MatReqModal" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title text-center w-100">
+                    <h3>'物料異常需求申請單 Đơn xin nhu cầu vật liệu bất thường V9'</h3>
+                </div>
+                <button type="button" class="btn btn-outline-danger border-0 rounded-circle" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x" style="font-size: 20px"></i></button>
+            </div>
+            <div class="modal-body" id="MatReqModal-body">
+                <table class="table table-bordered table-lablesample" id="MatReqModalTable">
+                    <thead id="MatReqModalTable-thead">
+                        <tr>
+                            <th><br />Ngày</th>
+                            <th><br />Tên hàng</th>
+                            <th><br />Công lệnh</th>
+                            <th><br />Miêu tả vật liệu</th>
+                            <th><br />Mã vật liệu</th>
+                            <th><br />Đơn vị</th>
+                            <th><br />Số lượng xin phát vượt lần này <br /><span class="text-primary">[A]</span></th>
+                            <th><br />Số lượng phát vượt thực tế lần này <br /><span class="text-primary">[B]</span></th>
+                            <th><br />Số lượng nhu cầu công lệnh <br /><span class="text-primary">[C]</span></th>
+                            <th><br />Số lượng thực phát công lệnh <br /><span class="text-primary">[D]</span></th>
+                            <th><br />Tổng tổn thất nguyên vật liệu <br /><span class="text-primary">[E = D - C + A]</span></th>
+                            <th><br />Giá vật liệu (VND) <br /><span class="text-primary">[F]</span></th>
+                            <th><br />Tổng tiền vật liệu tổn thất (VND) <br /><span class="text-primary">[G = E * F]</span></th>
+                            <th><br />Nguyên nhân nhu cầu</th>
+                        </tr>
+                    </thead>
+                    <tbody id="MatReqModalTable-tbody">
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="button" class="btn btn-sm btn-primary" id="LabelSample-btnSave">添新 Thêm mới</button>
+                <button type="button" class="btn btn-sm btn-primary" style="display: none" id="LabelSample-btnSaveEdit" onclick="SaveEdit(this, event)">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <!-- Vendor -->
+    <script src="~/Areas/Lable/Content/vendor/MomentJs/moment.js"></script>
+    <script src="~/files/Content/vendor/Viewer JS/viewer.min.js"></script>
+    <!-- Custom -->
+    <script src="~/Areas/SMT/Content/UnusualMatReq/UnusualMatReq.js"></script>
+}
+

@@ -29,7 +29,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>@ViewBag.Title | Check List System</title>
+    <title>@ViewBag.Title | Special Data Management</title>
 
     <!-- Favicons -->
     <link href="~/Content/Image/fii-logo.jpg" rel="icon">
@@ -57,7 +57,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="/Dashboard/Home/Home" class="logo d-flex align-items-center">
                 <img src="~/Content/Image/fii-logo.jpg" alt="">
-                <span class="d-none d-lg-block">Check List System</span>
+                <span class="d-none d-lg-block">Special Data Management</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -194,6 +194,19 @@
                 </ul>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link @(controllerName.Contains("UnusualMatReq") ? "" : "collapsed")" data-bs-target="#SMT-nav" data-bs-toggle="collapse" href="#" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="bi bi-columns-gap"></i><span>SMT</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="SMT-nav" class="nav-content @(controllerName.Contains("UnusualMatReq") ? "show" : "collapse")" data-bs-parent="#sidebar">
+                    <li>
+                        <a href="/SMT/UnusualMatReq/Index" class="@((actionName =="Index" && controllerName.Contains("UnusualMatReq")) ? "active" : "")">
+                            <i class="bi bi-circle"></i><span>Nhu cầu liệu bất thường</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
 
             <li class="nav-heading">Pages</li>
             <li class="nav-item">
@@ -231,6 +244,8 @@
     <script src="~/Content/Template/NiceAdmin/vendor/simple-datatables/simple-datatables.js?v=@Guid.NewGuid()"></script>
     <!-- Template Main JS File -->
     <script src="~/Content/Template/NiceAdmin/js/main.js"></script>
+
+    <script src="~/files/assets/js/common-pages.js?v=@Guid.NewGuid()"></script>
 
 
     @RenderSection("render", required: false)

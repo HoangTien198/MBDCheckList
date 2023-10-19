@@ -252,12 +252,12 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 // PQE
                 string EmailContentPQE = Commons.SampleMail.CreateChecklistEmail("lena.sh.ruan@mail.foxconn.com", LabelSample);
                 string SystemFormPQE = Commons.SendMailNew.NewMail(EmailContentPQE);
-                Commons.SendMailNew.SendMail("lena.sh.ruan@mail.foxconn.com", ccList, "New Label Sample - Check List System", SystemFormPQE);
+                Commons.SendMailNew.SendMail("lena.sh.ruan@mail.foxconn.com", ccList, "New Label Sample - Special Data Management System", SystemFormPQE);
 
                 // PE
                 string EmailContentPE = Commons.SampleMail.CreateChecklistEmail("jax.fw.ruan@mail.foxconn.com", LabelSample);
                 string SystemFormPE = Commons.SendMailNew.NewMail(EmailContentPE);
-                Commons.SendMailNew.SendMail("jax.fw.ruan@mail.foxconn.com", ccList, "New Label Sample - Check List System", SystemFormPE);
+                Commons.SendMailNew.SendMail("jax.fw.ruan@mail.foxconn.com", ccList, "New Label Sample - Special Data Management System", SystemFormPE);
 
                 #endregion
 
@@ -566,7 +566,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
 
                         string EmailContentConfirm = Commons.SampleMail.ConfirmEmail(Commons.ListMail.MAIL_LABEL, lable);
                         string SystemFormConfirm = Commons.SendMailNew.NewMail(EmailContentConfirm);
-                        Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, ccList, "Bieu luu trinh da duoc ky - Check List System", SystemFormConfirm);
+                        Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, ccList, "Bieu luu trinh da duoc ky - Special Data Management System", SystemFormConfirm);
                     }
                 }
                 else if (user.RoleId == 7) // TE
@@ -583,7 +583,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
 
                         string EmailContentConfirm = Commons.SampleMail.ConfirmEmail(Commons.ListMail.MAIL_LABEL, lable);
                         string SystemFormConfirm = Commons.SendMailNew.NewMail(EmailContentConfirm);
-                        Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, ccList, "Bieu luu trinh da duoc ky - Check List System", SystemFormConfirm);
+                        Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, ccList, "Bieu luu trinh da duoc ky - Special Data Management System", SystemFormConfirm);
                     }
                 }
 
@@ -624,7 +624,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
 
                 string EmailContentConfirm = Commons.SampleMail.RejectEmail(Commons.ListMail.MAIL_LABEL, lable);
                 string SystemFormConfirm = Commons.SendMailNew.NewMail(EmailContentConfirm);
-                Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, ccList, "Bieu luu trinh chua duoc thong qua - Check List System", SystemFormConfirm);
+                Commons.SendMailNew.SendMail(Commons.ListMail.MAIL_LABEL, ccList, "Bieu luu trinh chua duoc thong qua - Special Data Management System", SystemFormConfirm);
 
                 db.LabelSamples.AddOrUpdate(lable);
                 db.SaveChanges();

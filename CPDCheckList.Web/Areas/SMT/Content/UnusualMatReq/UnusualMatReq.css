@@ -1,0 +1,14 @@
+﻿.dataTable-table > thead > tr > th {
+    text-align: center;
+}
+.modal-fullscreen {
+    padding: 30px;
+}
+
+    .modal-fullscreen .modal-content {
+        border-radius: 15px;
+    }
+#MatReqModalTable-thead tr {
+    text-align: center;
+    vertical-align: middle;
+}

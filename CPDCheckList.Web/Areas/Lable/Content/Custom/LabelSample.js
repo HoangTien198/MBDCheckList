@@ -1421,7 +1421,6 @@ function FillUserLabel(status) {
     }
 }
 function FillPdfFile(label) {
-
     try {
         var fileName = $(label.FilePath.split('\\')).last();
 
@@ -1429,9 +1428,8 @@ function FillPdfFile(label) {
         $('#FilesPreview').append(`<a href="${label.FilePath.replace(/^.*\\Areas/, "/Areas")}" style="border: 1px solid; width: fit-content; padding: 5px;" target="_blank">${fileName[0]}<a>`);
     }
     catch {
-
-    }
-    
+        $('#FilesPreview').empty();
+    }   
 }
 
 // Image Event

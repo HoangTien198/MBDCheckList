@@ -277,6 +277,32 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WithDrawalModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Areas\SMT\Controllers\UnusualMatReqController.cs" />
+    <Compile Include="Areas\SMT\Entities\UnusualMatReq.cs">
+      <DependentUpon>UnusualMatReqModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\SMT\Entities\UnusualMatReqModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnusualMatReqModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\SMT\Entities\UnusualMatReqModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnusualMatReqModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\SMT\Entities\UnusualMatReqModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnusualMatReqModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\SMT\Entities\UnusualMatReqStatus.cs">
+      <DependentUpon>UnusualMatReqModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\SMT\Entities\User_MQ.cs">
+      <DependentUpon>UnusualMatReqModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\SMT\SMTAreaRegistration.cs" />
     <Compile Include="Areas\TemperatureHumidity\Controllers\TemperatureHumidityController.cs" />
     <Compile Include="Areas\TemperatureHumidity\TemperatureHumidityAreaRegistration.cs" />
     <Compile Include="Commons\AccountLogin.cs" />
@@ -463,6 +489,18 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelLableDataFlow.edmx</DependentUpon>
       <LastGenOutput>ModelLableDataFlow.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\SMT\Content\UnusualMatReq\UnusualMatReq.css" />
+    <Content Include="Areas\SMT\Content\UnusualMatReq\UnusualMatReq.js" />
+    <Content Include="Areas\SMT\Entities\UnusualMatReqModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnusualMatReqModel.edmx</DependentUpon>
+      <LastGenOutput>UnusualMatReqModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\SMT\Entities\UnusualMatReqModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnusualMatReqModel.edmx</DependentUpon>
+      <LastGenOutput>UnusualMatReqModel.cs</LastGenOutput>
     </Content>
     <Content Include="Content\Image\backgound_auto.jpg" />
     <Content Include="Content\Image\honhai-logo.png" />
@@ -670,6 +708,15 @@
     <Content Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.slim.min.map" />
     <Content Include="Areas\Lable\Content\vendor\Particles\particles.json" />
     <Content Include="Areas\Lable\Views\Sample\Index.cshtml" />
+    <Content Include="Areas\SMT\Views\web.config" />
+    <Content Include="Areas\SMT\Views\UnusualMatReq\Index.cshtml" />
+    <EntityDeploy Include="Areas\SMT\Entities\UnusualMatReqModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UnusualMatReqModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\SMT\Entities\UnusualMatReqModel.edmx.diagram">
+      <DependentUpon>UnusualMatReqModel.edmx</DependentUpon>
+    </Content>
     <None Include="files\Content\vendor\Jquery\jquery-3.4.1.intellisense.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.min.js" />
@@ -1481,6 +1528,8 @@
     <Folder Include="Areas\Dashboard\Data\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
     <Folder Include="Areas\Lable\Views\Shared\" />
+    <Folder Include="Areas\SMT\Data\" />
+    <Folder Include="Areas\SMT\Views\Shared\" />
     <Folder Include="Areas\TemperatureHumidity\Views\Shared\" />
     <Folder Include="Views\TemperatureMonitor\" />
   </ItemGroup>
