@@ -38,5 +38,17 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
                 return Json(new { status = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        public JsonResult GetUsers()
+        {
+            try
+            {
+                List<Entities.User_MQ> users = db.User_MQ.Where(u => u.RoleId > 7 && u.RoleId < 16).ToList();
+                return Json(new {status = true, data = JsonSerializer.Serialize(users)}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

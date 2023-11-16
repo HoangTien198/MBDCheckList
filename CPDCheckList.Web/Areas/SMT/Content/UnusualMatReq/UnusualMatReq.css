@@ -1,6 +1,7 @@
 ﻿.dataTable-table > thead > tr > th {
     text-align: center;
 }
+
 .modal-fullscreen {
     padding: 30px;
 }
@@ -8,7 +9,44 @@
     .modal-fullscreen .modal-content {
         border-radius: 15px;
     }
+
 #MatReqModalTable-thead tr {
     text-align: center;
     vertical-align: middle;
+}
+
+.text-middle {
+    vertical-align: middle;
+}
+.table-bordered .bg-secondary-light {
+    border-color: #9b9b9b;
+}
+
+.table-bordered tr {
+    border-color: #9b9b9b;
+}
+#MatReqModalTable{
+    font-size: 12px;
+}
+textarea{
+    resize: none;
+}
+.card.radius-15 {
+    background-color: #f3f7ff;
+}
+span.badge.rounded-pill {
+    height: 20px;
+    width: 20px;
+}
+.btn.bg-white:hover{
+    background-color: white !important;
+}
+.text-monospace {
+    background-color: white !important;
+}
+#NewItem-row{
+    cursor: pointer;
+}
+.card-sign{
+    padding: 5px;
 }

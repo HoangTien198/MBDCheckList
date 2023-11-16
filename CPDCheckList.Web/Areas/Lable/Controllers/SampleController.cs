@@ -36,7 +36,12 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 DateTime endDate = new DateTime(Year, Month, DateTime.DaysInMonth(Year, Month));
                 #endregion
 
-                List<LabelSample> data = db.LabelSamples.Where(cl => cl.CreatedDate >= startDate && cl.CreatedDate <= endDate && cl.Location == Location)
+                //List<LabelSample> data = db.LabelSamples.Where(cl => cl.CreatedDate >= startDate && cl.CreatedDate <= endDate && cl.Location == Location)
+                //    .Include(cl => cl.LabelSampleStatus)
+                //    .OrderByDescending(o => o.CreatedDate)
+                //    .ToList();
+
+                List<LabelSample> data = db.LabelSamples.Where(cl => cl.Location == Location)
                     .Include(cl => cl.LabelSampleStatus)
                     .OrderByDescending(o => o.CreatedDate)
                     .ToList();

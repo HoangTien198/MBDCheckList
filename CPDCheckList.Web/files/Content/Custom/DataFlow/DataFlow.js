@@ -48,7 +48,7 @@ function LoadDataCheckList() {
                     $('#tbody_DataFlow').append(row);
                 });
                 CreateTable();
-                DynamicLoadTable();
+                //DynamicLoadTable();
             }
             else {
                 Swal.fire("Có lỗi xảy ra", res.message, "error");

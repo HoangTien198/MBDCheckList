@@ -4,12 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c8991226c34a4ae3b807fdec4082af99" Name="Diagram1">
-        <EntityTypeShape EntityType="UnusualMatReqModel.UnusualMatReq" Width="2.75" PointX="7" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnusualMatReqModel.UnusualMatReqStatus" Width="2.375" PointX="3" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="UnusualMatReqModel.User_MQ" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <AssociationConnector Association="UnusualMatReqModel.FK_UnusualMatReq_UnusualMatReqStatus" ManuallyRouted="false" />
-        <AssociationConnector Association="UnusualMatReqModel.FK_UnusualMatReqStatus_Users" ManuallyRouted="false" />
+      <Diagram DiagramId="c8991226c34a4ae3b807fdec4082af99" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="UnusualMatReqModel.UnsualMatReqSign_mt" Width="2.625" PointX="11.5" PointY="5" />
+        <EntityTypeShape EntityType="UnusualMatReqModel.UnusualMatReqStatus_mt" Width="2.625" PointX="8" PointY="5.625" />
+        <EntityTypeShape EntityType="UnusualMatReqModel.User_mt" Width="2.625" PointX="11.5" PointY="0.625" />
+        <AssociationConnector Association="UnusualMatReqModel.FK_UnsualMatReqSign_UnusualMatReqStatus" />
+        <AssociationConnector Association="UnusualMatReqModel.FK_UnsualMatReqSign_Users" />
+        <AssociationConnector Association="UnusualMatReqModel.FK_UnusualMatReqStatus_Users" ManuallyRouted="true" >
+          <ConnectorPoint PointX="11.5" PointY="2.4783464198593479" />
+          <ConnectorPoint PointX="9.84375" PointY="2.4783464198593479" />
+          <ConnectorPoint PointX="9.84375" PointY="5.625" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="UnusualMatReqModel.Role_mt" Width="1.5" PointX="5.5" PointY="0.875" />
+        <AssociationConnector Association="UnusualMatReqModel.FK_Users_Roles" />
+        <EntityTypeShape EntityType="UnusualMatReqModel.UnusualMatReq_mt" Width="3" PointX="3.5" PointY="5" />
+        <AssociationConnector Association="UnusualMatReqModel.FK_UnusualMatReq_UnusualMatReqStatus" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,13 +12,16 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class UnusualMatReqStatus
+    public partial class UnsualMatReqSign_mt
     {
         public int Id { get; set; }
+        public Nullable<int> IdStatus { get; set; }
+        public Nullable<int> IdUser { get; set; }
+        public Nullable<System.DateTime> DateTime { get; set; }
+        public Nullable<int> SignOrder { get; set; }
         public string Status { get; set; }
-        public Nullable<int> CreatedUserId { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string Note { get; set; }
     
-        public virtual User_MQ CreatedUser { get; set; }
+        public virtual User_mt User { get; set; }
     }
 }

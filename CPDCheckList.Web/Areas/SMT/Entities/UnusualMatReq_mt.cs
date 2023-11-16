@@ -12,7 +12,7 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class UnusualMatReq
+    public partial class UnusualMatReq_mt
     {
         public int Id { get; set; }
         public Nullable<System.DateTime> DateReq { get; set; }
@@ -28,9 +28,9 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
         public Nullable<double> MatCost { get; set; }
         public Nullable<double> TotalLossCost { get; set; }
         public string DemReason { get; set; }
-        public Nullable<int> IdStatus { get; set; }
         public string Location { get; set; }
+        public Nullable<int> IdStatus { get; set; }
     
-        public virtual UnusualMatReqStatus UnusualMatReqStatus { get; set; }
+        public virtual UnusualMatReqStatus_mt UnusualMatReqStatus { get; set; }
     }
 }

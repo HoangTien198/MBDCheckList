@@ -35,7 +35,7 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 DateTime endDate = new DateTime(Year, Month, DateTime.DaysInMonth(Year, Month));
                 #endregion
 
-                List<LableDataFlow> data = db.LableDataFlows.Where(cl => cl.DateTime >= startDate && cl.DateTime <= endDate && cl.Location == Location).OrderByDescending(o => o.DateTime).ToList();
+                List<LableDataFlow> data = db.LableDataFlows.OrderByDescending(o => o.DateTime).ToList();
 
                 return Json(new { status = true, data }, JsonRequestBehavior.AllowGet);
             }

@@ -11,12 +11,19 @@
 
     $('#btn_AddNew').show();
 
-    setInterval(() => {
-        if ($('#btn_AddNew').is(':visible')) {
-            clearInterval(this);
-        } else {
-            $('#btn_AddNew').show();
+    const myInterval = setInterval(() => {
+        if ($('#thisUser').data('role') == 8) {
+            if ($('#btn_AddNew').is(':visible')) {
+                clearInterval(myInterval);
+            } else {
+                $('#btn_AddNew').show();
+            }
         }
+        else {
+            clearInterval(myInterval);
+        }
+        console.log("sss");
+        
     }, 100);
 });
 
@@ -54,7 +61,7 @@ function LoadDataCheckList() {
                 });
 
                 CreateTable();
-                AddEventLoadTable();
+                //AddEventLoadTable();
             }
             else {
                 Swal.fire("Có lỗi xảy ra", res.message, "error");

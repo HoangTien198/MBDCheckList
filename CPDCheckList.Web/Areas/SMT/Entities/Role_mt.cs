@@ -12,17 +12,13 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class User_MQ
+    public partial class Role_mt
     {
-        public int UserId { get; set; }
-        public string UserCode { get; set; }
-        public string UserFullName { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public int RoleId { get; set; }
+        public string RoleName { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
-        public Nullable<int> RoleId { get; set; }
     }
 }

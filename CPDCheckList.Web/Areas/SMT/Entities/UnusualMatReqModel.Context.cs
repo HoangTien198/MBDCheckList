@@ -25,8 +25,10 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<UnusualMatReq> UnusualMatReqs { get; set; }
-        public virtual DbSet<UnusualMatReqStatus> UnusualMatReqStatus1 { get; set; }
-        public virtual DbSet<User_MQ> User_MQ { get; set; }
+        public virtual DbSet<UnsualMatReqSign_mt> UnsualMatReqSign_mt { get; set; }
+        public virtual DbSet<UnusualMatReqStatus_mt> UnusualMatReqStatus_mt { get; set; }
+        public virtual DbSet<User_mt> User_mt { get; set; }
+        public virtual DbSet<Role_mt> Role_mt { get; set; }
+        public virtual DbSet<UnusualMatReq_mt> UnusualMatReq_mt { get; set; }
     }
 }
