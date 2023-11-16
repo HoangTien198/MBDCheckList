@@ -30,6 +30,7 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
         public string DemReason { get; set; }
         public string Location { get; set; }
         public Nullable<int> IdStatus { get; set; }
+        public string MatCode { get; set; }
     
         public virtual UnusualMatReqStatus_mt UnusualMatReqStatus { get; set; }
     }

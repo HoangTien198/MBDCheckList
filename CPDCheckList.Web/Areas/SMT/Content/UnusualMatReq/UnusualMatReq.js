@@ -287,33 +287,33 @@ $('#NewItem-row').click(function () {
     var deleteButton = $('<button class="btn btn-outline-danger p-0" style="font-size=12px"><i class="bi bi-trash"></i></button>');
     var data = $(`<tr class="text-middle">
                     <!-- 1  -->
-                    <td><input class="form-control form-control-sm" type="datetime-local" data-name="Add_DateReq" value="${moment().format('YYYY-MM-DDTHH:mm:ss')}" style="width: 175px;"></td>
+                    <td><input class="form-control form-control-sm" type="datetime-local" data-name="Add-DateReq" value="${moment().format('YYYY-MM-DDTHH:mm:ss')}" style="width: 175px;"></td>
                     <!-- 2  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_ModelName"></textarea></td>
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ModelName"></textarea></td>
                     <!-- 3  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_MO"></textarea></td>
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MO"></textarea></td>
                     <!-- 4  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_DateReq"></textarea></td>
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MatDesc"></textarea></td>
                     <!-- 5  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_MatDesc"></textarea></td>
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MatCode"></textarea></td>
                     <!-- 6  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_Unit"></textarea></td>
-                    <!-- 7  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_ActReqQty"></textarea></td>
-                    <!-- 8  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_ExReqQty"></textarea></td>
-                    <!-- 9  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_DemQty"></textarea></td>
-                    <!-- 10 -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_ActDelQty"></textarea></td>
-                    <!-- 11 -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_TotalLoss"></textarea></td>
-                    <!-- 12 -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_MatCost"></textarea></td>
-                    <!-- 13 -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_TotalLossCost"></textarea></td>
-                    <!-- 14 -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add_DemReason"></textarea></td>
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-Unit"></textarea></td>
+                    <!-- 7  -->                                                               
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ActReqQty"></textarea></td>
+                    <!-- 8  -->                                                               
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ExReqQty"></textarea></td>
+                    <!-- 9  -->                                                               
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-DemQty"></textarea></td>
+                    <!-- 10 -->                                                               
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ActDelQty"></textarea></td>
+                    <!-- 11 -->                                                               
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-TotalLoss"></textarea></td>
+                    <!-- 12 -->                                                               
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MatCost"></textarea></td>
+                    <!-- 13 -->                                                               
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-TotalLossCost"></textarea></td>
+                    <!-- 14 -->                                                               
+                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-DemReason"></textarea></td>
                     <!-- 15 -->                                                            
                     <td></td>
                 </tr>`);
@@ -322,34 +322,36 @@ $('#NewItem-row').click(function () {
     deleteButton.click(() => {
         deleteButton.closest('tr').remove();
     });
-    data.find('textarea[data-name="Add_ActReqQty"], textarea[data-name="Add_DemQty"], textarea[data-name="Add_ActDelQty"]').change(function (e) {
+
+    // Auto cal
+    data.find('textarea[data-name="Add-ActReqQty"], textarea[data-name="Add-DemQty"], textarea[data-name="Add-ActDelQty"]').change(function (e) {
         e.preventDefault();
 
         var thisTr = $(this).closest('tr');
 
         try {
-            var a = parseInt(thisTr.find('textarea[data-name="Add_ActReqQty"]').val());
-            var b = parseInt(thisTr.find('textarea[data-name="Add_DemQty"]').val());
-            var d = parseInt(thisTr.find('textarea[data-name="Add_ActDelQty"]').val());
+            var a = parseInt(thisTr.find('textarea[data-name="Add-ActReqQty"]').val());
+            var b = parseInt(thisTr.find('textarea[data-name="Add-DemQty"]').val());
+            var d = parseInt(thisTr.find('textarea[data-name="Add-ActDelQty"]').val());
 
             if (!isNaN(a) && !isNaN(b) && !isNaN(d)) {
-                thisTr.find('textarea[data-name="Add_TotalLoss"]').val(d - b + a);
+                thisTr.find('textarea[data-name="Add-TotalLoss"]').val(d - b + a);
             }
         }
         catch { }
     });
-    data.find('textarea[data-name="Add_TotalLoss"], textarea[data-name="Add_MatCost"]').change(function (e) {
+    data.find('textarea[data-name="Add-TotalLoss"], textarea[data-name="Add-MatCost"]').change(function (e) {
         e.preventDefault();
 
         var thisTr = $(this).closest('tr');
 
         try {
-            var e = parseInt(thisTr.find('textarea[data-name="Add_TotalLoss"]').val());
-            var f = parseInt(thisTr.find('textarea[data-name="Add_MatCost"]').val());
+            var e = parseInt(thisTr.find('textarea[data-name="Add-TotalLoss"]').val());
+            var f = parseInt(thisTr.find('textarea[data-name="Add-MatCost"]').val());
 
 
             if (!isNaN(e) && !isNaN(f)) {
-                thisTr.find('textarea[data-name="Add_TotalLossCost"]').val(e * f);
+                thisTr.find('textarea[data-name="Add-TotalLossCost"]').val(e * f);
             }
         }
         catch { }
@@ -542,20 +544,33 @@ function GetDataMatReqModalTable() {
     var table = $('#MatReqModalTable tbody');
     var trs = table.find('tr');
 
-    var datas = {
-
-    }
+    var datas = [];
 
     if (trs.length > 0) {
         $.each(trs, function (k, tr) {
             if ($(tr).is('#NewItem-row')) return;
 
             var data = {
-
+                DateReq: $(tr).find('[data-name="Add-DateReq"]').val(),
+                ModelName: $(tr).find('[data-name="Add-ModelName"]').val(),
+                MO: $(tr).find('[data-name="Add-MO"]').val(),
+                MatDesc: $(tr).find('[data-name="Add-MatDesc"]').val(),
+                MatCode: $(tr).find('[data-name="Add-MatCode"]').val(),
+                Unit: $(tr).find('[data-name="Add-Unit"]').val(),
+                ActReqQty: $(tr).find('[data-name="Add-ActReqQty"]').val(),
+                ExReqQty: $(tr).find('[data-name="Add-ExReqQty"]').val(),
+                DemQty: $(tr).find('[data-name="Add-DemQty"]').val(),
+                ActDelQty: $(tr).find('[data-name="Add-ActDelQty"]').val(),
+                TotalLoss: $(tr).find('[data-name="Add-TotalLoss"]').val(),
+                MatCost: $(tr).find('[data-name="Add-MatCost"]').val(),
+                TotalLossCost: $(tr).find('[data-name="Add-TotalLossCost"]').val(),
+                DemReason: $(tr).find('[data-name="Add-DemReason"]').val(),
             }
-            console.log(tr);
+            datas.push(data);
+            
         });
     }
+    console.log(datas);
 }
 
 // Orther

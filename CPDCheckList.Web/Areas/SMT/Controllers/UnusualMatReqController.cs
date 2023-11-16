@@ -14,7 +14,6 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
         Entities.UnusualMatReqEntities db = new Entities.UnusualMatReqEntities();
         public ActionResult Index()
         {
-
             return View();
         }
 
@@ -29,7 +28,8 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
                 DateTime endDate = new DateTime(Year, Month, DateTime.DaysInMonth(Year, Month));
                 #endregion
 
-                List<Entities.UnusualMatReq> UnusualMatReqs = db.UnusualMatReqs.Where(cl => cl.DateReq >= startDate && cl.DateReq <= endDate && cl.Location == Location).ToList();
+                //List<Entities.UnusualMatReq_mt> UnusualMatReqs = db.UnusualMatReq_mt.Where(cl => cl.DateReq >= startDate && cl.DateReq <= endDate && cl.Location == Location).ToList();
+                List<Entities.UnusualMatReq_mt> UnusualMatReqs = db.UnusualMatReq_mt.ToList();
 
                 return Json(new { status = true, data = JsonSerializer.Serialize(UnusualMatReqs) }, JsonRequestBehavior.AllowGet);
             }
@@ -42,7 +42,7 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
         {
             try
             {
-                List<Entities.User_MQ> users = db.User_MQ.Where(u => u.RoleId > 7 && u.RoleId < 16).ToList();
+                List<Entities.User_mt> users = db.User_mt.Where(u => u.RoleId > 7 && u.RoleId < 16).ToList();
                 return Json(new {status = true, data = JsonSerializer.Serialize(users)}, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

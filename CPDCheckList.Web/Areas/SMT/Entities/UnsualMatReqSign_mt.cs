@@ -21,7 +21,9 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
         public Nullable<int> SignOrder { get; set; }
         public string Status { get; set; }
         public string Note { get; set; }
+        public Nullable<int> IdRole { get; set; }
     
         public virtual User_mt User { get; set; }
+        public virtual Role_mt Role { get; set; }
     }
 }

@@ -11,14 +11,15 @@
         <AssociationConnector Association="UnusualMatReqModel.FK_UnsualMatReqSign_UnusualMatReqStatus" />
         <AssociationConnector Association="UnusualMatReqModel.FK_UnsualMatReqSign_Users" />
         <AssociationConnector Association="UnusualMatReqModel.FK_UnusualMatReqStatus_Users" ManuallyRouted="true" >
-          <ConnectorPoint PointX="11.5" PointY="2.4783464198593479" />
-          <ConnectorPoint PointX="9.84375" PointY="2.4783464198593479" />
-          <ConnectorPoint PointX="9.84375" PointY="5.625" />
+          <ConnectorPoint PointX="11.5" PointY="2.1920475260416667" />
+          <ConnectorPoint PointX="9.3125" PointY="2.1920475260416667" />
+          <ConnectorPoint PointX="9.3125" PointY="5.625" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="UnusualMatReqModel.Role_mt" Width="1.5" PointX="5.5" PointY="0.875" />
+        <EntityTypeShape EntityType="UnusualMatReqModel.Role_mt" Width="1.5" PointX="16.5" PointY="3.125" />
         <AssociationConnector Association="UnusualMatReqModel.FK_Users_Roles" />
         <EntityTypeShape EntityType="UnusualMatReqModel.UnusualMatReq_mt" Width="3" PointX="3.5" PointY="5" />
         <AssociationConnector Association="UnusualMatReqModel.FK_UnusualMatReq_UnusualMatReqStatus" />
+        <AssociationConnector Association="UnusualMatReqModel.FK_UnsualMatReqSign_Roles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -27,6 +27,7 @@
           <Property Name="SignOrder" Type="int" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="Note" Type="nvarchar" MaxLength="250" />
+          <Property Name="IdRole" Type="int" />
         </EntityType>
         <EntityType Name="UnusualMatReq">
           <Key>
@@ -48,6 +49,7 @@
           <Property Name="DemReason" Type="nvarchar" MaxLength="255" />
           <Property Name="Location" Type="nvarchar" MaxLength="10" />
           <Property Name="IdStatus" Type="int" />
+          <Property Name="MatCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="UnusualMatReqStatus">
           <Key>
@@ -73,6 +75,18 @@
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="RoleId" Type="int" />
         </EntityType>
+        <Association Name="FK_UnsualMatReqSign_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="UnsualMatReqSign" Type="Self.UnsualMatReqSign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UnsualMatReqSign">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UnsualMatReqSign_UnusualMatReqStatus">
           <End Role="UnusualMatReqStatus" Type="Self.UnusualMatReqStatus" Multiplicity="0..1" />
           <End Role="UnsualMatReqSign" Type="Self.UnsualMatReqSign" Multiplicity="*" />
@@ -139,6 +153,10 @@
           <EntitySet Name="UnusualMatReq" EntityType="Self.UnusualMatReq" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnusualMatReqStatus" EntityType="Self.UnusualMatReqStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_UnsualMatReqSign_Roles" Association="Self.FK_UnsualMatReqSign_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UnsualMatReqSign" EntitySet="UnsualMatReqSign" />
+          </AssociationSet>
           <AssociationSet Name="FK_UnsualMatReqSign_UnusualMatReqStatus" Association="Self.FK_UnsualMatReqSign_UnusualMatReqStatus">
             <End Role="UnusualMatReqStatus" EntitySet="UnusualMatReqStatus" />
             <End Role="UnsualMatReqSign" EntitySet="UnsualMatReqSign" />
@@ -190,6 +208,10 @@
             <End Role="UnusualMatReqStatus_mt" EntitySet="UnusualMatReqStatus_mt" />
             <End Role="UnusualMatReq" EntitySet="UnusualMatReq_mt" />
           </AssociationSet>
+          <AssociationSet Name="FK_UnsualMatReqSign_Roles" Association="UnusualMatReqModel.FK_UnsualMatReqSign_Roles">
+            <End Role="Role_mt" EntitySet="Role_mt" />
+            <End Role="UnsualMatReqSign_mt" EntitySet="UnsualMatReqSign_mt" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UnsualMatReqSign_mt">
           <Key>
@@ -203,6 +225,8 @@
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="UnusualMatReqModel.FK_UnsualMatReqSign_Users" FromRole="UnsualMatReqSign" ToRole="User" />
+          <Property Name="IdRole" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="UnusualMatReqModel.FK_UnsualMatReqSign_Roles" FromRole="UnsualMatReqSign_mt" ToRole="Role_mt" />
         </EntityType>
         <EntityType Name="UnusualMatReqStatus_mt">
           <Key>
@@ -311,6 +335,7 @@
           <Property Name="Location" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="IdStatus" Type="Int32" />
           <NavigationProperty Name="UnusualMatReqStatus" Relationship="UnusualMatReqModel.FK_UnusualMatReq_UnusualMatReqStatus" FromRole="UnusualMatReq" ToRole="UnusualMatReqStatus_mt" />
+          <Property Name="MatCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_UnusualMatReq_UnusualMatReqStatus">
           <End Type="UnusualMatReqModel.UnusualMatReqStatus_mt" Role="UnusualMatReqStatus_mt" Multiplicity="0..1" />
@@ -324,6 +349,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UnsualMatReqSign_Roles">
+          <End Type="UnusualMatReqModel.Role_mt" Role="Role_mt" Multiplicity="0..1" />
+          <End Type="UnusualMatReqModel.UnsualMatReqSign_mt" Role="UnsualMatReqSign_mt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role_mt">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UnsualMatReqSign_mt">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -333,6 +370,7 @@
           <EntitySetMapping Name="UnsualMatReqSign_mt">
             <EntityTypeMapping TypeName="UnusualMatReqModel.UnsualMatReqSign_mt">
               <MappingFragment StoreEntitySet="UnsualMatReqSign">
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="SignOrder" ColumnName="SignOrder" />
@@ -384,6 +422,7 @@
           <EntitySetMapping Name="UnusualMatReq_mt">
             <EntityTypeMapping TypeName="UnusualMatReqModel.UnusualMatReq_mt">
               <MappingFragment StoreEntitySet="UnusualMatReq">
+                <ScalarProperty Name="MatCode" ColumnName="MatCode" />
                 <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="DemReason" ColumnName="DemReason" />

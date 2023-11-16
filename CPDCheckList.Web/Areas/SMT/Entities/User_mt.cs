@@ -11,13 +11,15 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Text.Json.Serialization;
+
     public partial class User_mt
     {
         public int UserId { get; set; }
         public string UserCode { get; set; }
         public string UserFullName { get; set; }
         public string Username { get; set; }
+        [JsonIgnore]
         public string Password { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
