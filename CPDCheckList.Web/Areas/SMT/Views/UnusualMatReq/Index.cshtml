@@ -11,19 +11,19 @@
     <!-- Custom -->
     <link href="~/Areas/SMT/Content/UnusualMatReq/UnusualMatReq.css" rel="stylesheet" />
 }
-<input type="hidden" data-role="@user.RoleId" data-id="@user.UserId" data-card="@user.UserCode" data-name="@user.Username" id="thisUser" />
+<input type="hidden" data-role="@user.RoleId" data-id="@user.UserId" data-card="@user.UserCode" data-name="@user.Username" data-location="F06" id="thisUser" />
 
 <div class="page-wrapper">
     <div class="page-body">
         <div class="card mt-2">
             <div class="card-body p-0">
-                <table id="table_MatReq" class="table table-bordered table-striped table-hover nowrap">
+                <table id="table_MatReq" class="table table-striped table-bordered table-hover nowrap dataTable-tablesss">
                     <thead class="text-center">
                         <tr>
+                            <th>ID</th>
                             <th>日期<br />Ngày</th><!-- 0 DaterReq -->
                             <th>機種<br />Tên hàng</th><!-- 1 ModelName-->
                             <th>單<br />Công lệnh</th><!-- 2 MO -->
-                            <th>物料描述<br />Miêu tả vật liệu</th><!-- 3 MatDesc -->
                             <th>物料料號<br />Mã vật liệu</th><!-- 4 MatCode -->
                             <th>單位<br />Đơn vị</th><!--5 Unit -->
                             <th>本次超發申請<br />Số lượng xin phát</th><!-- 6 ActReqQty -->
@@ -81,13 +81,41 @@
                             <th>總耗損數量<br />Tổng tiền vật liệu tổn thất (VND)<br /><span class="text-primary">[G = E * F]</span></th>
                             <!-- 14 -->
                             <th>需求原因<br />Nguyên nhân nhu cầu</th>
-                            <!-- 15 -->
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="MatReqModalTable-tbody">
-                        <tr id="NewItem-row">
-                            <td colspan="15" id="NewItem-button" class="text-center"><button class="btn btn-outline-primary border-0 p-0"><i class="bi bi-plus-circle"></i> Add new</button></td>
+                        <tr class="text-middle">
+                            <!-- 1  -->
+                            <td><input class="form-control form-control-sm" type="datetime-local" data-name="Add-DateReq" style="width: 175px;"></td>
+                            <!-- 2  -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ModelName"></textarea></td>
+                            <!-- 3  -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MO"></textarea></td>
+                            <!-- 4  -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MatDesc"></textarea></td>
+                            <!-- 5  -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MatCode"></textarea></td>
+                            <!-- 6  -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-Unit"></textarea></td>
+                            <!-- 7  -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ActReqQty"></textarea></td>
+                            <!-- 8  -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ExReqQty"></textarea></td>
+                            <!-- 9  -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-DemQty"></textarea></td>
+                            <!-- 10 -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ActDelQty"></textarea></td>
+                            <!-- 11 -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-TotalLoss"></textarea></td>
+                            <!-- 12 -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MatCost"></textarea></td>
+                            <!-- 13 -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-TotalLossCost"></textarea></td>
+                            <!-- 14 -->
+                            <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-DemReason"></textarea></td>
+                        </tr>
+                        <tr id="Addfile-row">
+                            <td colspan="14" id="Addfile-button" class="text-center"><button class="btn btn-outline-primary border-0 p-0"><i class="bi bi-plus-circle"></i> Add file</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -107,7 +135,7 @@
                                     <div class="row mt-3">
                                         <div class="col-md-4">
                                             <label class="form-label">Mã thẻ</label>
-                                            <input type="text" class="form-control" value="@user.UserCode" created-card disabled />
+                                            <input type="text" class="form-control" value="@user.UserCode" data-id="@user.UserId" created-card disabled />
                                         </div>
                                         <div class="col-md-7">
                                             <label class="form-label">Người làm đơn</label>

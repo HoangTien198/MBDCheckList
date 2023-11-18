@@ -59,6 +59,7 @@
           <Property Name="Status" Type="nvarchar" MaxLength="100" />
           <Property Name="IdUserCreated" Type="int" />
           <Property Name="DateTime" Type="datetime" />
+          <Property Name="Type" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -238,6 +239,7 @@
           <Property Name="DateTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="UnsualMatReqSigns" Relationship="UnusualMatReqModel.FK_UnsualMatReqSign_UnusualMatReqStatus" FromRole="UnusualMatReqStatu" ToRole="UnsualMatReqSign" />
           <NavigationProperty Name="UserCreated" Relationship="UnusualMatReqModel.FK_UnusualMatReqStatus_Users" FromRole="UnusualMatReqStatus" ToRole="User" />
+          <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User_mt">
           <Key>
@@ -384,6 +386,7 @@
           <EntitySetMapping Name="UnusualMatReqStatus_mt">
             <EntityTypeMapping TypeName="UnusualMatReqModel.UnusualMatReqStatus_mt">
               <MappingFragment StoreEntitySet="UnusualMatReqStatus">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="DateTime" ColumnName="DateTime" />
                 <ScalarProperty Name="IdUserCreated" ColumnName="IdUserCreated" />
                 <ScalarProperty Name="Status" ColumnName="Status" />

@@ -18,13 +18,7 @@
 .text-middle {
     vertical-align: middle;
 }
-.table-bordered .bg-secondary-light {
-    border-color: #9b9b9b;
-}
 
-.table-bordered tr {
-    border-color: #9b9b9b;
-}
 #MatReqModalTable{
     font-size: 12px;
 }
@@ -49,4 +43,9 @@ span.badge.rounded-pill {
 }
 .card-sign{
     padding: 5px;
+}
+.dataTable-tablesss {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: separate;
 }

@@ -1,4 +1,5 @@
 ﻿using CPDCheckList.Web.Areas.Lable.Data;
+using CPDCheckList.Web.Areas.SMT.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,6 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
         {
             return View();
         }
-
         public ActionResult GetMatReqs(string Location, int Year, int Month, int Date)
         {
             try
@@ -29,7 +29,7 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
                 #endregion
 
                 //List<Entities.UnusualMatReq_mt> UnusualMatReqs = db.UnusualMatReq_mt.Where(cl => cl.DateReq >= startDate && cl.DateReq <= endDate && cl.Location == Location).ToList();
-                List<Entities.UnusualMatReq_mt> UnusualMatReqs = db.UnusualMatReq_mt.ToList();
+                List<Entities.UnusualMatReq_mt> UnusualMatReqs = db.UnusualMatReq_mt.OrderByDescending(o =>o.DateReq).ToList();
 
                 return Json(new { status = true, data = JsonSerializer.Serialize(UnusualMatReqs) }, JsonRequestBehavior.AllowGet);
             }
@@ -48,6 +48,35 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
             catch (Exception ex)
             {
                 return Json(new { status = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // POST: Add new request
+        public JsonResult NewRequest(UnusualMatReq_mt unusualMatReq)
+        {
+            try {
+                unusualMatReq.UnusualMatReqStatus.Status = "Pending";
+                db.UnusualMatReq_mt.Add(unusualMatReq);
+
+                foreach(var sign in unusualMatReq.UnusualMatReqStatus.UnsualMatReqSigns)
+                {
+                    sign.IdStatus = unusualMatReq.UnusualMatReqStatus.Id;
+                    sign.Status = "Pending";
+                    sign.User = db.User_mt.FirstOrDefault(u => u.UserId ==  sign.IdUser);
+                    sign.Role = db.Role_mt.FirstOrDefault(r => r.RoleId == sign.IdRole);
+
+                    //unusualMatReq.UnusualMatReqStatus.UnsualMatReqSigns.Add(sign);
+                }
+                unusualMatReq.UnusualMatReqStatus.UserCreated = db.User_mt.FirstOrDefault(u => u.UserId == unusualMatReq.UnusualMatReqStatus.IdUserCreated);
+                unusualMatReq.UnusualMatReqStatus = unusualMatReq.UnusualMatReqStatus;
+
+                db.SaveChanges();
+
+                return Json(new { status = true, data = unusualMatReq });
+            }
+            catch (Exception ex)
+            {
+                return Json(new {status = false, message = ex.Message});
             }
         }
     }

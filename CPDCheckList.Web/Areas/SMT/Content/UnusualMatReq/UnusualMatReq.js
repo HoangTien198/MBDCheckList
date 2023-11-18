@@ -49,7 +49,7 @@ function LoadData() {
                 });
 
                 CreateTable();
-                AddEventLoadTable();
+               // AddEventLoadTable();
             }
             else {
                 Swal.fire("Có lỗi xảy ra", res.message, "error");
@@ -63,7 +63,7 @@ function LoadData() {
     });
 }
 function AddEventLoadTable() {
-    const divElement = document.querySelector('.dataTable-container');
+    const divElement = document.querySelector('#table_MatReq');
     divElement.addEventListener('scroll', function () {
         var scrollLenght = parseInt((divElement.scrollTop + divElement.clientHeight));
         var scrollHeight = parseInt(divElement.scrollHeight * 0.9);
@@ -137,22 +137,41 @@ function CreateTable() {
 function DrawTableRows(item, isAddInDatatable = false) {
     var row = [];
 
+    console.log(item);
+
+    // 0 ID 
+    row.push(`<td>${moment(item.DaterReq).format('YYYYMMDDHHmm')}-${item.Id}</td>`);
     // 0 DaterReq 
     row.push(`<td>${moment(item.DaterReq).format('YYYY-MM-DD HH:mm') }</td>`);
     // 1 ModelName 
     row.push(`<td class="text-center">${item.ModelName}</td>`);
     // 2 MO 
     row.push(`<td class="text-center">${item.MO}</td>`);
-    // 3 MatDesc 
-    row.push(`<td>${item.MatDesc}</td>`);
     // 4 MatCode
     row.push(`<td>${item.MatCode}</td>`);
     // 5 Unit
     row.push(`<td>${item.Unit}</td>`);
     // 6 ActReqQty
-    row.push(`<td>${item.ActReqQty}</td>`);
+    row.push(`<td class="text-center">${item.ActReqQty}</td>`);
     // 7 Status
-    row.push(`<td>Status</td>`);
+    var status = {
+        color: "warning",
+        status: "Pending"
+    }
+    var colorStatus = "warning"
+    switch (item.UnusualMatReqStatus.Status) {
+        case "Pending":
+            break;
+        case "Approved":
+            status.color = "success";
+            status.status = "Approved";
+            break;
+        case "Rejected":
+            status.color = "danger";
+            status.status = "Rejected";
+            break;
+    }
+    row.push(`<td class="text-center"><span class="badge bg-${status.color}">${status.status}</span></td>`);
     // 8 Action
     {
         var Button = `<td class="action_col">
@@ -174,48 +193,12 @@ $(document).on('click', '#btn_AddNew', function (e) {
     e.preventDefault();
     $('input[data-name="Type"]').change();
     $('#type_select').change(); 
+
+    $('input[data-name="Add-DateReq"]').val(moment().format('YYYY-MM-DDTHH:mm:ss'));
+
     $('#MatReqModal').modal('show');
 });
 
-// Get Users
-var Users;
-var DataUsers = {
-    LineLeadUser: {
-        Id: 0,
-        Name: "Tổ/Tuyến trưởng",
-        Data: []
-    },
-    SmtMngUser: {
-        Id: 0,
-        Name: "Chủ quản SMT",
-        Data: []
-    },
-    McUser: {
-        Id: 0,
-        Name: "MC",
-        Data: []
-    },
-    MpmUser: {
-        Id: 0,
-        Name: "MPM",
-        Data: []
-    },
-    PcUser: {
-        Id: 0,
-        Name: "PC",
-        Data: []
-},
-    ViceMngUser: {
-        Id: 0,
-        Name: "Phó giám đốc",
-        Data: []
-    },
-    KittingUser: {
-        Id: 0,
-        Name: "Kitting",
-        Data: []
-    },
-}
 function GetUsers() {
     $.ajax({
         type: "GET",
@@ -283,88 +266,42 @@ function GetUsers() {
 }
 
 // Add new row
-$('#NewItem-row').click(function () {
-    var deleteButton = $('<button class="btn btn-outline-danger p-0" style="font-size=12px"><i class="bi bi-trash"></i></button>');
-    var data = $(`<tr class="text-middle">
-                    <!-- 1  -->
-                    <td><input class="form-control form-control-sm" type="datetime-local" data-name="Add-DateReq" value="${moment().format('YYYY-MM-DDTHH:mm:ss')}" style="width: 175px;"></td>
-                    <!-- 2  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ModelName"></textarea></td>
-                    <!-- 3  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MO"></textarea></td>
-                    <!-- 4  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MatDesc"></textarea></td>
-                    <!-- 5  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MatCode"></textarea></td>
-                    <!-- 6  -->                                                            
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-Unit"></textarea></td>
-                    <!-- 7  -->                                                               
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ActReqQty"></textarea></td>
-                    <!-- 8  -->                                                               
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ExReqQty"></textarea></td>
-                    <!-- 9  -->                                                               
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-DemQty"></textarea></td>
-                    <!-- 10 -->                                                               
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-ActDelQty"></textarea></td>
-                    <!-- 11 -->                                                               
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-TotalLoss"></textarea></td>
-                    <!-- 12 -->                                                               
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-MatCost"></textarea></td>
-                    <!-- 13 -->                                                               
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-TotalLossCost"></textarea></td>
-                    <!-- 14 -->                                                               
-                    <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-DemReason"></textarea></td>
-                    <!-- 15 -->                                                            
-                    <td></td>
-                </tr>`);
+$('#Addfile-button').click(function () {
+    console.log('add file');
+});
 
-    data.find('td').last().append(deleteButton);
-    deleteButton.click(() => {
-        deleteButton.closest('tr').remove();
-    });
+// Auto Cal
+$('textarea[data-name="Add-ActReqQty"], textarea[data-name="Add-DemQty"], textarea[data-name="Add-ActDelQty"]').change(function (e) {
+    e.preventDefault();
 
-    // Auto cal
-    data.find('textarea[data-name="Add-ActReqQty"], textarea[data-name="Add-DemQty"], textarea[data-name="Add-ActDelQty"]').change(function (e) {
-        e.preventDefault();
+    var thisTr = $(this).closest('tr');
 
-        var thisTr = $(this).closest('tr');
+    try {
+        var a = parseInt(thisTr.find('textarea[data-name="Add-ActReqQty"]').val());
+        var b = parseInt(thisTr.find('textarea[data-name="Add-DemQty"]').val());
+        var d = parseInt(thisTr.find('textarea[data-name="Add-ActDelQty"]').val());
 
-        try {
-            var a = parseInt(thisTr.find('textarea[data-name="Add-ActReqQty"]').val());
-            var b = parseInt(thisTr.find('textarea[data-name="Add-DemQty"]').val());
-            var d = parseInt(thisTr.find('textarea[data-name="Add-ActDelQty"]').val());
-
-            if (!isNaN(a) && !isNaN(b) && !isNaN(d)) {
-                thisTr.find('textarea[data-name="Add-TotalLoss"]').val(d - b + a);
-            }
+        if (!isNaN(a) && !isNaN(b) && !isNaN(d)) {
+            thisTr.find('textarea[data-name="Add-TotalLoss"]').val(d - b + a);
         }
-        catch { }
-    });
-    data.find('textarea[data-name="Add-TotalLoss"], textarea[data-name="Add-MatCost"]').change(function (e) {
-        e.preventDefault();
+    }
+    catch { }
+});
+$('textarea[data-name="Add-TotalLoss"], textarea[data-name="Add-MatCost"]').change(function (e) {
+    e.preventDefault();
 
-        var thisTr = $(this).closest('tr');
+    var thisTr = $(this).closest('tr');
 
-        try {
-            var e = parseInt(thisTr.find('textarea[data-name="Add-TotalLoss"]').val());
-            var f = parseInt(thisTr.find('textarea[data-name="Add-MatCost"]').val());
+    try {
+        var e = parseInt(thisTr.find('textarea[data-name="Add-TotalLoss"]').val());
+        var f = parseInt(thisTr.find('textarea[data-name="Add-MatCost"]').val());
 
 
-            if (!isNaN(e) && !isNaN(f)) {
-                thisTr.find('textarea[data-name="Add-TotalLossCost"]').val(e * f);
-            }
+        if (!isNaN(e) && !isNaN(f)) {
+            thisTr.find('textarea[data-name="Add-TotalLossCost"]').val(e * f);
         }
-        catch { }
-    });
-
-
-    if ($('#MatReqModalTable-tbody tr').length < 6) {
-        $(this).closest('tr').before(data);
     }
-    else{
-        Swal.fire("Có lỗi xảy ra", "Max item.", "error");
-    }
-    
+    catch { }
 });
 
 // Sign
@@ -379,7 +316,7 @@ $('#add_sign').click(function () {
                                      <select type="text" class="form-select" sign-dept></select>
                                  </div>
                                  <div class="col-md-7">
-                                     <label class="form-label">Người ký (nếu chỉ định)</label>
+                                     <label class="form-label">Người ký</label>
                                      <select type="text" class="form-select" sign-user></select>
                                  </div>
                                  <div class="col-md-1 align-self-end">
@@ -425,8 +362,9 @@ $('#add_sign').click(function () {
                  return false;
              }         
         });
+        card.find('[sign-user]').append(`<option value="178">All</option>`);
         await $.each(users, function (k, item) {           
-            card.find('[sign-user]').append(`<option value="${item.UserCode}">${item.UserCode} - ${item.UserFullName}</option>`);
+            card.find('[sign-user]').append(`<option value="${item.UserId}" >${item.UserCode} - ${item.UserFullName}</option>`);
         });
 
         
@@ -470,7 +408,7 @@ function DrawCardSign(IdDept) {
                                      <select type="text" class="form-select" sign-dept></select>
                                  </div>
                                  <div class="col-md-7">
-                                     <label class="form-label">Người ký (nếu chỉ định)</label>
+                                     <label class="form-label">Người ký</label>
                                      <select type="text" class="form-select" sign-user></select>
                                  </div>
                                  <div class="col-md-1 align-self-end">
@@ -518,9 +456,9 @@ function DrawCardSign(IdDept) {
                 return false;
             }
         });
-        card.find('[sign-user]').append(`<option value="none">None</option>`);
+        card.find('[sign-user]').append(`<option value="178">All</option>`);
         await $.each(users, function (k, item) {
-            card.find('[sign-user]').append(`<option value="${item.UserCode}">${item.UserCode} - ${item.UserFullName}</option>`);
+            card.find('[sign-user]').append(`<option value="${item.UserId}">${item.UserCode} - ${item.UserFullName}</option>`);
         });
 
 
@@ -538,39 +476,63 @@ function DrawCardSign(IdDept) {
 
 // Get All Data
 $('#MatReqModal-btnSave').click(function () {
-    GetDataMatReqModalTable();
+    var data = GetDataMatReqModalTable();
+
+    $.ajax({
+        type: "POST",
+        url: "/SMT/UnusualMatReq/NewRequest",
+        data: JSON.stringify(data),
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (res) {
+            if (res.status) {       
+                dataTable.rows().add(DrawTableRows(res.data, true));
+            }
+            else {
+                Swal.fire("Có lỗi xảy ra", res.message, "error");
+            }
+        },
+        error: function (err) {
+            Swal.fire("Có lỗi xảy ra", GetResponseError(err.responseText, 'title'), "error");
+        }
+    });
 });
 function GetDataMatReqModalTable() {
-    var table = $('#MatReqModalTable tbody');
-    var trs = table.find('tr');
-
-    var datas = [];
-
-    if (trs.length > 0) {
-        $.each(trs, function (k, tr) {
-            if ($(tr).is('#NewItem-row')) return;
-
-            var data = {
-                DateReq: $(tr).find('[data-name="Add-DateReq"]').val(),
-                ModelName: $(tr).find('[data-name="Add-ModelName"]').val(),
-                MO: $(tr).find('[data-name="Add-MO"]').val(),
-                MatDesc: $(tr).find('[data-name="Add-MatDesc"]').val(),
-                MatCode: $(tr).find('[data-name="Add-MatCode"]').val(),
-                Unit: $(tr).find('[data-name="Add-Unit"]').val(),
-                ActReqQty: $(tr).find('[data-name="Add-ActReqQty"]').val(),
-                ExReqQty: $(tr).find('[data-name="Add-ExReqQty"]').val(),
-                DemQty: $(tr).find('[data-name="Add-DemQty"]').val(),
-                ActDelQty: $(tr).find('[data-name="Add-ActDelQty"]').val(),
-                TotalLoss: $(tr).find('[data-name="Add-TotalLoss"]').val(),
-                MatCost: $(tr).find('[data-name="Add-MatCost"]').val(),
-                TotalLossCost: $(tr).find('[data-name="Add-TotalLossCost"]').val(),
-                DemReason: $(tr).find('[data-name="Add-DemReason"]').val(),
-            }
-            datas.push(data);
-            
-        });
+    var tr = $('#MatReqModalTable tbody').find('tr').first();
+    var data = {
+        DateReq: $(tr).find('[data-name="Add-DateReq"]').val(),
+        ModelName: $(tr).find('[data-name="Add-ModelName"]').val(),
+        MO: $(tr).find('[data-name="Add-MO"]').val(),
+        MatDesc: $(tr).find('[data-name="Add-MatDesc"]').val(),
+        MatCode: $(tr).find('[data-name="Add-MatCode"]').val(),
+        Unit: $(tr).find('[data-name="Add-Unit"]').val(),
+        ActReqQty: $(tr).find('[data-name="Add-ActReqQty"]').val(),
+        ExReqQty: $(tr).find('[data-name="Add-ExReqQty"]').val(),
+        DemQty: $(tr).find('[data-name="Add-DemQty"]').val(),
+        ActDelQty: $(tr).find('[data-name="Add-ActDelQty"]').val(),
+        TotalLoss: $(tr).find('[data-name="Add-TotalLoss"]').val(),
+        MatCost: $(tr).find('[data-name="Add-MatCost"]').val(),
+        TotalLossCost: $(tr).find('[data-name="Add-TotalLossCost"]').val(),
+        DemReason: $(tr).find('[data-name="Add-DemReason"]').val(),
+        Location: $('#thisUser').data('location')
     }
-    console.log(datas);
+    data.UnusualMatReqStatus = {
+        IdUserCreated: $('input[created-card]').data('id'),
+        Type: $('#type_select').is(':checked') ? "NPI" : "Normal",
+        DateTime: moment().format("YYYY-MM-DD HH:mm:ss")
+    }
+    data.UnusualMatReqStatus.UnsualMatReqSigns = [];
+
+    $.each($('#sign-container').find('[sign-row]'), function (k, row) {
+        var UnsualMatReqSign = {
+            IdUser: $(row).find('[sign-user]').val(),
+            SignOrder: k + 1,
+            IdRole: $(row).find('[sign-dept]').val()
+        }
+        data.UnusualMatReqStatus.UnsualMatReqSigns.push(UnsualMatReqSign);
+    });
+
+    return data;
 }
 
 // Orther
@@ -584,4 +546,43 @@ function GetResponseError(htmlString, elementName) {
     } else {
         return "Unknown Error.";
     }
+}
+// Get Users
+var Users;
+var DataUsers = {
+    LineLeadUser: {
+        Id: 0,
+        Name: "Tổ/Tuyến trưởng",
+        Data: []
+    },
+    SmtMngUser: {
+        Id: 0,
+        Name: "Chủ quản SMT",
+        Data: []
+    },
+    McUser: {
+        Id: 0,
+        Name: "MC",
+        Data: []
+    },
+    MpmUser: {
+        Id: 0,
+        Name: "MPM",
+        Data: []
+    },
+    PcUser: {
+        Id: 0,
+        Name: "PC",
+        Data: []
+    },
+    ViceMngUser: {
+        Id: 0,
+        Name: "Phó giám đốc",
+        Data: []
+    },
+    KittingUser: {
+        Id: 0,
+        Name: "Kitting",
+        Data: []
+    },
 }
