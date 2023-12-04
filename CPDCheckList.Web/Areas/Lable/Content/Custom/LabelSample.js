@@ -120,7 +120,7 @@ function AddEventLoadTable() {
                         endload();
                     }
                     else {
-                        Swal.fire("Oops...Something went wrong!", response.message, "error");
+                        Swal.fire("Oops...Something went wrong!", res.message, "error");
                         endload();
                     }
                 },

@@ -1,11 +1,16 @@
 ﻿using CPDCheckList.Web.Areas.Lable.Data;
 using CPDCheckList.Web.Areas.SMT.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Data.Entity.Migrations;
 
 namespace CPDCheckList.Web.Areas.SMT.Controllers
 {
@@ -31,7 +36,7 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
                 //List<Entities.UnusualMatReq_mt> UnusualMatReqs = db.UnusualMatReq_mt.Where(cl => cl.DateReq >= startDate && cl.DateReq <= endDate && cl.Location == Location).ToList();
                 List<Entities.UnusualMatReq_mt> UnusualMatReqs = db.UnusualMatReq_mt.OrderByDescending(o =>o.DateReq).ToList();
 
-                return Json(new { status = true, data = JsonSerializer.Serialize(UnusualMatReqs) }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = true, data = UnusualMatReqs }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -43,7 +48,26 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
             try
             {
                 List<Entities.User_mt> users = db.User_mt.Where(u => u.RoleId > 7 && u.RoleId < 16).ToList();
-                return Json(new {status = true, data = JsonSerializer.Serialize(users)}, JsonRequestBehavior.AllowGet);
+                return Json(new {status = true, data = users }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult GetRequest(int Id)
+        {
+            try
+            {
+                var request = db.UnusualMatReq_mt.FirstOrDefault(r => r.Id == Id);
+                if(request != null)
+                {
+                    return Json(new {status = true, request}, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { status = false, message = "Could not find Request." }, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {
@@ -52,23 +76,27 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
         }
 
         // POST: Add new request
-        public JsonResult NewRequest(UnusualMatReq_mt unusualMatReq)
+        public JsonResult NewRequest(FormCollection formData)
         {
             try {
-                unusualMatReq.UnusualMatReqStatus.Status = "Pending";
-                db.UnusualMatReq_mt.Add(unusualMatReq);
+                var jsonstring = formData["unusualMatReq"];
+                UnusualMatReq_mt unusualMatReq = JsonConvert.DeserializeObject<UnusualMatReq_mt>(jsonstring);
 
-                foreach(var sign in unusualMatReq.UnusualMatReqStatus.UnsualMatReqSigns)
+                var file = Request.Files.Get("file");
+                if (file != null)
                 {
-                    sign.IdStatus = unusualMatReq.UnusualMatReqStatus.Id;
-                    sign.Status = "Pending";
-                    sign.User = db.User_mt.FirstOrDefault(u => u.UserId ==  sign.IdUser);
-                    sign.Role = db.Role_mt.FirstOrDefault(r => r.RoleId == sign.IdRole);
+                    var path = Server.MapPath($"/Areas/SMT/Data/Files/{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
+                    var filename = System.IO.Path.GetFileName(file.FileName);
+                    var savepath = System.IO.Path.Combine(path, filename);
+                    file.SaveAs(savepath);
 
-                    //unusualMatReq.UnusualMatReqStatus.UnsualMatReqSigns.Add(sign);
+                    unusualMatReq.FilePath = savepath;
                 }
-                unusualMatReq.UnusualMatReqStatus.UserCreated = db.User_mt.FirstOrDefault(u => u.UserId == unusualMatReq.UnusualMatReqStatus.IdUserCreated);
-                unusualMatReq.UnusualMatReqStatus = unusualMatReq.UnusualMatReqStatus;
+
+                unusualMatReq.UnusualMatReqStatus.First().Status = "Pending";
+                int IdUserCreated = unusualMatReq.UnusualMatReqStatus.First().IdUserCreated ?? 0;
+                unusualMatReq.UnusualMatReqStatus.First().UserCreated = db.User_mt.FirstOrDefault( u => u.UserId == IdUserCreated);
+                db.UnusualMatReq_mt.Add(unusualMatReq);
 
                 db.SaveChanges();
 
@@ -79,5 +107,73 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
                 return Json(new {status = false, message = ex.Message});
             }
         }
+
+        // DELETE : Delete
+        public JsonResult DeleteRequest(int Id)
+        {
+            try
+            {
+                var request = db.UnusualMatReq_mt.FirstOrDefault(r => r.Id == Id);
+                if (request != null)
+                {
+                    db.UnusualMatReq_mt.Remove(request);
+                    db.SaveChanges();
+                    return Json(new { status = true, request }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { status = false, message = "Could not find Request." }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // Sign
+        public JsonResult Approve(int IdRequest, int IdUser)
+        {
+            try
+            {
+                var request = db.UnusualMatReq_mt.FirstOrDefault(r => r.Id == IdRequest);
+                if(request != null)
+                {
+                    var user = db.User_mt.FirstOrDefault(u => u.UserId == IdUser);
+                    var status = request.UnusualMatReqStatus.ToList()[0];
+                    var sign = status.UnsualMatReqSigns.FirstOrDefault(s => (s.IdUser == 178 ? s.IdRole == user.RoleId : s.IdUser == IdUser));
+                    sign.Status = "Approve";
+                    sign.DateTime = DateTime.Now;
+                    sign.IdUser = IdUser;
+
+
+                    if (!status.UnsualMatReqSigns.Any(s => s.Status != "Approve")) // Nếu không có sign status nào khác "Approve" thì trả về true
+                    {
+                        status.Status = "Approved";
+                    }
+
+                    db.UnusualMatReq_mt.AddOrUpdate(request);
+                    db.SaveChanges();
+                }
+
+                return Json(new { status = true, request });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, message = ex.Message });
+            }
+        }
+        public JsonResult Reject(int IdRequest, int IdUser, string note)
+        {
+            try
+            {
+                return Json(new { status = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, message = ex.Message });
+            }
+        }
+
     }
 }

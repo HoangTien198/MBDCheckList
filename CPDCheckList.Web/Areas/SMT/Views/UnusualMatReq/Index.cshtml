@@ -21,14 +21,15 @@
                     <thead class="text-center">
                         <tr>
                             <th>ID</th>
-                            <th>日期<br />Ngày</th><!-- 0 DaterReq -->
-                            <th>機種<br />Tên hàng</th><!-- 1 ModelName-->
-                            <th>單<br />Công lệnh</th><!-- 2 MO -->
-                            <th>物料料號<br />Mã vật liệu</th><!-- 4 MatCode -->
-                            <th>單位<br />Đơn vị</th><!--5 Unit -->
-                            <th>本次超發申請<br />Số lượng xin phát</th><!-- 6 ActReqQty -->
-                            <th>地位<br />Trạng thái</th><!-- 7 Status -->
-                            <th>行动<br />Action</th><!-- 8 Action -->
+                            <th>申请人 <br />Người làm đơn</th>
+                            <th>日期<br />Ngày</th>
+                            <th>機種<br />Tên hàng</th>
+                            <th>單<br />Công lệnh</th>
+                            <th>物料料號<br />Mã vật liệu</th>
+                            <th>單位<br />Đơn vị</th>
+                            <th>本次超發申請<br />Số lượng xin phát</th>
+                            <th>地位<br />Trạng thái</th>
+                            <th>行动<br />Action</th>
                         </tr>
                     </thead>
                     <tbody id="table_MatReq-tbody">
@@ -115,7 +116,10 @@
                             <td><textarea class="form-control form-control-sm" rows="3" data-name="Add-DemReason"></textarea></td>
                         </tr>
                         <tr id="Addfile-row">
-                            <td colspan="14" id="Addfile-button" class="text-center"><button class="btn btn-outline-primary border-0 p-0"><i class="bi bi-plus-circle"></i> Add file</button></td>
+                            <td colspan="14" id="Addfile-button" class="text-center">
+                                <button class="btn btn-outline-primary border-0 p-0"><i class="bi bi-plus-circle"></i> Add file</button>
+                                <label class="text-primary" style="display:none" id="fileName">Tên file</label>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -127,19 +131,23 @@
                     <label class="form-check-label" for="flexSwitchCheckChecked">NPI</label>
                 </div>
 
-                <div class="container py-2" >
-                    <div class="row">
+                <div class="container py-2">
+                    <div class="row justify-content-center">
                         <div class="col-sm-8 py-2">
                             <div class="card border-primary shadow radius-15">
-                                <div class="card-body">
-                                    <div class="row mt-3">
+                                <div class="card-body p-2">
+                                    <div class="row">
                                         <div class="col-md-4">
-                                            <label class="form-label">Mã thẻ</label>
-                                            <input type="text" class="form-control" value="@user.UserCode" data-id="@user.UserId" created-card disabled />
+                                            <div class="input-group">
+                                                <span class="input-group-text">Mã thẻ</span>
+                                                <input type="text" class="form-control" value="@user.UserCode" data-id="@user.UserId" created-card disabled />
+                                            </div>
                                         </div>
                                         <div class="col-md-7">
-                                            <label class="form-label">Người làm đơn</label>
-                                            <input type="text" class="form-control" value="@user.Username" created-name disabled />
+                                            <div class="input-group">
+                                                <span class="input-group-text">Người làm đơn</span>
+                                                <input type="text" class="form-control" value="@user.Username" created-name disabled />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +166,6 @@
                                 <div class="col">&nbsp;</div>
                             </div>
                         </div>
-                        <div class="col-sm"></div>
                     </div>
                     <div id="sign-container">
 
@@ -172,6 +179,95 @@
             </div>
             <div class="modal-footer justify-content-end">
                 <button type="button" class="btn btn-sm btn-primary" id="MatReqModal-btnSave">添新 Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Details -->
+<div class="modal fade" id="RequestDetails" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title text-center w-100">
+                    <h3>'物料異常需求申請單 Đơn xin nhu cầu vật liệu bất thường V9</h3>
+                </div>
+                <button type="button" class="btn btn-outline-danger border-0 rounded-circle" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x" style="font-size: 20px"></i></button>
+            </div>
+            <div class="modal-body" id="MatReqModal-body">
+                <table class="table table-bordered table-lablesample" id="RequestDetails-table">
+                    <thead>
+                        <tr class="text-center text-middle">
+                            <!-- 1  -->
+                            <th>日期<br />Ngày</th>
+                            <!-- 2  -->
+                            <th style="width: 10%;">機種<br />Tên hàng</th>
+                            <!-- 3  -->
+                            <th style="width: 10%;">單<br />Công lệnh</th>
+                            <!-- 4  -->
+                            <th>物料描述<br />Miêu tả vật liệu</th>
+                            <!-- 5  -->
+                            <th style="width: 10%;">物料料號<br />Mã vật liệu</th>
+                            <!-- 6  -->
+                            <th>單位<br />Đơn vị</th>
+                            <!-- 7  -->
+                            <th style="width: 5%;">本次超發申請<br />Số lượng xin phát vượt lần này<br /><span class="text-primary">[A]</span></th>
+                            <!-- 8  -->
+                            <th style="width: 5%;">本次實際超發<br />Số lượng phát vượt thực tế lần này<br /><span class="text-primary">[B]</span></th>
+                            <!-- 9  -->
+                            <th>需求數量<br />Số lượng nhu cầu công lệnh<br /><span class="text-primary">[C]</span></th>
+                            <!-- 10 -->
+                            <th>實發數 量<br />Số lượng thực phát công lệnh<br /><span class="text-primary">[D]</span></th>
+                            <!-- 11 -->
+                            <th>總耗損數量<br />Tổng tổn thất nguyên vật liệu<br /><span class="text-primary">[E = D - C + A]</span></th>
+                            <!-- 12 -->
+                            <th>總耗損數量<br />Giá vật liệu (VND)<br /><span class="text-primary">[F]</span></th>
+                            <!-- 13 -->
+                            <th>總耗損數量<br />Tổng tiền vật liệu tổn thất (VND)<br /><span class="text-primary">[G = E * F]</span></th>
+                            <!-- 14 -->
+                            <th>需求原因<br />Nguyên nhân nhu cầu</th>
+                        </tr>
+                    </thead>
+                    <tbody id="RequestDetails-tbody">
+                        <tr class="text-middle">
+                            <td><input class="form-control form-control-sm" type="datetime-local" data-name="details-DateReq" style="width: 175px;"></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-ModelName"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-MO"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-MatDesc"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-MatCode"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-Unit"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-ActReqQty"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-ExReqQty"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-DemQty"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-ActDelQty"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-TotalLoss"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-MatCost"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-TotalLossCost"></textarea></td>
+                            <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-DemReason"></textarea></td>
+                        </tr>
+                        <tr id="details-file">
+                            
+                        </tr>
+                    </tbody>
+                </table>    
+
+                <h4 class="font-weight-light text-start py-3" data-name="details-signname">LƯU TRÌNH KÝ</h4>
+
+               <table class="table table-bordered">
+                   <tbody data-name="details-signprocess" class="fw-bold">
+                       <tr details-signprocess-header>
+                       </tr>
+                       <tr>
+                       </tr>
+                   </tbody>
+               </table>
+
+            </div>
+            <div class="modal-footer justify-content-center">
+                <div>
+                    <button class="btn btn-outline-danger">Reject</button>
+                    <button class="btn btn-success">Approve</button>
+                </div>
             </div>
         </div>
     </div>

@@ -25,6 +25,7 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
         public Nullable<int> IdUserCreated { get; set; }
         public Nullable<System.DateTime> DateTime { get; set; }
         public string Type { get; set; }
+        public Nullable<int> IdRequest { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnsualMatReqSign_mt> UnsualMatReqSigns { get; set; }

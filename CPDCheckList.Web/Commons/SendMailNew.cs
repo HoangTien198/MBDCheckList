@@ -194,7 +194,7 @@ namespace CPDCheckList.Web.Commons
                                      $"Manufacturing Order (MO): {checklist.MO}</br>" +
                                      $"Print Count: {checklist.LablePrintNum}</br>" +
                                      $"</br>";
-                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System</a>.</br>";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System https://10.220.130.116:8888/</a>.</br>";
                 mailContent += "After logging in, please navigate to the 'Data Flow' section under 'Label,' where you will find the new request awaiting your action.</br>";
                 mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[cpeii-vn-te-me@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
                 mailContent += "</br>";
@@ -222,7 +222,7 @@ namespace CPDCheckList.Web.Commons
                                      $"Manufacturing Order (MO): {checklist.MO}</br>" +
                                      $"Print Count: {checklist.LablePrintNum}</br>" +
                                      $"</br>";
-                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System</a>. ";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System https://10.220.130.116:8888/</a>. ";
                 mailContent += "After logging in, please visit the 'Data Flow' section under 'Label,' where you will see the status update of your request.</br>";
                 mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[cpeii-vn-te-me@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
                 mailContent += "</br>";
@@ -251,7 +251,7 @@ namespace CPDCheckList.Web.Commons
                                      $"Print Count: {checklist.LablePrintNum}</br>" +
                                      $"</br>";
                 mailContent += $"Reason for rejection: {checklist.LableDataFlow_Status.Note}</br></br>";
-                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System</a>. ";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System https://10.220.130.116:8888/</a>. ";
                 mailContent += "After logging in, please visit the 'Data Flow' section under 'Label,' where you will see the status update of your request.</br>";
                 mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[cpeii-vn-te-me@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
                 mailContent += "</br>";
@@ -282,7 +282,7 @@ namespace CPDCheckList.Web.Commons
                                      $"Product: {label.ProductName}</br>" +
                                      $"MO: {label.MO}</br>" +
                                      $"</br>";
-                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System</a>.</br>";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System https://10.220.130.116:8888/</a>.</br>";
                 mailContent += "After logging in, please navigate to the 'Data Flow' section under 'Label,' where you will find the new request awaiting your action.</br>";
                 mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[cpeii-vn-te-me@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
                 mailContent += "</br>";
@@ -309,7 +309,7 @@ namespace CPDCheckList.Web.Commons
                                      $"Product: {label.ProductName}</br>" +
                                      $"MO: {label.MO}</br>" +
                                      $"</br>";
-                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System</a>. ";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System https://10.220.130.116:8888/</a>. ";
                 mailContent += "After logging in, please visit the 'Data Flow' section under 'Label,' where you will see the status update of your request.</br>";
                 mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[cpeii-vn-te-me@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
                 mailContent += "</br>";
@@ -337,7 +337,7 @@ namespace CPDCheckList.Web.Commons
                                      $"MO: {label.MO}</br>" +
                                      $"</br>";
                 mailContent += $"Reason for rejection: {label.LabelSampleStatus.Note}</br></br>";
-                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System</a>. ";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System https://10.220.130.116:8888/</a>. ";
                 mailContent += "After logging in, please visit the 'Data Flow' section under 'Label,' where you will see the status update of your request.</br>";
                 mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[cpeii-vn-te-me@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
                 mailContent += "</br>";

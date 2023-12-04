@@ -14,6 +14,12 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
     
     public partial class UnusualMatReq_mt
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UnusualMatReq_mt()
+        {
+            this.UnusualMatReqStatus = new HashSet<UnusualMatReqStatus_mt>();
+        }
+    
         public int Id { get; set; }
         public Nullable<System.DateTime> DateReq { get; set; }
         public string ModelName { get; set; }
@@ -29,9 +35,10 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
         public Nullable<double> TotalLossCost { get; set; }
         public string DemReason { get; set; }
         public string Location { get; set; }
-        public Nullable<int> IdStatus { get; set; }
         public string MatCode { get; set; }
+        public string FilePath { get; set; }
     
-        public virtual UnusualMatReqStatus_mt UnusualMatReqStatus { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UnusualMatReqStatus_mt> UnusualMatReqStatus { get; set; }
     }
 }

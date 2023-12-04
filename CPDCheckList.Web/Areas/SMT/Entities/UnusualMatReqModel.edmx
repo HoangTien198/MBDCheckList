@@ -48,8 +48,8 @@
           <Property Name="TotalLossCost" Type="float" />
           <Property Name="DemReason" Type="nvarchar" MaxLength="255" />
           <Property Name="Location" Type="nvarchar" MaxLength="10" />
-          <Property Name="IdStatus" Type="int" />
           <Property Name="MatCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="FilePath" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="UnusualMatReqStatus">
           <Key>
@@ -60,6 +60,7 @@
           <Property Name="IdUserCreated" Type="int" />
           <Property Name="DateTime" Type="datetime" />
           <Property Name="Type" Type="nvarchar" MaxLength="10" />
+          <Property Name="IdRequest" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -89,7 +90,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UnsualMatReqSign_UnusualMatReqStatus">
-          <End Role="UnusualMatReqStatus" Type="Self.UnusualMatReqStatus" Multiplicity="0..1" />
+          <End Role="UnusualMatReqStatus" Type="Self.UnusualMatReqStatus" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="UnsualMatReqSign" Type="Self.UnsualMatReqSign" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UnusualMatReqStatus">
@@ -112,15 +115,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UnusualMatReq_UnusualMatReqStatus">
-          <End Role="UnusualMatReqStatus" Type="Self.UnusualMatReqStatus" Multiplicity="0..1" />
-          <End Role="UnusualMatReq" Type="Self.UnusualMatReq" Multiplicity="*" />
+        <Association Name="FK_UnusualMatReqStatus_UnusualMatReq">
+          <End Role="UnusualMatReq" Type="Self.UnusualMatReq" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UnusualMatReqStatus" Type="Self.UnusualMatReqStatus" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UnusualMatReqStatus">
+            <Principal Role="UnusualMatReq">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UnusualMatReq">
-              <PropertyRef Name="IdStatus" />
+            <Dependent Role="UnusualMatReqStatus">
+              <PropertyRef Name="IdRequest" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -166,9 +171,9 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UnsualMatReqSign" EntitySet="UnsualMatReqSign" />
           </AssociationSet>
-          <AssociationSet Name="FK_UnusualMatReq_UnusualMatReqStatus" Association="Self.FK_UnusualMatReq_UnusualMatReqStatus">
-            <End Role="UnusualMatReqStatus" EntitySet="UnusualMatReqStatus" />
+          <AssociationSet Name="FK_UnusualMatReqStatus_UnusualMatReq" Association="Self.FK_UnusualMatReqStatus_UnusualMatReq">
             <End Role="UnusualMatReq" EntitySet="UnusualMatReq" />
+            <End Role="UnusualMatReqStatus" EntitySet="UnusualMatReqStatus" />
           </AssociationSet>
           <AssociationSet Name="FK_UnusualMatReqStatus_Users" Association="Self.FK_UnusualMatReqStatus_Users">
             <End Role="Users" EntitySet="Users" />
@@ -204,14 +209,14 @@
             <End Role="Role" EntitySet="Role_mt" />
             <End Role="User_mt" EntitySet="User_mt" />
           </AssociationSet>
-          <EntitySet Name="UnusualMatReq_mt" EntityType="UnusualMatReqModel.UnusualMatReq_mt" />
-          <AssociationSet Name="FK_UnusualMatReq_UnusualMatReqStatus" Association="UnusualMatReqModel.FK_UnusualMatReq_UnusualMatReqStatus">
-            <End Role="UnusualMatReqStatus_mt" EntitySet="UnusualMatReqStatus_mt" />
-            <End Role="UnusualMatReq" EntitySet="UnusualMatReq_mt" />
-          </AssociationSet>
           <AssociationSet Name="FK_UnsualMatReqSign_Roles" Association="UnusualMatReqModel.FK_UnsualMatReqSign_Roles">
             <End Role="Role_mt" EntitySet="Role_mt" />
             <End Role="UnsualMatReqSign_mt" EntitySet="UnsualMatReqSign_mt" />
+          </AssociationSet>
+          <EntitySet Name="UnusualMatReq_mt" EntityType="UnusualMatReqModel.UnusualMatReq_mt" />
+          <AssociationSet Name="FK_UnusualMatReqStatus_UnusualMatReq" Association="UnusualMatReqModel.FK_UnusualMatReqStatus_UnusualMatReq">
+            <End Role="UnusualMatReq" EntitySet="UnusualMatReq_mt" />
+            <End Role="UnusualMatReqStatus_mt" EntitySet="UnusualMatReqStatus_mt" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="UnsualMatReqSign_mt">
@@ -240,6 +245,7 @@
           <NavigationProperty Name="UnsualMatReqSigns" Relationship="UnusualMatReqModel.FK_UnsualMatReqSign_UnusualMatReqStatus" FromRole="UnusualMatReqStatu" ToRole="UnsualMatReqSign" />
           <NavigationProperty Name="UserCreated" Relationship="UnusualMatReqModel.FK_UnusualMatReqStatus_Users" FromRole="UnusualMatReqStatus" ToRole="User" />
           <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IdRequest" Type="Int32" />
         </EntityType>
         <EntityType Name="User_mt">
           <Key>
@@ -316,6 +322,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UnsualMatReqSign_Roles">
+          <End Type="UnusualMatReqModel.Role_mt" Role="Role_mt" Multiplicity="0..1" />
+          <End Type="UnusualMatReqModel.UnsualMatReqSign_mt" Role="UnsualMatReqSign_mt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role_mt">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UnsualMatReqSign_mt">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="UnusualMatReq_mt">
           <Key>
             <PropertyRef Name="Id" />
@@ -335,31 +353,19 @@
           <Property Name="TotalLossCost" Type="Double" />
           <Property Name="DemReason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Location" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="IdStatus" Type="Int32" />
-          <NavigationProperty Name="UnusualMatReqStatus" Relationship="UnusualMatReqModel.FK_UnusualMatReq_UnusualMatReqStatus" FromRole="UnusualMatReq" ToRole="UnusualMatReqStatus_mt" />
           <Property Name="MatCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UnusualMatReqStatus" Relationship="UnusualMatReqModel.FK_UnusualMatReqStatus_UnusualMatReq" FromRole="UnusualMatReq" ToRole="UnusualMatReqStatus_mt" />
+          <Property Name="FilePath" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="FK_UnusualMatReq_UnusualMatReqStatus">
-          <End Type="UnusualMatReqModel.UnusualMatReqStatus_mt" Role="UnusualMatReqStatus_mt" Multiplicity="0..1" />
-          <End Type="UnusualMatReqModel.UnusualMatReq_mt" Role="UnusualMatReq" Multiplicity="*" />
+        <Association Name="FK_UnusualMatReqStatus_UnusualMatReq">
+          <End Type="UnusualMatReqModel.UnusualMatReq_mt" Role="UnusualMatReq" Multiplicity="0..1" />
+          <End Type="UnusualMatReqModel.UnusualMatReqStatus_mt" Role="UnusualMatReqStatus_mt" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UnusualMatReqStatus_mt">
+            <Principal Role="UnusualMatReq">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UnusualMatReq">
-              <PropertyRef Name="IdStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UnsualMatReqSign_Roles">
-          <End Type="UnusualMatReqModel.Role_mt" Role="Role_mt" Multiplicity="0..1" />
-          <End Type="UnusualMatReqModel.UnsualMatReqSign_mt" Role="UnsualMatReqSign_mt" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role_mt">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="UnsualMatReqSign_mt">
-              <PropertyRef Name="IdRole" />
+            <Dependent Role="UnusualMatReqStatus_mt">
+              <PropertyRef Name="IdRequest" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -386,6 +392,7 @@
           <EntitySetMapping Name="UnusualMatReqStatus_mt">
             <EntityTypeMapping TypeName="UnusualMatReqModel.UnusualMatReqStatus_mt">
               <MappingFragment StoreEntitySet="UnusualMatReqStatus">
+                <ScalarProperty Name="IdRequest" ColumnName="IdRequest" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="DateTime" ColumnName="DateTime" />
                 <ScalarProperty Name="IdUserCreated" ColumnName="IdUserCreated" />
@@ -425,8 +432,8 @@
           <EntitySetMapping Name="UnusualMatReq_mt">
             <EntityTypeMapping TypeName="UnusualMatReqModel.UnusualMatReq_mt">
               <MappingFragment StoreEntitySet="UnusualMatReq">
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
                 <ScalarProperty Name="MatCode" ColumnName="MatCode" />
-                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="DemReason" ColumnName="DemReason" />
                 <ScalarProperty Name="TotalLossCost" ColumnName="TotalLossCost" />

@@ -19,9 +19,12 @@
     vertical-align: middle;
 }
 
-#MatReqModalTable{
+#MatReqModalTable, #RequestDetails-table {
     font-size: 12px;
 }
+    #MatReqModalTable, #RequestDetails-table th {
+        background-color: #e9f1ff;
+    }
 textarea{
     resize: none;
 }
@@ -48,4 +51,10 @@ span.badge.rounded-pill {
     width: 100%;
     border-spacing: 0;
     border-collapse: separate;
+}
+#MatReqModalTable-tbody, [details]:disabled {
+    background-color: white;
+}
+[details-signprocess-header] {
+    background-color: #e9f1ff;
 }
