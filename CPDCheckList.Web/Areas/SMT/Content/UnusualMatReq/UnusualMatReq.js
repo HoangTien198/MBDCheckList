@@ -11,16 +11,17 @@
             } else {
                 $('#btn_AddNew').fadeIn(300);
             }
+            console.log('show btn');
         }, 300);
     }
     else {
         const myInterval = setInterval(() => {
-            if ($('#btn_AddNew').is(':visible')) {
+            if (!$('#btn_AddNew').is(':visible')) {
                 clearInterval(myInterval);
             } else {
                 $('#btn_AddNew').hide();
             }
-            console.log('hide');
+            console.log('hide btn');
         }, 300);
     }
     
@@ -187,23 +188,17 @@ function DrawTableRows(item, isAddInDatatable = false) {
     row.push(`<td class="text-center"><span class="badge bg-${status.color}">${status.status}</span></td>`);
     // 9 Action
     {
-        console.log(item);
-
         var Button = ``;
         var checkIsNeedSign = false;
-        if (item.UnusualMatReqStatus[0].IdUserCreated != $('#thisUser').data('id')) { // nếu không phải người tạo đơn
+        if (item.UnusualMatReqStatus[0].IdUserCreated != $('#thisUser').data('id') && item.UnusualMatReqStatus[0].Status == "Pending") { // nếu không phải người tạo đơn
             $.each(item.UnusualMatReqStatus[0].UnsualMatReqSigns, function (k, sign) {
                 if (sign.IdUser != 178) {
                     if (sign.IdUser == $('#thisUser').data('id')) {
-                        if (sign.Status == "Pending") {
-                            checkIsNeedSign = true;
-                        }
+                        checkIsNeedSign = true;
                     }
                 } else {
                     if (sign.IdRole == $('#thisUser').data('role')) {
-                        if (sign.Status == "Pending") {
-                            checkIsNeedSign = true;
-                        }
+                        checkIsNeedSign = true;
                     }
                 }
             }); // kiểm tra xem user này đã ký chưa, nếu là 178 (all) thì check role này đã ký chưa
@@ -400,10 +395,6 @@ async function Details(elm, e) {
     var id = $(elm).data('id');
     var request = await GetRequest(id);
 
-    console.log(request);
-
-    
-
     $('[data-name="details-DateReq"]').val(moment(request.DateReq).format('YYYY-MM-DDTHH:mm:ss'));
     $('[data-name="details-ModelName"]').val(request.ModelName);
     $('[data-name="details-MO"]').val(request.MO);
@@ -418,6 +409,8 @@ async function Details(elm, e) {
     $('[data-name="details-MatCost"]').val(request.MatCost);
     $('[data-name="details-TotalLossCost"]').val(request.TotalLossCost);
     $('[data-name="details-DemReason"]').val(request.DemReason);
+
+
 
     var signProcessTable = $('[data-name="details-signprocess"]');
 
@@ -452,12 +445,17 @@ async function Details(elm, e) {
                 $(tbodySign[1]).append(`<td class="text-center"></td>`);
                 break;
             }
-            case "Approve": {
+            case "Approved": {
                 $(tbodySign[1]).append(`<td class="text-center" style="background-color: #d1e7dd; color: #198754;">${sign.User.UserCode} </br> ${sign.User.UserFullName}</td>`);
                 break;
             }
-            case "Reject": {
-                $(tbodySign[1]).append(`<td class="text-center" style="background-color: #f8d7da; color: #dc3545;">${sign.User.UserCode} </br> ${sign.User.UserFullName}</td>`);
+            case "Rejected": {
+                $(tbodySign[1]).append(`
+                <td class="text-center" style="background-color: #f8d7da; color: #dc3545;">
+                    ${sign.User.UserCode} </br> 
+                    ${sign.User.UserFullName} </br>
+                    Note: <lable class="fw-normal">${sign.Note}</lable>
+                </td>`);
                 break;
             }
         }
@@ -466,6 +464,8 @@ async function Details(elm, e) {
     if (!checkIsNeedSign) {
         $('#RequestDetails .modal-footer').hide();
     } else {
+        $('#RequestDetails .modal-footer [btn-reject]').data('id', id);
+        $('#RequestDetails .modal-footer [btn-approve]').data('id', id)
         $('#RequestDetails .modal-footer').show();
     }
 
@@ -474,6 +474,8 @@ async function Details(elm, e) {
 
 // Sign
 async function Approve(elm, e) {
+    e.preventDefault();
+
     var IdRequest = $(elm).data('id');
     var IdUser = $('#thisUser').data('id');
     var Index = $(`#table_MatReq-tbody [data-id="${IdRequest}"]`).index();
@@ -481,7 +483,7 @@ async function Approve(elm, e) {
 
     
     Swal.fire({
-        title: "Do you want Approve this request?",
+        title: "<lable class='text-success'>Do you want Approve this request?</lable>",
         html: `<table class="table table-bordered">
                     <tr class="bg-secondary-light">
                         <th>ID</th>
@@ -498,7 +500,6 @@ async function Approve(elm, e) {
                         <td>${request.MO}</td>
                     </tr>
                 </table>`,
-        //html: html,
         icon: 'question',
         reverseButtons: false,
         confirmButtonText: 'Approve',
@@ -537,8 +538,76 @@ async function Approve(elm, e) {
         }
     });
 }
-function Reject(elm, e) {
+async function Reject(elm, e) {
+    e.preventDefault();
 
+    var IdRequest = $(elm).data('id');
+    var IdUser = $('#thisUser').data('id');
+    var Index = $(`#table_MatReq-tbody [data-id="${IdRequest}"]`).index();
+    var request = await GetRequest(IdRequest);
+
+
+    Swal.fire({
+        title: "<lable class='text-danger'>Do you want Reject this request?</lable>",
+        html: `<table class="table table-bordered">
+                    <tr class="bg-secondary-light">
+                        <th>ID</th>
+                        <th>申请人 Người làm đơn</th>
+                        <th>日期 Ngày</th>
+                        <th>機種 Tên hàng</th>
+                        <th>單 Công lệnh</th>
+                    </tr>
+                    <tr>
+                        <td>${moment(request.DateReq).format('YYYYMMDDHHmm')}-${request.Id}</td>
+                        <td>${request.UnusualMatReqStatus[0].UserCreated.UserCode} ${request.UnusualMatReqStatus[0].UserCreated.UserFullName}</td>
+                        <td>${moment(request.DateReq).format('YYYY-MM-DD HH:mm')}</td>
+                        <td>${request.ModelName}</td>
+                        <td>${request.MO}</td>
+                    </tr>
+                </table>
+                <div class="col-12 text-start ">
+                    <lable class="form-label mb-2">Reject note</lable>
+                    <textarea id="rejectnote" class="col-12 border border-1" rows="3" style="resize: none;"></textarea>
+                </div>`,
+        icon: 'question',
+        reverseButtons: false,
+        confirmButtonText: 'Reject',
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        buttonsStyling: false,
+        reverseButtons: true,
+        customClass: {
+            cancelButton: 'btn btn-outline-secondary fw-bold me-3',
+            confirmButton: 'btn btn-danger fw-bold'
+        },
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var note = $('#rejectnote').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/SMT/UnusualMatReq/Reject",
+                data: JSON.stringify({ IdRequest, IdUser, note }),
+                dataType: "json",
+                contentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (response.status) {
+                        var row = DrawTableRows(response.request, true);
+                        dataTable.rows().updateRow(Index, row);
+
+                        Swal.fire("Success!", "Request was Rejected.", "success");
+
+                        $('#RequestDetails').modal('hide');
+                    }
+                    else {
+                    }
+                },
+                error: function (error) {
+                    Swal.fire("Something went wrong!", GetAjaxErrorMessage(error), "error");
+                }
+            });
+        }
+    });
 }
 
 

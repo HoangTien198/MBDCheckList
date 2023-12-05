@@ -10,6 +10,7 @@ using System.Threading;
 using CPDCheckList.Web.Areas.Lable.Data;
 using System.Globalization;
 using System.Text;
+using CPDCheckList.Web.Areas.SMT.Entities;
 
 namespace CPDCheckList.Web.Commons
 {
@@ -352,6 +353,91 @@ namespace CPDCheckList.Web.Commons
         }
 
         
+    }
+    public class SmtMail
+    {
+        public static string CreatetEmail(string toEmail, UnusualMatReq_mt request)
+        {
+            try
+            {
+                var signStatus = request.UnusualMatReqStatus.ToList()[0];
+                string mailContent = $"Hello, {toEmail}</br>" +
+                                     $"</br>" +
+                                     $"We hope this email finds you well. We want to inform you that there is a new order creation request in the system that requires your attention.</br>" +
+                                     $"</br>" +
+                                     $"Created: {signStatus.UserCreated.UserCode} - {MailCommond.RemoveDiacritics(signStatus.UserCreated.UserFullName)}</br>" +
+                                     $"Date: {request.DateReq}</br>" +
+                                     $"Model: {request.ModelName}</br>" +
+                                     $"MO: {request.MO}</br>" +
+                                     $"</br>";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System https://10.220.130.116:8888/</a>.</br>";
+                mailContent += "After logging in, please visit the 'SMT' section under 'Nhu cầu liệu bất thường', where you will see the status update of your request.</br>";
+                mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[cpeii-vn-te-me@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
+                mailContent += "</br>";
+                mailContent += "Thank you and Best Regards!";
+
+                return mailContent;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+        public static string ApproveMail(string toEmail, UnusualMatReq_mt request)
+        {
+            try
+            {
+                var signStatus = request.UnusualMatReqStatus.ToList()[0];
+                string mailContent = $"Hello, {toEmail}</br>" +
+                                     $"</br>" +
+                                     $"We hope this email finds you well. We are pleased to inform you that your order creation request has been successfully approved.</br>" +
+                                     $"</br>" +
+                                     $"Created: {signStatus.UserCreated.UserCode} - {MailCommond.RemoveDiacritics(signStatus.UserCreated.UserFullName)}</br>" +
+                                     $"Date: {request.DateReq}</br>" +
+                                     $"Model: {request.ModelName}</br>" +
+                                     $"MO: {request.MO}</br>" +
+                                     $"</br>";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System https://10.220.130.116:8888/</a>. ";
+                mailContent += "After logging in, please visit the 'SMT' section under 'Nhu cầu liệu bất thường', where you will see the status update of your request.</br>";
+                mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[you-nan.ruan@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
+                mailContent += "</br>";
+                mailContent += "Thank you and Best Regards!";
+
+                return mailContent;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+        public static string RejectEmail(string toEmail, UnusualMatReq_mt request)
+        {
+            try
+            {
+                var signStatus = request.UnusualMatReqStatus.ToList()[0];
+                string mailContent = $"Hello, {toEmail}</br>" +
+                                     $"</br>" +
+                                     $"We hope this email finds you well. We regret to inform you that your order creation request has been declined.</br>" +
+                                     $"</br>" +
+                                     $"Created: {signStatus.UserCreated.UserCode} - {MailCommond.RemoveDiacritics(signStatus.UserCreated.UserFullName)}</br>" +
+                                     $"Date: {request.DateReq}</br>" +
+                                     $"Model: {request.ModelName}</br>" +
+                                     $"MO: {request.MO}</br>" +
+                                     $"</br>";
+                mailContent += $"Reason for rejection: {MailCommond.RemoveDiacritics(signStatus.UnsualMatReqSigns.FirstOrDefault(s => s.Status == "Rejected").Note)}</br></br>";
+                mailContent += "You can access this request by logging into your account on the <a href=\"https://10.220.130.116:8888/\">Checklist System https://10.220.130.116:8888/</a>. ";
+                mailContent += "After logging in, please visit the 'SMT' section under 'Nhu cầu liệu bất thường', where you will see the status update of your request.</br>";
+                mailContent += "This is an automated email, so there is no need to respond. If you have any questions or need further assistance, please contact our support team at <a href=\"javascript:;\">[cpeii-vn-te-me@mail.foxconn.com]</a> or <a href=\"javascript:;\">[37145]</a>.</br>";
+                mailContent += "</br>";
+                mailContent += "Thank you and Best Regards!";
+
+                return mailContent;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
     }
 
     public static class MailCommond

@@ -35,6 +35,7 @@
                     <tbody id="table_MatReq-tbody">
                     </tbody>
                 </table>
+                
             </div>
         </div>
     </div>
@@ -185,7 +186,7 @@
 </div>
 
 <!-- Details -->
-<div class="modal fade" id="RequestDetails" data-bs-backdrop="static">
+<div class="modal fade" id="RequestDetails" data-bs-backdrop="static" data-bs-focus="false">
     <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
         <div class="modal-content">
             <div class="modal-header">
@@ -265,8 +266,8 @@
             </div>
             <div class="modal-footer justify-content-center">
                 <div>
-                    <button class="btn btn-outline-danger">Reject</button>
-                    <button class="btn btn-success">Approve</button>
+                    <button class="btn btn-outline-danger" onclick="Reject(this, event)" btn-reject>Reject</button>
+                    <button class="btn btn-success" onclick="Approve(this, event)" btn-approve>Approve</button>
                 </div>
             </div>
         </div>

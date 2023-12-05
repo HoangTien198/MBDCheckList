@@ -142,7 +142,7 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
                     var user = db.User_mt.FirstOrDefault(u => u.UserId == IdUser);
                     var status = request.UnusualMatReqStatus.ToList()[0];
                     var sign = status.UnsualMatReqSigns.FirstOrDefault(s => (s.IdUser == 178 ? s.IdRole == user.RoleId : s.IdUser == IdUser));
-                    sign.Status = "Approve";
+                    sign.Status = "Approved";
                     sign.DateTime = DateTime.Now;
                     sign.IdUser = IdUser;
 
@@ -167,7 +167,25 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
         {
             try
             {
-                return Json(new { status = true });
+                var request = db.UnusualMatReq_mt.FirstOrDefault(r => r.Id == IdRequest);
+                if (request != null)
+                {
+                    var user = db.User_mt.FirstOrDefault(u => u.UserId == IdUser);
+                    var status = request.UnusualMatReqStatus.ToList()[0];
+                    var sign = status.UnsualMatReqSigns.FirstOrDefault(s => (s.IdUser == 178 ? s.IdRole == user.RoleId : s.IdUser == IdUser));
+                    sign.Status = "Rejected";
+                    sign.DateTime = DateTime.Now;
+                    sign.IdUser = IdUser;
+                    sign.Note = note;
+
+
+                    status.Status = "Rejected";
+
+                    db.UnusualMatReq_mt.AddOrUpdate(request);
+                    db.SaveChanges();
+                }
+
+                return Json(new { status = true, request });
             }
             catch (Exception ex)
             {

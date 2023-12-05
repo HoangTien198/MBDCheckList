@@ -58,3 +58,6 @@ span.badge.rounded-pill {
 [details-signprocess-header] {
     background-color: #e9f1ff;
 }
+.swal2-modal.swal2-icon-question{
+    width: 800px;
+}
