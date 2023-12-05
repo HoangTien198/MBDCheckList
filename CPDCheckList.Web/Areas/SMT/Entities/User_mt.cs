@@ -9,6 +9,7 @@
 
 namespace CPDCheckList.Web.Areas.SMT.Entities
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Text.Json.Serialization;
@@ -19,13 +20,15 @@ namespace CPDCheckList.Web.Areas.SMT.Entities
         public string UserCode { get; set; }
         public string UserFullName { get; set; }
         public string Username { get; set; }
-        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
         public string Password { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<int> RoleId { get; set; }
+        public string Email { get; set; }
     
         public virtual Role_mt Role { get; set; }
     }

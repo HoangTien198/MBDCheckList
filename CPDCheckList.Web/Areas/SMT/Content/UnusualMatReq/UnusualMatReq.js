@@ -194,11 +194,11 @@ function DrawTableRows(item, isAddInDatatable = false) {
             $.each(item.UnusualMatReqStatus[0].UnsualMatReqSigns, function (k, sign) {
                 if (sign.IdUser != 178) {
                     if (sign.IdUser == $('#thisUser').data('id')) {
-                        checkIsNeedSign = true;
+                        if (sign.Status == "Pending") checkIsNeedSign = true;
                     }
                 } else {
                     if (sign.IdRole == $('#thisUser').data('role')) {
-                        checkIsNeedSign = true;
+                        if (sign.Status == "Pending") checkIsNeedSign = true;
                     }
                 }
             }); // kiểm tra xem user này đã ký chưa, nếu là 178 (all) thì check role này đã ký chưa
@@ -415,6 +415,12 @@ async function Details(elm, e) {
     var signProcessTable = $('[data-name="details-signprocess"]');
 
     $('[ data-name="details-signname"]').text(`LƯU TRÌNH KÝ (${request.UnusualMatReqStatus[0].Type})`);
+
+    $('#details-file').empty();
+    if (request.FilePath) {
+        $('#details-file').append(`<a href="${request.FilePath.replace(/^.*\\files/, "/files")}">File: ${request.FilePath.split(`\\`).pop()}</a>`);
+    }
+    
 
     var checkIsNeedSign = false;
     var tbodySign = signProcessTable.find('tr');

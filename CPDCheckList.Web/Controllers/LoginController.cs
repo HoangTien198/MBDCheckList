@@ -151,8 +151,6 @@ namespace CPDCheckList.Web.Controllers
             {
                 string code = Request.Params["code"];
 
-                var temp = Request.QueryString.GetValues("q")[0];
-
                 var handler = new JwtSecurityTokenHandler();
                 var jwtSecurityToken = handler.ReadJwtToken(code);
 

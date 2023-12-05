@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Data.Entity.Migrations;
+using System.Collections;
 
 namespace CPDCheckList.Web.Areas.SMT.Controllers
 {
@@ -85,7 +86,13 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
                 var file = Request.Files.Get("file");
                 if (file != null)
                 {
-                    var path = Server.MapPath($"/Areas/SMT/Data/Files/{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
+                    var path = Server.MapPath($"/files/SMT/{DateTime.Now.ToString("yyyy-MM-dd")}");
+
+                    if(!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }    
+
                     var filename = System.IO.Path.GetFileName(file.FileName);
                     var savepath = System.IO.Path.Combine(path, filename);
                     file.SaveAs(savepath);
@@ -97,6 +104,32 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
                 int IdUserCreated = unusualMatReq.UnusualMatReqStatus.First().IdUserCreated ?? 0;
                 unusualMatReq.UnusualMatReqStatus.First().UserCreated = db.User_mt.FirstOrDefault( u => u.UserId == IdUserCreated);
                 db.UnusualMatReq_mt.Add(unusualMatReq);
+
+                // Send mail
+                foreach (var sign in unusualMatReq.UnusualMatReqStatus.First().UnsualMatReqSigns)
+                {
+                    string email = string.Empty;
+                    if(sign.IdUser == 178)
+                    {
+                        sign.Role = db.Role_mt.FirstOrDefault(r => r.RoleId == sign.IdRole);
+                        email = sign.Role.Email == null ? sign.Role.Email : string.Empty;
+                    }
+                    else
+                    {
+                        sign.User = db.User_mt.FirstOrDefault(u => u.UserId == sign.IdUser);
+                        email = sign.User.Email == null ? sign.User.Email : string.Empty;
+                    }
+
+                    if(email != string.Empty)
+                    {
+                        string CreateEmailContent = Commons.SendMailNew.NewMail(Commons.SmtMail.CreatetEmail(email, unusualMatReq));
+                        Commons.SendMailNew.SendMail(email, new string[0], "New 物料異常需求申請單 - Don xin nhu cau vat lieu bat thuong", CreateEmailContent);
+                    }
+
+                    //string CreateEmailContent = Commons.SendMailNew.NewMail(Commons.SmtMail.CreatetEmail(email, unusualMatReq));
+                    //Commons.SendMailNew.SendMail("you-nan.ruan@mail.foxconn.com", new string[0], "New 物料異常需求申請單 - Đơn xin nhu cầu vật liệu bất thường", CreateEmailContent);
+                    //break;
+                }
 
                 db.SaveChanges();
 
@@ -150,6 +183,14 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
                     if (!status.UnsualMatReqSigns.Any(s => s.Status != "Approve")) // Nếu không có sign status nào khác "Approve" thì trả về true
                     {
                         status.Status = "Approved";
+
+                        // Send mail
+                        string email = request.UnusualMatReqStatus.First().UserCreated.Email;                      
+                        if (email != string.Empty)
+                        {
+                            string CreateEmailContent = Commons.SmtMail.ApproveMail(email, request);
+                            Commons.SendMailNew.SendMail(email, new string[0], "Approved 物料異常需求申請單 - Don xin nhu cau vat lieu bat thuong", CreateEmailContent);
+                        }
                     }
 
                     db.UnusualMatReq_mt.AddOrUpdate(request);
@@ -180,6 +221,14 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
 
 
                     status.Status = "Rejected";
+
+                    // Send mail
+                    string email = request.UnusualMatReqStatus.First().UserCreated.Email;
+                    if (email != string.Empty)
+                    {
+                        string CreateEmailContent = Commons.SmtMail.RejectEmail(email, request);
+                        Commons.SendMailNew.SendMail(email, new string[0], "Rejected 物料異常需求申請單 - Don xin nhu cau vat lieu bat thuong", CreateEmailContent);
+                    }
 
                     db.UnusualMatReq_mt.AddOrUpdate(request);
                     db.SaveChanges();

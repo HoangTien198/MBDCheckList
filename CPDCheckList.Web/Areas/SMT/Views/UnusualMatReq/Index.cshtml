@@ -9,7 +9,7 @@
     <!-- Vendor -->
     <link href="~/files/Content/vendor/Viewer JS/viewer.min.css" rel="stylesheet" />
     <!-- Custom -->
-    <link href="~/Areas/SMT/Content/UnusualMatReq/UnusualMatReq.css" rel="stylesheet" />
+    <link href="~/Areas/SMT/Content/UnusualMatReq/UnusualMatReq.css?v=@Guid.NewGuid()" rel="stylesheet" />
 }
 <input type="hidden" data-role="@user.RoleId" data-id="@user.UserId" data-card="@user.UserCode" data-name="@user.Username" data-location="F06" id="thisUser" />
 
@@ -246,8 +246,10 @@
                             <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-TotalLossCost"></textarea></td>
                             <td><textarea class="form-control form-control-sm" rows="3" details disabled data-name="details-DemReason"></textarea></td>
                         </tr>
-                        <tr id="details-file">
-                            
+                        <tr>
+                            <td colspan="14" id="details-file" class="text-center">
+
+                            </td>
                         </tr>
                     </tbody>
                 </table>    
@@ -279,6 +281,6 @@
     <script src="~/Areas/Lable/Content/vendor/MomentJs/moment.js"></script>
     <script src="~/files/Content/vendor/Viewer JS/viewer.min.js"></script>
     <!-- Custom -->
-    <script src="~/Areas/SMT/Content/UnusualMatReq/UnusualMatReq.js"></script>
+    <script src="~/Areas/SMT/Content/UnusualMatReq/UnusualMatReq.js?v=@Guid.NewGuid()"></script>
 }
 

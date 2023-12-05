@@ -15,6 +15,7 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="UpdatedBy" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="UnsualMatReqSign">
           <Key>
@@ -76,6 +77,7 @@
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="RoleId" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <Association Name="FK_UnsualMatReqSign_Roles">
           <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
@@ -262,6 +264,7 @@
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="RoleId" Type="Int32" />
           <NavigationProperty Name="Role" Relationship="UnusualMatReqModel.FK_Users_Roles" FromRole="User_mt" ToRole="Role" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_UnsualMatReqSign_UnusualMatReqStatus">
           <End Type="UnusualMatReqModel.UnusualMatReqStatus_mt" Role="UnusualMatReqStatu" Multiplicity="0..1" />
@@ -309,6 +312,7 @@
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Users_Roles">
           <End Type="UnusualMatReqModel.Role_mt" Role="Role" Multiplicity="0..1" />
@@ -404,6 +408,7 @@
           <EntitySetMapping Name="User_mt">
             <EntityTypeMapping TypeName="UnusualMatReqModel.User_mt">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
@@ -420,6 +425,7 @@
           <EntitySetMapping Name="Role_mt">
             <EntityTypeMapping TypeName="UnusualMatReqModel.Role_mt">
               <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
