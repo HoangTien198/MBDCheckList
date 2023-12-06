@@ -180,7 +180,7 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
                     sign.IdUser = IdUser;
 
 
-                    if (!status.UnsualMatReqSigns.Any(s => s.Status != "Approve")) // Nếu không có sign status nào khác "Approve" thì trả về true
+                    if (!status.UnsualMatReqSigns.Any(s => s.Status != "Approved")) // Nếu không có sign status nào khác "Approve" thì trả về true
                     {
                         status.Status = "Approved";
 

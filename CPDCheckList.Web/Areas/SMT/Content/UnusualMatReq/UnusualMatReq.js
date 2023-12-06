@@ -1,5 +1,5 @@
 ﻿$(function () {
-    $('#page_name').text('物料異常需求申請單 Đơn xin nhu cầu vật liệu bất thường V9');
+    $('#page_name').text('物料異常需求申請單 Đơn xin nhu cầu vật liệu bất thường');
 
     LoadData();
     GetUsers();
@@ -429,17 +429,18 @@ async function Details(elm, e) {
 
     $(tbodySign[0]).append(`<td class="text-center">Người làm đơn</td>`);
     $(tbodySign[1]).append(`<td class="text-center">${request.UnusualMatReqStatus[0].UserCreated.UserCode} </br> ${request.UnusualMatReqStatus[0].UserCreated.UserFullName}</td>`);
-    $.each(request.UnusualMatReqStatus[0].UnsualMatReqSigns, function (k, sign) {   
+
+    $.each(request.UnusualMatReqStatus[0].UnsualMatReqSigns, function (k, sign) {
         $(tbodySign[0]).append(`<td class="text-center bg-secondary-light">${sign.Role.RoleName}</td>`);
 
         if (sign.IdUser != 178) {
             if (sign.IdUser == $('#thisUser').data('id')) {
                 if (sign.Status == "Pending") {
                     checkIsNeedSign = true;
-                }    
+                }
             }
         } else {
-            if (sign.IdRole == $('#thisUser').data('role')) { 
+            if (sign.IdRole == $('#thisUser').data('role')) {
                 if (sign.Status == "Pending") {
                     checkIsNeedSign = true;
                 }
@@ -465,17 +466,35 @@ async function Details(elm, e) {
                 break;
             }
         }
-        
     });
+      
     if (!checkIsNeedSign) {
         $('#RequestDetails .modal-footer').hide();
     } else {
-        $('#RequestDetails .modal-footer [btn-reject]').data('id', id);
-        $('#RequestDetails .modal-footer [btn-approve]').data('id', id)
-        $('#RequestDetails .modal-footer').show();
+        if (request.UnusualMatReqStatus[0].UnsualMatReqSigns.Status == "Pending") {
+            $('#RequestDetails .modal-footer [btn-reject]').data('id', id);
+            $('#RequestDetails .modal-footer [btn-approve]').data('id', id);
+            $('#RequestDetails .modal-footer').show();
+        }
+        else {
+            $('#RequestDetails .modal-footer').hide();
+        }
+        
     }
+    //var filePath = request.FilePath.replace(/^.*\\files/, "/files");
+    //await PdfViewer(filePath);
+
 
     $('#RequestDetails').modal('show');
+}
+async function PdfViewer(filePath) {
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+    let pdfViewer = new PDFjsViewer($('.pdfjs-viewer'));
+    pdfViewer.loadDocument("https://github.com/dealfonso/pdfjs-viewer/raw/main/examples/test.pdf");
+
+    
 }
 
 // Sign
