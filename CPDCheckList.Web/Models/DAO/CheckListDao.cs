@@ -27,7 +27,16 @@ namespace CPDCheckList.Web.Models.DAO
             DateTime startDate;
             if (day < 3 && day != -1)
             {
-                startDate = new DateTime(year, month - 1, 1);
+                if(month == 1)
+                {
+                    startDate = new DateTime(year - 1, 12 , 1);
+                }
+                else
+                {
+                    startDate = new DateTime(year, month - 1, 1);
+                }
+               
+
 
             }
             else

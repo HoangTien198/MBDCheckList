@@ -10,9 +10,6 @@ var isLoadingData = false;
 $(document).ready(function () {
     $('#page_name').text(`Check List - ${$('#location').val()}`);
     loadDataCheckList();
-
-    console.log(CheckShiftWork());
-
 });
 
 //load data

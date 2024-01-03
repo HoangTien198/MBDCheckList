@@ -54,7 +54,7 @@ namespace CPDCheckList.Web.Models.DAO
         /// <param name="data"></param>
         /// <param name="userLogin"></param>
         /// <returns>1; Thành công | 0:Thất bại</returns>
-        public int LineLeaderConfirmCheckListOnTime(CheckListOnTimeAjaxLineLeader data, AccountLogin userLogin)
+        public string LineLeaderConfirmCheckListOnTime(CheckListOnTimeAjaxLineLeader data, AccountLogin userLogin)
         {
             try
             {
@@ -81,30 +81,30 @@ namespace CPDCheckList.Web.Models.DAO
                 var timeLineDao = new TimeLineDao();
                 var _timeLine = timeLineDao.GetById(data.TimeLineId);
 
-                if (data.MailSelected.Trim().ToUpper() == "ARLO")
-                {
-                    SFCService.Servicepostdata sfcmail = new SFCService.Servicepostdata();
-                    string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_IPQC_ARLO, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Period of time check list",
-                        $"Period of time check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm Period of time check list on Special Data Management system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\nTime: {_timeLine.WorkOn}\n-----------------", "");
-                }
-                if (data.MailSelected.Trim().ToUpper() == "NETGEAR")
-                {
-                    SFCService.Servicepostdata sfcmail = new SFCService.Servicepostdata();
-                    string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_IPQC_NETGEAR, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Period of time check list",
-                        $"Period of time check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm Period of time check list on Special Data Management system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\nTime: {_timeLine.WorkOn}\n-----------------", "");
-                }
-                if (data.MailSelected.Trim().ToUpper() == "F17_IPQC")
-                {
-                    SFCService.Servicepostdata sfcmail = new SFCService.Servicepostdata();
-                    string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_IPQC_F17, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Period of time check list",
-                        $"Period of time check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm Period of time check list on Special Data Management system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\nTime: {_timeLine.WorkOn}\n-----------------", "");
-                }
-                return 1;//thành công
+                //if (data.MailSelected.Trim().ToUpper() == "ARLO")
+                //{
+                //    SFCService.Servicepostdata sfcmail = new SFCService.Servicepostdata();
+                //    string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_IPQC_ARLO, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Period of time check list",
+                //        $"Period of time check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm Period of time check list on Special Data Management system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\nTime: {_timeLine.WorkOn}\n-----------------", "");
+                //}
+                //if (data.MailSelected.Trim().ToUpper() == "NETGEAR")
+                //{
+                //    SFCService.Servicepostdata sfcmail = new SFCService.Servicepostdata();
+                //    string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_IPQC_NETGEAR, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Period of time check list",
+                //        $"Period of time check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm Period of time check list on Special Data Management system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\nTime: {_timeLine.WorkOn}\n-----------------", "");
+                //}
+                //if (data.MailSelected.Trim().ToUpper() == "F17_IPQC")
+                //{
+                //    SFCService.Servicepostdata sfcmail = new SFCService.Servicepostdata();
+                //    string rs = sfcmail.SEND_MAIL_PARAM(ListMail.MAIL_IPQC_F17, "cpeii-vn-te-me@mail.foxconn.com", "", "Confirm Period of time check list",
+                //        $"Period of time check list is created by:{user.UserCode} - {user.UserFullName}. Please Confirm Period of time check list on Special Data Management system: http://10.220.130.116:8888 \nMO: {_checkList.MO}\nDate: {_checkList.CreatedDate}\nShift Work: {(_checkList.ShiftWork == 1 ? "Ngay" : "Dem")}\nCreated By: {user.UserCode} - {user.UserFullName}\nTime: {_timeLine.WorkOn}\n-----------------", "");
+                //}
+                return string.Empty;//thành công
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                return 0;//thất bại
+                return ex.Message;//thất bại
             }
             
         }

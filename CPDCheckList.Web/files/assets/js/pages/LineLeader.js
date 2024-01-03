@@ -613,124 +613,119 @@ async function ConfirmCheckListOnTime(elm, e) {
         Swal.fire("Empty", "Chưa lấy được giá trị ô hiệu suất thực tế!", "warning");
     }
     else {
-        if (!data.FailQuantity) {
-            Swal.fire("Empty", "Chưa lấy được giá trị ô số lượng lỗi!", "warning");
+        ifif(!data.LineLeaderTestQuantity) {
+            Swal.fire("Empty", "Chưa lấy được giá trị ô số lượng kiểm tra mẫu!", "warning");
         }
-        else {
-            if (!data.LineLeaderTestQuantity) {
-                Swal.fire("Empty", "Chưa lấy được giá trị ô số lượng kiểm tra mẫu!", "warning");
-            }
             else {
-                data.CheckListFirstId = $(elm).data('checklistid');
-                data.timeLineId = $(elm).data('timelineid');
+            data.CheckListFirstId = $(elm).data('checklistid');
+            data.timeLineId = $(elm).data('timelineid');
 
-                var htmlstring = '';
-                if ($('#location').val() == "F06") {
-                    htmlstring = `<select name="select" id="mailSelected" class='swal2-input' required class="form-control form-control-primary">
+            var htmlstring = '';
+            if ($('#location').val() == "F06") {
+                htmlstring = `<select name="select" id="mailSelected" class='swal2-input' required class="form-control form-control-primary">
                                       <option value="">select mail</option>
                                       <option value="Arlo">Mail to IPQC_ARLO</option>
                                       <option value="Netgear">Mail to IPQC_NETGEAR</option>
                                   </select>`;
-                }
-                else{
-                    htmlstring = `<select name="select" id="mailSelected" class='swal2-input' required class="form-control form-control-primary">
+            }
+            else {
+                htmlstring = `<select name="select" id="mailSelected" class='swal2-input' required class="form-control form-control-primary">
                                       <option value="">select mail</option>
                                       <option value="F17_IPQC">Mail to F17_IPQC</option>
                                   </select>`;
-                }
-
-
-                Swal.fire({
-                    title: 'Chọn mail để gửi đơn:',
-                    icon: "warning",
-                    html: htmlstring,
-                    confirmButtonText: 'Gửi',
-                    showCancelButton: true,
-                    cancelButtonText: "Hủy bỏ!",
-                    reverseButtons: true,
-                    preConfirm: () => {
-                        if (document.getElementById('mailSelected').value) {
-                            var mailSelected = document.getElementById('mailSelected').value.trim();
-                            data.MailSelected = mailSelected.trim();
-                            $.ajax({
-                                type: "POST",
-                                url: "/BanDau/BanDau/ConfirmCheckListOnTimeLineLeader",
-                                data: JSON.stringify(data),
-                                dataType: "json",//Kieu du lieu tra ve
-                                contentType: "application/json;charset=utf-8",
-                                success: function (response) {
-                                    try {
-                                        if (response.status == 0) {
-                                            Swal.fire("Lỗi", "Hiện tại chưa thể thực hiện kí, liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
-                                        }
-                                        else {
-                                            var userJson = JSON.parse(response.Data);
-                                            var spanField_leader = $(elm).closest('tr').find('[data-fieldname="LineLeaderConfirmByName"]');
-                                            var spanField_ipqc = $(elm).closest('tr').find('[data-fieldname="IPQCConfirmByName"]');
-
-                                            $(spanField_leader).html(userJson.UserFullName);
-                                            $(spanField_leader).addClass('text-success');
-
-
-
-                                            $(spanField_ipqc).html('<label class="badge bg-info">Chờ xác nhận</label>');
-
-                                            for (let i = 0; i < 4; i++) {
-                                                $(arrFieldNameOnTime[i]).prop('disabled', true);
-                                            }
-
-                                            {
-                                                //binding pass/fail quantity => tỉ lệ:
-                                                var sumOfPassQuantity = 0;
-                                                var sumOfFailQuantity = 0;
-
-                                                $.each(cTable, (k, item) => {
-                                                    let iPass = $(item).find('[data-fieldname="PassQuantity"]').val();
-                                                    let iFail = $(item).find('[data-fieldname="FailQuantity"]').val();
-
-                                                    if (iPass != "") {
-                                                        sumOfPassQuantity += parseInt(iPass);
-                                                        sumOfFailQuantity += parseInt(iFail);
-                                                    }
-                                                });
-
-                                                $('.sumOfPassQuantity').empty();
-                                                $('.sumOfPassQuantity').append(`<label class="badge bg-success">${sumOfPassQuantity}</label>`);
-                                                $('.sumOfFailQuantity').empty();
-                                                $('.sumOfFailQuantity').append(`<label class="badge bg-danger">${sumOfFailQuantity}</label>`);
-
-                                                $('.ratioPass').empty();
-                                                var ratio = parseFloat(((sumOfPassQuantity - sumOfFailQuantity) / sumOfPassQuantity) * 100).toFixed(2);
-                                                if (ratio < 80) {
-                                                    $('.ratioPass').append(`<label class="badge bg-danger">${ratio}</label>`);
-
-                                                }
-                                                else if (ratio < 95) {
-                                                    $('.ratioPass').append(`<label class="badge bg-warning">${ratio}</label>`);
-                                                }
-                                                else {
-                                                    $('.ratioPass').append(`<label class="badge bg-success">${ratio}</label>`);
-                                                }
-                                            } // Tính lại tỷ lệ
-                                           
-
-                                            Swal.fire("SUCCESS", "Ký thành công", "success");
-                                        }
-                                    } catch (e) {
-                                        Swal.fire("Lỗi", "Có lỗi xảy ra, liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
-                                    }
-                                },
-                                error: function (res) {
-                                    Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
-                                }
-                            });
-                        } else {
-                            Swal.showValidationMessage('Hãy chọn mail!');
-                        }
-                    }
-                })
-
             }
+
+
+            Swal.fire({
+                title: 'Chọn mail để gửi đơn:',
+                icon: "warning",
+                html: htmlstring,
+                confirmButtonText: 'Gửi',
+                showCancelButton: true,
+                cancelButtonText: "Hủy bỏ!",
+                reverseButtons: true,
+                preConfirm: () => {
+                    if (document.getElementById('mailSelected').value) {
+                        var mailSelected = document.getElementById('mailSelected').value.trim();
+                        data.MailSelected = mailSelected.trim();
+                        $.ajax({
+                            type: "POST",
+                            url: "/BanDau/BanDau/ConfirmCheckListOnTimeLineLeader",
+                            data: JSON.stringify(data),
+                            dataType: "json",//Kieu du lieu tra ve
+                            contentType: "application/json;charset=utf-8",
+                            success: function (response) {
+                                try {
+                                    if (response.status == 0) {
+                                        Swal.fire("Lỗi", "Hiện tại chưa thể thực hiện kí, liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
+                                    }
+                                    else {
+                                        var userJson = JSON.parse(response.Data);
+                                        var spanField_leader = $(elm).closest('tr').find('[data-fieldname="LineLeaderConfirmByName"]');
+                                        var spanField_ipqc = $(elm).closest('tr').find('[data-fieldname="IPQCConfirmByName"]');
+
+                                        $(spanField_leader).html(userJson.UserFullName);
+                                        $(spanField_leader).addClass('text-success');
+
+
+
+                                        $(spanField_ipqc).html('<label class="badge bg-info">Chờ xác nhận</label>');
+
+                                        for (let i = 0; i < 4; i++) {
+                                            $(arrFieldNameOnTime[i]).prop('disabled', true);
+                                        }
+
+                                        {
+                                            //binding pass/fail quantity => tỉ lệ:
+                                            var sumOfPassQuantity = 0;
+                                            var sumOfFailQuantity = 0;
+
+                                            $.each(cTable, (k, item) => {
+                                                let iPass = $(item).find('[data-fieldname="PassQuantity"]').val();
+                                                let iFail = $(item).find('[data-fieldname="FailQuantity"]').val();
+
+                                                if (iPass != "") {
+                                                    sumOfPassQuantity += parseInt(iPass);
+                                                    sumOfFailQuantity += parseInt(iFail);
+                                                }
+                                            });
+
+                                            $('.sumOfPassQuantity').empty();
+                                            $('.sumOfPassQuantity').append(`<label class="badge bg-success">${sumOfPassQuantity}</label>`);
+                                            $('.sumOfFailQuantity').empty();
+                                            $('.sumOfFailQuantity').append(`<label class="badge bg-danger">${sumOfFailQuantity}</label>`);
+
+                                            $('.ratioPass').empty();
+                                            var ratio = parseFloat(((sumOfPassQuantity - sumOfFailQuantity) / sumOfPassQuantity) * 100).toFixed(2);
+                                            if (ratio < 80) {
+                                                $('.ratioPass').append(`<label class="badge bg-danger">${ratio}</label>`);
+
+                                            }
+                                            else if (ratio < 95) {
+                                                $('.ratioPass').append(`<label class="badge bg-warning">${ratio}</label>`);
+                                            }
+                                            else {
+                                                $('.ratioPass').append(`<label class="badge bg-success">${ratio}</label>`);
+                                            }
+                                        } // Tính lại tỷ lệ
+
+
+                                        Swal.fire("SUCCESS", "Ký thành công", "success");
+                                    }
+                                } catch (e) {
+                                    Swal.fire("Lỗi", "Có lỗi xảy ra, liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
+                                }
+                            },
+                            error: function (res) {
+                                Swal.fire("Có lỗi xảy ra", "Liên hệ bộ phận MBD-AIOT để được trợ giúp. Số máy: 31746", "error");
+                            }
+                        });
+                    } else {
+                        Swal.showValidationMessage('Hãy chọn mail!');
+                    }
+                }
+            })
+
         }
     }
 }

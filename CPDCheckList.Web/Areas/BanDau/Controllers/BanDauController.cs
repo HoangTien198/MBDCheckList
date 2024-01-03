@@ -141,13 +141,13 @@ namespace CPDCheckList.Web.Areas.BanDau.Controllers
             {
                 user = db.Users_.FirstOrDefault(u => u.UserId == userLogin.UserId);
 
-                if (check == 1)
+                if (check == string.Empty)
                 {
                     return Json(new { status = 1, Data = JsonConvert.SerializeObject(user) });//thành công
                 }
                 else
                 {
-                    return Json(new { status = 0 });//thất bại
+                    return Json(new { status = 0, message = check });//thất bại
                 }
             }
         }

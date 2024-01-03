@@ -25,7 +25,17 @@ namespace CPDCheckList.Web.Areas.RutKiem.Controllers
                 using (WithDrawalEntities db = new WithDrawalEntities())
                 {
                     DateTime startDate;
-                    if (Date < 5 && Date != -1) startDate = new DateTime(Year, Month - 1, 1);
+                    if (Date < 5 && Date != -1)
+                    {
+                        if(Month == 1)
+                        {
+                            startDate = new DateTime(Year - 1, 12 , 1);
+                        }
+                        else
+                        {
+                            startDate = new DateTime(Year, Month - 1, 1);
+                        }
+                    } 
                     else startDate = new DateTime(Year, Month, 1);
                     DateTime endDate = new DateTime(Year, Month, DateTime.DaysInMonth(Year, Month));
 

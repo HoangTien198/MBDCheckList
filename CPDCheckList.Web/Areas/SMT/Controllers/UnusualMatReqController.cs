@@ -29,7 +29,17 @@ namespace CPDCheckList.Web.Areas.SMT.Controllers
             {
                 #region Validate Date Time for Get Data
                 DateTime startDate;
-                if (Date < 5) startDate = new DateTime(Year, Month - 1, 1);
+                if (Date < 5 && Date != -1)
+                {
+                    if (Month == 1)
+                    {
+                        startDate = new DateTime(Year - 1, 12, 1);
+                    }
+                    else
+                    {
+                        startDate = new DateTime(Year, Month - 1, 1);
+                    }
+                }
                 else startDate = new DateTime(Year, Month, 1);
                 DateTime endDate = new DateTime(Year, Month, DateTime.DaysInMonth(Year, Month));
                 #endregion
