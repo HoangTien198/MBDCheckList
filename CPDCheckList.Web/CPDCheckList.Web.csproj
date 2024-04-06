@@ -185,6 +185,29 @@
     <Compile Include="Areas\BanDau\Model\CheckListSaveAjax.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\ICColor\Controllers\ICColorManagerController.cs" />
+    <Compile Include="Areas\ICColor\Data\ICColorManager.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ICColorManager.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\ICColor\Data\ICColorManager.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ICColorManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\ICColor\Data\ICColorManager.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ICColorManager.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\ICColor\Data\ICColorManager1.cs">
+      <DependentUpon>ICColorManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\ICColor\Data\ICColorStatus.cs">
+      <DependentUpon>ICColorManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\ICColor\ICColorAreaRegistration.cs" />
     <Compile Include="Areas\Lable\Controllers\DataFlowController.cs" />
     <Compile Include="Areas\Lable\Controllers\SampleController.cs" />
     <Compile Include="Areas\Lable\Data\CurrentLabel.cs">
@@ -373,6 +396,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\ICColor\Data\ICColorManager.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ICColorManager.edmx</DependentUpon>
+      <LastGenOutput>ICColorManager.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\ICColor\Data\ICColorManager.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ICColorManager.edmx</DependentUpon>
+      <LastGenOutput>ICColorManager.cs</LastGenOutput>
+    </Content>
     <Content Include="Areas\Lable\Content\Custom\LabelSample.css" />
     <Content Include="Areas\Lable\Content\Custom\LabelSample.js" />
     <Content Include="Areas\Lable\Content\template\NiceAdmin\css\style.css" />
@@ -451,6 +484,15 @@
     <Content Include="Areas\Lable\Content\vendor\DataTables\datatables.min.js" />
     <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\css\all.css" />
     <Content Include="Areas\Lable\Content\vendor\Font\Rubik\stylesheet.css" />
+    <Content Include="Areas\ICColor\Views\web.config" />
+    <Content Include="Areas\ICColor\Views\ICColorManager\Manager.cshtml" />
+    <EntityDeploy Include="Areas\ICColor\Data\ICColorManager.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ICColorManager.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\ICColor\Data\ICColorManager.edmx.diagram">
+      <DependentUpon>ICColorManager.edmx</DependentUpon>
+    </Content>
     <None Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.intellisense.js" />
     <Content Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.js" />
     <Content Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.min.js" />
@@ -1533,10 +1575,12 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Data\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
+    <Folder Include="Areas\ICColor\Views\Shared\" />
     <Folder Include="Areas\Lable\Views\Shared\" />
     <Folder Include="Areas\SMT\Data\" />
     <Folder Include="Areas\SMT\Views\Shared\" />
     <Folder Include="Areas\TemperatureHumidity\Views\Shared\" />
+    <Folder Include="Views\ICColor\" />
     <Folder Include="Views\TemperatureMonitor\" />
   </ItemGroup>
   <ItemGroup>

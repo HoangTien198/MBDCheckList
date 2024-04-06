@@ -1,10 +1,16 @@
 ﻿using CPDCheckList.Web.Commons;
 using CPDCheckList.Web.Models.DAO;
 using CPDCheckList.Web.Models.EF;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -175,6 +181,42 @@ namespace CPDCheckList.Web.Controllers
             {
                 return RedirectToAction("Error404", "ErrorPage");
             }
+        }
+
+        public ActionResult LoginSmartFactoryCallback()
+        {
+            try
+            {
+                string code = Request.Params["code"];
+                
+                dynamic userInfo = JsonConvert.DeserializeObject(Base64Decode(code));
+                string username = userInfo.user.username;
+
+                Session["OauthSmartFactoryCode"] = code;
+                db = new CheckListDbContext();
+                var user = db.Users.FirstOrDefault(u => u.Username == username);
+
+
+                if (user != null)
+                {
+                    CheckLogin(user.Username, user.Password);
+                    return RedirectToAction("Home", "Home", new { area = "Dashboard" });
+                }
+                else
+                {
+                    return JavaScript("endload();Swal.fire(\"Đăng nhập không thành công!\", \"Kiểm tra lại thông tin tài khoản và mật khẩu!\", \"error\");");
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error404", "ErrorPage");
+            }
+        }
+
+        private static string Base64Decode(string base64EncodedData)
+        {
+            byte[] base64Bytes = Convert.FromBase64String(base64EncodedData);
+            return Encoding.UTF8.GetString(base64Bytes);
         }
     }
 }

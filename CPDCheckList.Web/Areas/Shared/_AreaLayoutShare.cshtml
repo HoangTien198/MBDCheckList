@@ -155,7 +155,7 @@
                 </ul>
             </li>
 
-            <li class="nav-item">
+            @*<li class="nav-item">
                 <a class="nav-link @((controllerName.Contains("RutKiem") || controllerName.Contains("TemperatureHumidity")) ? "" : "collapsed")" data-bs-target="#RutKiem-nav" data-bs-toggle="collapse" href="#" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="bi bi-slack"></i><span>COPYIC</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
@@ -174,7 +174,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li>*@
 
             <li class="nav-item">
                 <a class="nav-link @((controllerName.Contains("DataFlow") || controllerName.Contains("Sample")) ? "" : "collapsed")" data-bs-target="#Lable-nav" data-bs-toggle="collapse" href="#" aria-expanded="true" aria-controls="collapseTwo">
@@ -189,6 +189,11 @@
                     <li>
                         <a href="/Lable/Sample/Index" class="@((actionName =="Index" && controllerName.Contains("Sample")) ? "active" : "")">
                             <i class="bi bi-circle"></i><span>Label Mẫu</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/ICColor/ICColorManager/Manager" class="@((actionName =="Manager" && controllerName.Contains("ICColor")) ? "active" : "")">
+                            <i class="bi bi-circle"></i><span>IC Color Manager</span>
                         </a>
                     </li>
                 </ul>

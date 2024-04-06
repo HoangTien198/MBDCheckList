@@ -214,7 +214,7 @@ function DrawTableRows(item, isAddInDatatable = false) {
             case 2:
             case 3:
             case 4: {
-                if (SampleStatus.IdUserCreated == id || id == 119) {
+                if (SampleStatus.IdUserCreated == id || id == 119 || 179) {
                     cButton = `<td class="action_col">
                                   <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
                                   <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
@@ -569,7 +569,7 @@ function ClearModal() {
 $(document).on('click', '#btn_AddNew', function (e) {
     e.preventDefault();
 
-    if ($('#thisUser').data('id') != 119) return;
+    if ($('#thisUser').data('id') != 119 && $('#thisUser').data('id') != 179) return;
 
     $('input[data-name="CreatedDate"]').val(moment().format('YYYY-MM-DDTHH:mm'));
     $('input[data-name="ValidDate"]').val(moment().format('YYYY-MM-DDTHH:mm'));
@@ -875,7 +875,7 @@ function Details(elm, e) {
 
 // Edit
 function Edit(elm, e) {
-    if ($('#thisUser').data('id') != 119) return;
+    if ($('#thisUser').data('id') != 119 && $('#thisUser').data('id') != 179) return;
 
     ClearModal();
     e.preventDefault();
@@ -958,7 +958,7 @@ function SaveEdit(elm, e) {
 
 // Delete
 function Delete(elm, e) {
-    if ($('#thisUser').data('id') != 119) return;
+    if ($('#thisUser').data('id') != 119 && $('#thisUser').data('id') != 179) return;
 
     e.preventDefault();
 

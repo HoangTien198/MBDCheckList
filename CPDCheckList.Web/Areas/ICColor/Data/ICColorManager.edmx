@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ICColorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ICColorManager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customer" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProgramName" Type="nvarchar" MaxLength="100" />
+          <Property Name="MachineName" Type="nvarchar" MaxLength="100" />
+          <Property Name="MachineType" Type="nvarchar" MaxLength="50" />
+          <Property Name="ICCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ICParameter" Type="nvarchar" MaxLength="100" />
+          <Property Name="Checksum" Type="nvarchar" MaxLength="50" />
+          <Property Name="SocketBoard" Type="nvarchar" MaxLength="50" />
+          <Property Name="Improver" Type="int" />
+          <Property Name="Step" Type="nvarchar" MaxLength="50" />
+          <Property Name="Time" Type="int" />
+          <Property Name="IsCheck" Type="bit" />
+          <Property Name="ChangeDate" Type="datetime" />
+          <Property Name="IdStatus" Type="int" />
+        </EntityType>
+        <EntityType Name="ICColorStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser1" Type="int" />
+          <Property Name="IdUser2" Type="int" />
+          <Property Name="Startus" Type="nvarchar" MaxLength="50" />
+          <Property Name="Datetime" Type="datetime" />
+          <Property Name="Note" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <Association Name="FK_ICColorManager_ICColorManagerStatus">
+          <End Role="ICColorStatus" Type="Self.ICColorStatus" Multiplicity="0..1" />
+          <End Role="ICColorManager" Type="Self.ICColorManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ICColorStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ICColorManager">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ICColorModelStoreContainer">
+          <EntitySet Name="ICColorManager" EntityType="Self.ICColorManager" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ICColorStatus" EntityType="Self.ICColorStatus" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ICColorManager_ICColorManagerStatus" Association="Self.FK_ICColorManager_ICColorManagerStatus">
+            <End Role="ICColorStatus" EntitySet="ICColorStatus" />
+            <End Role="ICColorManager" EntitySet="ICColorManager" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ICColorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ICColorManager" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ICColorStatus1" EntityType="ICColorModel.ICColorStatus" />
+          <EntitySet Name="ICColorManager1" EntityType="ICColorModel.ICColorManager1" />
+          <AssociationSet Name="FK_ICColorManager_ICColorManagerStatus" Association="ICColorModel.FK_ICColorManager_ICColorManagerStatus">
+            <End Role="ICColorStatu" EntitySet="ICColorStatus1" />
+            <End Role="ICColorManager1" EntitySet="ICColorManager1" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ICColorStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser1" Type="Int32" />
+          <Property Name="IdUser2" Type="Int32" />
+          <Property Name="Startus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Datetime" Type="DateTime" Precision="3" />
+          <Property Name="Note" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ICColorManager1">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProgramName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MachineName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MachineType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ICCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ICParameter" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Checksum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SocketBoard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Improver" Type="Int32" />
+          <Property Name="Step" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="Int32" />
+          <Property Name="IsCheck" Type="Boolean" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+          <Property Name="IdStatus" Type="Int32" />
+          <NavigationProperty Name="Status" Relationship="ICColorModel.FK_ICColorManager_ICColorManagerStatus" FromRole="ICColorManager1" ToRole="ICColorStatu" />
+        </EntityType>
+        <Association Name="FK_ICColorManager_ICColorManagerStatus">
+          <End Type="ICColorModel.ICColorStatus" Role="ICColorStatu" Multiplicity="0..1" />
+          <End Type="ICColorModel.ICColorManager1" Role="ICColorManager1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ICColorStatu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ICColorManager1">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ICColorModelStoreContainer" CdmEntityContainer="ICColorManager">
+          <EntitySetMapping Name="ICColorStatus1">
+            <EntityTypeMapping TypeName="ICColorModel.ICColorStatus">
+              <MappingFragment StoreEntitySet="ICColorStatus">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="Startus" ColumnName="Startus" />
+                <ScalarProperty Name="IdUser2" ColumnName="IdUser2" />
+                <ScalarProperty Name="IdUser1" ColumnName="IdUser1" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ICColorManager1">
+            <EntityTypeMapping TypeName="ICColorModel.ICColorManager1">
+              <MappingFragment StoreEntitySet="ICColorManager">
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+                <ScalarProperty Name="IsCheck" ColumnName="IsCheck" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="Improver" ColumnName="Improver" />
+                <ScalarProperty Name="SocketBoard" ColumnName="SocketBoard" />
+                <ScalarProperty Name="Checksum" ColumnName="Checksum" />
+                <ScalarProperty Name="ICParameter" ColumnName="ICParameter" />
+                <ScalarProperty Name="ICCode" ColumnName="ICCode" />
+                <ScalarProperty Name="MachineType" ColumnName="MachineType" />
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+                <ScalarProperty Name="ProgramName" ColumnName="ProgramName" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
