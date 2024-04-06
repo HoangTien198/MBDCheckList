@@ -20,5 +20,10 @@ namespace CPDCheckList.Web.Areas.ICColor.Data
         public string Startus { get; set; }
         public Nullable<System.DateTime> Datetime { get; set; }
         public string Note { get; set; }
+        public Nullable<int> IdUserCreated { get; set; }
+    
+        public virtual User_ICColor UserSign1 { get; set; }
+        public virtual User_ICColor UserSign2 { get; set; }
+        public virtual User_ICColor UserCreated { get; set; }
     }
 }

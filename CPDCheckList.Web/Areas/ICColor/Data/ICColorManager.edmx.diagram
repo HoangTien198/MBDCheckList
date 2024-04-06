@@ -6,8 +6,12 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c4b74f3b554944b4baa6a656feb4a7c1" Name="Diagram1">
         <EntityTypeShape EntityType="ICColorModel.ICColorStatus" Width="1.5" PointX="7.125" PointY="1.625" />
-        <EntityTypeShape EntityType="ICColorModel.ICColorManager1" Width="1.5" PointX="2.5" PointY="1.125" />
+        <EntityTypeShape EntityType="ICColorModel.ICColor" Width="2.5" PointX="2.5" PointY="1.125" />
         <AssociationConnector Association="ICColorModel.FK_ICColorManager_ICColorManagerStatus" />
+        <EntityTypeShape EntityType="ICColorModel.User_ICColor" Width="1.5" PointX="11.25" PointY="1.25" />
+        <AssociationConnector Association="ICColorModel.FK_ICColorStatus_Users1" />
+        <AssociationConnector Association="ICColorModel.FK_ICColorStatus_Users2" />
+        <AssociationConnector Association="ICColorModel.FK_ICColorStatus_UserCreated" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

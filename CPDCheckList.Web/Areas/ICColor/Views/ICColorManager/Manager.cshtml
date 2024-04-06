@@ -2,7 +2,126 @@
 @{
     ViewBag.Title = "Manager";
     Layout = "~/Areas/Shared/_AreaLayoutShare.cshtml";
+
+    var user = (CPDCheckList.Web.Commons.AccountLogin)Session["USER_SESSION"];
 }
 
-<h2>Manager</h2>
+@section styles{
+    <!-- plugin -->
+    <link href="~/Areas/Lable/Content/vendor/DataTables/datatables.min.css" rel="stylesheet" />
+    <link href="~/Areas/Lable/Content/vendor/DataTables/datatable.bootstrap.css" rel="stylesheet" />
+    <link href="~/Areas/Lable/Content/vendor/Font-Awesome-640-Pro/css/all.css" rel="stylesheet" />
+    <link href="~/Areas/Lable/Content/vendor/Toats/toastr.min.css" rel="stylesheet" />
+    <link href="~/Areas/Lable/Content/vendor/Select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Areas/Lable/Content/vendor/Select2/select2-bootstrap.min.css" rel="stylesheet" />
+    <!-- custom -->
+    <link href="~/Areas/ICColor/Content/ICColorManager.css" rel="stylesheet" />
+}
 
+<input type="hidden" data-role="@user.RoleId" data-id="@user.UserId" id="thisUser" />
+
+<!-- body -->
+<section>
+    <div class="card mt-2">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="card-title">燒碼顔色管理表-CPEII-VN<br />BIỂU QUẢN LÝ MÀU SẮC NẠP MÃ IC-CPEII-VN</h5>
+                <button class="btn btn-primary" id="newICColor-btn" style="height: 36px;"><i class="fa-solid fa-plus"></i> New Record</button>
+            </div>
+
+
+            <ul class="nav nav-tabs" role="tablist" id="tab-customer">
+            </ul>
+
+            <table class="table table-striped table-bordered table-hover" id="datatable">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Customer</th>
+                        <th>ProgramName</th>
+                        <th>MachineType</th>
+                        <th>ICCode</th>
+                        <th>ICParameter</th>
+                        <th>Checksum</th>
+                        <th>SocketBoard</th>
+                        <th>Improver</th>
+                        <th>Step</th>
+                        <th>Time</th>
+                        <th>ChangeDate</th>
+                        <th>Status</th>
+                        <th>User create</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- modal -->
+<section>
+    <div class="modal fade" id="NewRecordModal" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">燒碼顔色管理表-CPEII-VN <br />BIỂU QUẢN LÝ MÀU SẮC NẠP MÃ  IC-CPEII-VN</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="form-label">燒碼程式名稱 <br /> Tên chương trình sao chép</label>
+                            <input type="text" class="form-control mb-3" id="new-ProgramName" autocomplete="on">
+
+                            <label class="form-label"> 燒碼機型號 <br /> Loạimáy sao chép IC </label>
+                            <input type="text" class="form-control mb-3" id="new-MachineType">
+
+                            <label class="form-label">IC 料號<br />Mã liệu IC</label>
+                            <input type="text" class="form-control mb-3" id="new-ICCode">
+
+                            <label class="form-label">IC 規格<br />Quy Cách IC</label>
+                            <input type="text" class="form-control mb-3" id="new-ICParameter">
+
+                            <label class="form-label"><br />Checksum</label>
+                            <input type="text" class="form-control mb-3" id="new-Checksum">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label"> Socket Board 型號<br />Thông số khuôn</label>
+                            <input type="text" class="form-control mb-3" id="new-SocketBoard">
+
+                            <label class="form-label">程式修改者<br />Người cải thiện</label>
+                            <select type="text" class="form-select mb-3 w-100" id="new-Improver"></select>
+
+                            <label class="form-label">燒錄步驟 <br />Các bước sao chép</label>
+                            <input type="text" class="form-control mb-3" id="new-Step" />
+
+                            <label class="form-label">烧入时间（秒）<br />Thời gian sao chép</label>
+                            <input type="number" class="form-control mb-3" id="new-Time" min="0" value="0" />
+
+                            <label class="form-label">變更日期 <br />Thời gian thay đổi</label>
+                            <input type="datetime-local" class="form-control mb-3" id="new-ChangeDate" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="NewRecordModal-btnSave"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section scripts{
+    <!-- plugin -->
+    <script src="~/Areas/Lable/Content/vendor/DataTables/datatables.min.js"></script>
+    <script src="~/Areas/Lable/Content/vendor/Toats/toastr.min.js"></script>
+    <script src="~/Areas/Lable/Content/vendor/MomentJs/moment.js"></script>
+    <script src="~/Areas/Lable/Content/vendor/Select2/select2.min.js"></script>
+    <!-- custom -->
+    <script src="~/Areas/ICColor/Content/ICColorManager.js"></script>
+}

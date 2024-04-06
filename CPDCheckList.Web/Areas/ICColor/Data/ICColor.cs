@@ -12,7 +12,7 @@ namespace CPDCheckList.Web.Areas.ICColor.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ICColorManager1
+    public partial class ICColor
     {
         public int Id { get; set; }
         public string Customer { get; set; }
@@ -29,6 +29,7 @@ namespace CPDCheckList.Web.Areas.ICColor.Data
         public Nullable<bool> IsCheck { get; set; }
         public Nullable<System.DateTime> ChangeDate { get; set; }
         public Nullable<int> IdStatus { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
     
         public virtual ICColorStatus Status { get; set; }
     }

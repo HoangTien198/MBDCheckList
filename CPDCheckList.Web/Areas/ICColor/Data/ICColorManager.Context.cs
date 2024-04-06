@@ -25,7 +25,8 @@ namespace CPDCheckList.Web.Areas.ICColor.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ICColorStatus> ICColorStatus1 { get; set; }
-        public virtual DbSet<ICColorManager1> ICColorManager1 { get; set; }
+        public virtual DbSet<ICColorStatus> ICColorStatus { get; set; }
+        public virtual DbSet<ICColor> ICColors { get; set; }
+        public virtual DbSet<User_ICColor> User_ICColor { get; set; }
     }
 }

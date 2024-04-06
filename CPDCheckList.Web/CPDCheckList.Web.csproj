@@ -105,6 +105,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -186,6 +187,11 @@
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\ICColor\Controllers\ICColorManagerController.cs" />
+    <Compile Include="Areas\ICColor\DAO\R_ICColor.cs" />
+    <Compile Include="Areas\ICColor\DAO\R_ICColorStatus.cs" />
+    <Compile Include="Areas\ICColor\Data\ICColor.cs">
+      <DependentUpon>ICColorManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\ICColor\Data\ICColorManager.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -201,10 +207,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ICColorManager.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\ICColor\Data\ICColorManager1.cs">
+    <Compile Include="Areas\ICColor\Data\ICColorStatus.cs">
       <DependentUpon>ICColorManager.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\ICColor\Data\ICColorStatus.cs">
+    <Compile Include="Areas\ICColor\Data\User_ICColor.cs">
       <DependentUpon>ICColorManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\ICColor\ICColorAreaRegistration.cs" />
@@ -396,6 +402,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\ICColor\Content\ICColorManager.css" />
+    <Content Include="Areas\ICColor\Content\ICColorManager.js" />
     <Content Include="Areas\ICColor\Data\ICColorManager.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ICColorManager.edmx</DependentUpon>
@@ -493,6 +501,7 @@
     <Content Include="Areas\ICColor\Data\ICColorManager.edmx.diagram">
       <DependentUpon>ICColorManager.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Lable\Content\vendor\DataTables\datatable.bootstrap.css" />
     <None Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.intellisense.js" />
     <Content Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.js" />
     <Content Include="Areas\Lable\Content\vendor\Jquery\jquery-3.4.1.min.js" />
@@ -510,10 +519,15 @@
     <Content Include="Areas\Lable\Content\vendor\Particles\particles.min.js" />
     <Content Include="Areas\Lable\Content\vendor\Popper\popper.min.js" />
     <Content Include="Areas\Lable\Content\vendor\QRcode\html5-qrcode.js" />
+    <Content Include="Areas\Lable\Content\vendor\Select2\select2-bootstrap.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Select2\select2.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Select2\select2.min.js" />
     <Content Include="Areas\Lable\Content\vendor\Stepper\bs-stepper.min.css" />
     <Content Include="Areas\Lable\Content\vendor\Stepper\bs-stepper.min.js" />
     <Content Include="Areas\Lable\Content\vendor\SweetAlert\swal.min.css" />
     <Content Include="Areas\Lable\Content\vendor\SweetAlert\swal.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\Toats\toastr.min.css" />
+    <Content Include="Areas\Lable\Content\vendor\Toats\toastr.min.js" />
     <Content Include="Areas\Lable\Content\vendor\Viewer JS\viewer.min.css" />
     <Content Include="Areas\Lable\Content\vendor\Viewer JS\viewer.min.js" />
     <Content Include="Areas\Lable\Content\vendor\Wave\style.css" />
@@ -765,6 +779,7 @@
     <Content Include="Areas\SMT\Entities\UnusualMatReqModel.edmx.diagram">
       <DependentUpon>UnusualMatReqModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Lable\Content\vendor\Toats\toastr.js.map" />
     <None Include="files\Content\vendor\Jquery\jquery-3.4.1.intellisense.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.js" />
     <Content Include="files\Content\vendor\Jquery\jquery-3.4.1.min.js" />

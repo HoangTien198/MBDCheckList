@@ -1,0 +1,6 @@
+﻿.select2-selection {
+    height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 1rem !important;
+}
