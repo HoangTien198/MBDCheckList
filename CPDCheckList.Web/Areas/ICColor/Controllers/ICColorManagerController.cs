@@ -1,4 +1,5 @@
 ﻿using CPDCheckList.Web.Areas.ICColor.DAO;
+using CPDCheckList.Web.Areas.ICColor.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace CPDCheckList.Web.Areas.ICColor.Controllers
             }
         }
 
-        public JsonResult CreateICColor(Data.ICColor icColor)
+        public JsonResult CreateICColor(ICColorManager1 icColor)
         {
             try
             {
@@ -69,7 +70,7 @@ namespace CPDCheckList.Web.Areas.ICColor.Controllers
                 return Json(new { status = false, message = ex }, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult UpdateICColor(Data.ICColor icColor)
+        public JsonResult UpdateICColor(ICColorManager1 icColor)
         {
             try
             {

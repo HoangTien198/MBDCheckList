@@ -23,7 +23,6 @@
           <Property Name="Time" Type="int" />
           <Property Name="IsCheck" Type="bit" />
           <Property Name="ChangeDate" Type="datetime" />
-          <Property Name="IdStatus" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ICColorStatus">
@@ -33,10 +32,11 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUser1" Type="int" />
           <Property Name="IdUser2" Type="int" />
-          <Property Name="Startus" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="Datetime" Type="datetime" />
           <Property Name="Note" Type="nvarchar" MaxLength="300" />
           <Property Name="IdUserCreated" Type="int" />
+          <Property Name="IdICColor" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -54,17 +54,17 @@
           <Property Name="RoleId" Type="int" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" />
         </EntityType>
-        <Association Name="FK_ICColorManager_ICColorManagerStatus">
-          <End Role="ICColorStatus" Type="Self.ICColorStatus" Multiplicity="0..1">
+        <Association Name="FK_ICColorStatus_ICColorManager">
+          <End Role="ICColorManager" Type="Self.ICColorManager" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="ICColorManager" Type="Self.ICColorManager" Multiplicity="*" />
+          <End Role="ICColorStatus" Type="Self.ICColorStatus" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ICColorStatus">
+            <Principal Role="ICColorManager">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ICColorManager">
-              <PropertyRef Name="IdStatus" />
+            <Dependent Role="ICColorStatus">
+              <PropertyRef Name="IdICColor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -108,9 +108,9 @@
           <EntitySet Name="ICColorManager" EntityType="Self.ICColorManager" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ICColorStatus" EntityType="Self.ICColorStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_ICColorManager_ICColorManagerStatus" Association="Self.FK_ICColorManager_ICColorManagerStatus">
-            <End Role="ICColorStatus" EntitySet="ICColorStatus" />
+          <AssociationSet Name="FK_ICColorStatus_ICColorManager" Association="Self.FK_ICColorStatus_ICColorManager">
             <End Role="ICColorManager" EntitySet="ICColorManager" />
+            <End Role="ICColorStatus" EntitySet="ICColorStatus" />
           </AssociationSet>
           <AssociationSet Name="FK_ICColorStatus_UserCreated" Association="Self.FK_ICColorStatus_UserCreated">
             <End Role="Users" EntitySet="Users" />
@@ -130,42 +130,43 @@
     <edmx:ConceptualModels>
       <Schema Namespace="ICColorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ICColorManager" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ICColorStatus" EntityType="ICColorModel.ICColorStatus" />
-          <EntitySet Name="ICColors" EntityType="ICColorModel.ICColor" />
-          <AssociationSet Name="FK_ICColorManager_ICColorManagerStatus" Association="ICColorModel.FK_ICColorManager_ICColorManagerStatus">
-            <End Role="ICColorStatu" EntitySet="ICColorStatus" />
-            <End Role="ICColorManager1" EntitySet="ICColors" />
-          </AssociationSet>
           <EntitySet Name="User_ICColor" EntityType="ICColorModel.User_ICColor" />
-          <AssociationSet Name="FK_ICColorStatus_Users1" Association="ICColorModel.FK_ICColorStatus_Users1">
-            <End Role="User" EntitySet="User_ICColor" />
-            <End Role="ICColorStatus" EntitySet="ICColorStatus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ICColorStatus_Users2" Association="ICColorModel.FK_ICColorStatus_Users2">
-            <End Role="User" EntitySet="User_ICColor" />
-            <End Role="ICColorStatus" EntitySet="ICColorStatus" />
+          <EntitySet Name="ICColorManager1" EntityType="ICColorModel.ICColorManager1" />
+          <EntitySet Name="ICColorStatus1" EntityType="ICColorModel.ICColorStatus" />
+          <AssociationSet Name="FK_ICColorStatus_ICColorManager" Association="ICColorModel.FK_ICColorStatus_ICColorManager">
+            <End Role="ICColorManager1" EntitySet="ICColorManager1" />
+            <End Role="ICColorStatu" EntitySet="ICColorStatus1" />
           </AssociationSet>
           <AssociationSet Name="FK_ICColorStatus_UserCreated" Association="ICColorModel.FK_ICColorStatus_UserCreated">
             <End Role="User_ICColor" EntitySet="User_ICColor" />
-            <End Role="ICColorStatus" EntitySet="ICColorStatus" />
+            <End Role="ICColorStatu" EntitySet="ICColorStatus1" />
           </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="ICColorStatus">
+          <AssociationSet Name="FK_ICColorStatus_Users1" Association="ICColorModel.FK_ICColorStatus_Users1">
+            <End Role="User_ICColor" EntitySet="User_ICColor" />
+            <End Role="ICColorStatu" EntitySet="ICColorStatus1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ICColorStatus_Users2" Association="ICColorModel.FK_ICColorStatus_Users2">
+            <End Role="User_ICColor" EntitySet="User_ICColor" />
+            <End Role="ICColorStatu" EntitySet="ICColorStatus1" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="User_ICColor">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUser1" Type="Int32" />
-          <Property Name="IdUser2" Type="Int32" />
-          <Property Name="Startus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Datetime" Type="DateTime" Precision="3" />
-          <Property Name="Note" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserSign1" Relationship="ICColorModel.FK_ICColorStatus_Users1" FromRole="ICColorStatus" ToRole="User" />
-          <NavigationProperty Name="UserSign2" Relationship="ICColorModel.FK_ICColorStatus_Users2" FromRole="ICColorStatus" ToRole="User" />
-          <Property Name="IdUserCreated" Type="Int32" />
-          <NavigationProperty Name="UserCreated" Relationship="ICColorModel.FK_ICColorStatus_UserCreated" FromRole="ICColorStatus" ToRole="User_ICColor" />
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="ICColor">
+        <EntityType Name="ICColorManager1">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -183,98 +184,102 @@
           <Property Name="Time" Type="Int32" />
           <Property Name="IsCheck" Type="Boolean" />
           <Property Name="ChangeDate" Type="DateTime" Precision="3" />
-          <Property Name="IdStatus" Type="Int32" />
-          <NavigationProperty Name="Status" Relationship="ICColorModel.FK_ICColorManager_ICColorManagerStatus" FromRole="ICColorManager1" ToRole="ICColorStatu" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ICColorStatuss" Relationship="ICColorModel.FK_ICColorStatus_ICColorManager" FromRole="ICColorManager1" ToRole="ICColorStatu" />
         </EntityType>
-        <Association Name="FK_ICColorManager_ICColorManagerStatus">
-          <End Type="ICColorModel.ICColorStatus" Role="ICColorStatu" Multiplicity="0..1" />
-          <End Type="ICColorModel.ICColor" Role="ICColorManager1" Multiplicity="*" />
+        <EntityType Name="ICColorStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser1" Type="Int32" />
+          <Property Name="IdUser2" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Datetime" Type="DateTime" Precision="3" />
+          <Property Name="Note" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="IdUserCreated" Type="Int32" />
+          <Property Name="IdICColor" Type="Int32" />
+          <NavigationProperty Name="UserCreated" Relationship="ICColorModel.FK_ICColorStatus_UserCreated" FromRole="ICColorStatu" ToRole="User_ICColor" />
+          <NavigationProperty Name="UserSign1" Relationship="ICColorModel.FK_ICColorStatus_Users1" FromRole="ICColorStatu" ToRole="User_ICColor" />
+          <NavigationProperty Name="UserSign2" Relationship="ICColorModel.FK_ICColorStatus_Users2" FromRole="ICColorStatu" ToRole="User_ICColor" />
+        </EntityType>
+        <Association Name="FK_ICColorStatus_ICColorManager">
+          <End Type="ICColorModel.ICColorManager1" Role="ICColorManager1" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ICColorModel.ICColorStatus" Role="ICColorStatu" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ICColorStatu">
+            <Principal Role="ICColorManager1">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ICColorManager1">
-              <PropertyRef Name="IdStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="User_ICColor">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="UserFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="RoleId" Type="Int32" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <Association Name="FK_ICColorStatus_Users1">
-          <End Type="ICColorModel.User_ICColor" Role="User" Multiplicity="0..1" />
-          <End Type="ICColorModel.ICColorStatus" Role="ICColorStatus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="ICColorStatus">
-              <PropertyRef Name="IdUser1" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ICColorStatus_Users2">
-          <End Type="ICColorModel.User_ICColor" Role="User" Multiplicity="0..1" />
-          <End Type="ICColorModel.ICColorStatus" Role="ICColorStatus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="ICColorStatus">
-              <PropertyRef Name="IdUser2" />
+            <Dependent Role="ICColorStatu">
+              <PropertyRef Name="IdICColor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ICColorStatus_UserCreated">
           <End Type="ICColorModel.User_ICColor" Role="User_ICColor" Multiplicity="0..1" />
-          <End Type="ICColorModel.ICColorStatus" Role="ICColorStatus" Multiplicity="*" />
+          <End Type="ICColorModel.ICColorStatus" Role="ICColorStatu" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User_ICColor">
               <PropertyRef Name="UserId" />
             </Principal>
-            <Dependent Role="ICColorStatus">
+            <Dependent Role="ICColorStatu">
               <PropertyRef Name="IdUserCreated" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_ICColorStatus_Users1">
+          <End Type="ICColorModel.User_ICColor" Role="User_ICColor" Multiplicity="0..1" />
+          <End Type="ICColorModel.ICColorStatus" Role="ICColorStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_ICColor">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ICColorStatu">
+              <PropertyRef Name="IdUser1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ICColorStatus_Users2">
+          <End Type="ICColorModel.User_ICColor" Role="User_ICColor" Multiplicity="0..1" />
+          <End Type="ICColorModel.ICColorStatus" Role="ICColorStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_ICColor">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ICColorStatu">
+              <PropertyRef Name="IdUser2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ICColorModelStoreContainer" CdmEntityContainer="ICColorManager">
-          <EntitySetMapping Name="ICColorStatus">
-            <EntityTypeMapping TypeName="ICColorModel.ICColorStatus">
-              <MappingFragment StoreEntitySet="ICColorStatus">
-                <ScalarProperty Name="IdUserCreated" ColumnName="IdUserCreated" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-                <ScalarProperty Name="Startus" ColumnName="Startus" />
-                <ScalarProperty Name="IdUser2" ColumnName="IdUser2" />
-                <ScalarProperty Name="IdUser1" ColumnName="IdUser1" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <EntitySetMapping Name="User_ICColor">
+            <EntityTypeMapping TypeName="ICColorModel.User_ICColor">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserFullName" ColumnName="UserFullName" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ICColors">
-            <EntityTypeMapping TypeName="ICColorModel.ICColor">
+          <EntitySetMapping Name="ICColorManager1">
+            <EntityTypeMapping TypeName="ICColorModel.ICColorManager1">
               <MappingFragment StoreEntitySet="ICColorManager">
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
                 <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
                 <ScalarProperty Name="IsCheck" ColumnName="IsCheck" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
@@ -292,20 +297,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="User_ICColor">
-            <EntityTypeMapping TypeName="ICColorModel.User_ICColor">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="UserFullName" ColumnName="UserFullName" />
-                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <EntitySetMapping Name="ICColorStatus1">
+            <EntityTypeMapping TypeName="ICColorModel.ICColorStatus">
+              <MappingFragment StoreEntitySet="ICColorStatus">
+                <ScalarProperty Name="IdICColor" ColumnName="IdICColor" />
+                <ScalarProperty Name="IdUserCreated" ColumnName="IdUserCreated" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdUser2" ColumnName="IdUser2" />
+                <ScalarProperty Name="IdUser1" ColumnName="IdUser1" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -12,8 +12,14 @@ namespace CPDCheckList.Web.Areas.ICColor.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ICColor
+    public partial class ICColorManager1
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ICColorManager1()
+        {
+            this.ICColorStatuss = new HashSet<ICColorStatus>();
+        }
+    
         public int Id { get; set; }
         public string Customer { get; set; }
         public string ProgramName { get; set; }
@@ -28,9 +34,9 @@ namespace CPDCheckList.Web.Areas.ICColor.Data
         public Nullable<int> Time { get; set; }
         public Nullable<bool> IsCheck { get; set; }
         public Nullable<System.DateTime> ChangeDate { get; set; }
-        public Nullable<int> IdStatus { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
     
-        public virtual ICColorStatus Status { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ICColorStatus> ICColorStatuss { get; set; }
     }
 }

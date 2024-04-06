@@ -9,6 +9,7 @@ using CPDCheckList.Web.Commons;
 using Microsoft.Ajax.Utilities;
 using System.Runtime.InteropServices.ComTypes;
 using CPDCheckList.Web.Areas.Lable.Data;
+using System.Drawing;
 
 namespace CPDCheckList.Web.Areas.ICColor.DAO
 {
@@ -19,7 +20,15 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
         /* GET */
         public static object GetICColors()
         {
-            var ICColors = context.ICColors.ToList();
+            var ICColors = context.ICColorManager1.ToList();
+
+            foreach ( var c in ICColors )
+            {
+                var status = c.ICColorStatuss.FirstOrDefault();
+                status.UserCreated = context.User_ICColor.FirstOrDefault(u => u.UserId == status.IdUserCreated);
+               // status.USER = context.User_ICColor.FirstOrDefault(u => u.UserId == status.IdUserCreated);
+                //status.UserCreated = context.User_ICColor.FirstOrDefault(u => u.UserId == status.IdUserCreated);
+            }
 
             var ICColorsByCustomer = ICColors
             .GroupBy(ic => ic.Customer)
@@ -30,9 +39,11 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
 
             return ICColorsByCustomer;
         }
-        public static Data.ICColor GetICColor(int Id)
+        public static ICColorManager1 GetICColor(int Id)
         {
-            var ICColor = context.ICColors.FirstOrDefault(ic => ic.Id == Id);
+            var ICColor = context.ICColorManager1.FirstOrDefault(ic => ic.Id == Id);
+
+            ICColor.ICColorStatuss.FirstOrDefault().UserCreated = context.User_ICColor.FirstOrDefault(u => u.UserId == ICColor.Improver);
 
             return ICColor;
         }
@@ -73,7 +84,7 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
         }
 
         /* SET */
-        public static Data.ICColor CreateICColor(Data.ICColor icColor)
+        public static Data.ICColorManager1 CreateICColor(ICColorManager1 icColor)
         {
             try
             {
@@ -82,23 +93,23 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
                 DateTime currentDateTime = DateTime.Now;
                 DateTime newDateTime = currentDateTime.AddMinutes(randomMinutes);
 
-                AccountLogin userLogin = (AccountLogin)HttpContext.Current.Session["USER_SESSION"];
-
                 if (string.IsNullOrEmpty(icColor.Customer)) throw new Exception("Please create new Customer before create new record.");
+
+                icColor.CreatedDate = currentDateTime;
+                context.ICColorManager1.Add(icColor);
+                context.SaveChanges();
 
                 Data.ICColorStatus icColorStatus = new ICColorStatus
                 {
+                    IdICColor = icColor.Id,
                     IdUser1 = 119,
                     IdUser2 = 179,
-                    Startus = "Confirmed",
+                    Status = "Confirmed",
                     Datetime = newDateTime,
-                    IdUserCreated = userLogin.UserId
+                    IdUserCreated = icColor.Improver
                 };
 
-                icColor.CreatedDate = currentDateTime;
-                icColor.Status = icColorStatus;
-                context.ICColors.Add(icColor);
-
+                context.ICColorStatus1.Add(icColorStatus);
                 context.SaveChanges();
 
                 return GetICColor(icColor.Id);
@@ -110,7 +121,7 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
             }
            
         }
-        public static Data.ICColor UpdateICColor(Data.ICColor icColor)
+        public static ICColorManager1 UpdateICColor(ICColorManager1 icColor)
         {
             if (icColor == null)
             {
@@ -126,7 +137,6 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
 
             dbICColor.Customer = icColor.Customer;
             dbICColor.ProgramName = icColor.ProgramName;
-            dbICColor.MachineName = icColor.MachineName;
             dbICColor.MachineType = icColor.MachineType;
             dbICColor.ICCode = icColor.ICCode;
             dbICColor.ICParameter = icColor.ICParameter;
@@ -135,15 +145,12 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
             dbICColor.Improver = icColor.Improver;
             dbICColor.Step = icColor.Step;
             dbICColor.Time = icColor.Time;
-            dbICColor.IsCheck = icColor.IsCheck;
             dbICColor.ChangeDate = icColor.ChangeDate;
-            dbICColor.IdStatus = icColor.IdStatus;
+            dbICColor.ICColorStatuss.FirstOrDefault().IdUserCreated = icColor.Improver;
 
-
-            context.ICColors.AddOrUpdate(dbICColor);
             context.SaveChanges();
 
-            return dbICColor;
+            return GetICColor(icColor.Id);
         }
         public static bool DeleteICColor(int Id)
         {
@@ -158,7 +165,7 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
                     throw new Exception("IC Color does not exixts.");
                 }
 
-                context.ICColors.Remove(dbICColor);
+                context.ICColorManager1.Remove(dbICColor);
                 context.SaveChanges();
 
                 return true;

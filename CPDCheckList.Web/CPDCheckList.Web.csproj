@@ -189,9 +189,6 @@
     <Compile Include="Areas\ICColor\Controllers\ICColorManagerController.cs" />
     <Compile Include="Areas\ICColor\DAO\R_ICColor.cs" />
     <Compile Include="Areas\ICColor\DAO\R_ICColorStatus.cs" />
-    <Compile Include="Areas\ICColor\Data\ICColor.cs">
-      <DependentUpon>ICColorManager.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\ICColor\Data\ICColorManager.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -206,6 +203,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ICColorManager.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\ICColor\Data\ICColorManager1.cs">
+      <DependentUpon>ICColorManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\ICColor\Data\ICColorStatus.cs">
       <DependentUpon>ICColorManager.tt</DependentUpon>
@@ -487,9 +487,12 @@
     <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\jquery.dataTables.js" />
     <Content Include="Areas\Lable\Content\vendor\DataTables\DataTables-1.13.4\js\jquery.dataTables.min.js" />
     <Content Include="Areas\Lable\Content\vendor\DataTables\datatables.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\dataTables.fixedColumns.js" />
     <Content Include="Areas\Lable\Content\vendor\DataTables\datatables.js" />
     <Content Include="Areas\Lable\Content\vendor\DataTables\datatables.min.css" />
     <Content Include="Areas\Lable\Content\vendor\DataTables\datatables.min.js" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\fixedColumns.dataTables.css" />
+    <Content Include="Areas\Lable\Content\vendor\DataTables\fixedColumns.dataTables.js" />
     <Content Include="Areas\Lable\Content\vendor\Font-Awesome-640-Pro\css\all.css" />
     <Content Include="Areas\Lable\Content\vendor\Font\Rubik\stylesheet.css" />
     <Content Include="Areas\ICColor\Views\web.config" />

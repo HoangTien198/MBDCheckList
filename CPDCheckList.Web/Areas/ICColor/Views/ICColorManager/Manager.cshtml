@@ -4,18 +4,22 @@
     Layout = "~/Areas/Shared/_AreaLayoutShare.cshtml";
 
     var user = (CPDCheckList.Web.Commons.AccountLogin)Session["USER_SESSION"];
+
+    var newGuid = Guid.NewGuid();
 }
 
 @section styles{
     <!-- plugin -->
-    <link href="~/Areas/Lable/Content/vendor/DataTables/datatables.min.css" rel="stylesheet" />
-    <link href="~/Areas/Lable/Content/vendor/DataTables/datatable.bootstrap.css" rel="stylesheet" />
+    <link href="~/Areas/Lable/Content/vendor/DataTables/datatables.css" rel="stylesheet" />
+    <link href="~/Areas/Lable/Content/vendor/DataTables/fixedColumns.dataTables.css" rel="stylesheet" />
+
     <link href="~/Areas/Lable/Content/vendor/Font-Awesome-640-Pro/css/all.css" rel="stylesheet" />
     <link href="~/Areas/Lable/Content/vendor/Toats/toastr.min.css" rel="stylesheet" />
     <link href="~/Areas/Lable/Content/vendor/Select2/select2.min.css" rel="stylesheet" />
     <link href="~/Areas/Lable/Content/vendor/Select2/select2-bootstrap.min.css" rel="stylesheet" />
+
     <!-- custom -->
-    <link href="~/Areas/ICColor/Content/ICColorManager.css" rel="stylesheet" />
+    <link href="~/Areas/ICColor/Content/ICColorManager.css?v=@newGuid" rel="stylesheet" />
 }
 
 <input type="hidden" data-role="@user.RoleId" data-id="@user.UserId" id="thisUser" />
@@ -36,21 +40,20 @@
             <table class="table table-striped table-bordered table-hover" id="datatable">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Customer</th>
-                        <th>ProgramName</th>
-                        <th>MachineType</th>
-                        <th>ICCode</th>
-                        <th>ICParameter</th>
-                        <th>Checksum</th>
-                        <th>SocketBoard</th>
-                        <th>Improver</th>
-                        <th>Step</th>
-                        <th>Time</th>
-                        <th>ChangeDate</th>
-                        <th>Status</th>
-                        <th>User create</th>
-                        <th>Action</th>
+                        <!-- 0 --><th>Id</th>
+                        <!-- 1 --><th>Customer</th>
+                        <!-- 2 --><th>燒碼程式名稱 <br /> Tên chương trình sao chép</th>
+                        <!-- 3 --><th>燒碼機型號 <br /> Loạimáy sao chép IC</th>
+                        <!-- 4 --><th>IC 料號<br />Mã liệu IC</th>
+                        <!-- 5 --><th>IC 規格<br />Quy Cách IC</th>
+                        <!-- 6 --><th>Checksum</th>
+                        <!-- 7 --><th>Socket Board 型號<br />Thông số khuôn</th>
+                        <!-- 8 --><th>程式修改者<br />Người cải thiện</th>
+                        <!-- 9 --><th>燒錄步驟 <br />Các bước sao chép</th>
+                        <!-- 10 --><th>烧入时间（秒）<br />Thời gian sao chép</th>
+                        <!-- 11 --><th>變更日期 <br />Thời gian thay đổi</th>
+                        <!-- 12 --><th>地位<br />Trạng thái</th>
+                        <!-- 13 --><th>行动<br />Action</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -62,6 +65,7 @@
 
 <!-- modal -->
 <section>
+
     <div class="modal fade" id="NewRecordModal" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -113,15 +117,71 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="UpdateRecordModal" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">燒碼顔色管理表-CPEII-VN <br />BIỂU QUẢN LÝ MÀU SẮC NẠP MÃ  IC-CPEII-VN</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="form-label">燒碼程式名稱 <br /> Tên chương trình sao chép</label>
+                            <input type="text" class="form-control mb-3" id="update-ProgramName" autocomplete="on">
+
+                            <label class="form-label"> 燒碼機型號 <br /> Loạimáy sao chép IC </label>
+                            <input type="text" class="form-control mb-3" id="update-MachineType">
+
+                            <label class="form-label">IC 料號<br />Mã liệu IC</label>
+                            <input type="text" class="form-control mb-3" id="update-ICCode">
+
+                            <label class="form-label">IC 規格<br />Quy Cách IC</label>
+                            <input type="text" class="form-control mb-3" id="update-ICParameter">
+
+                            <label class="form-label"><br />Checksum</label>
+                            <input type="text" class="form-control mb-3" id="update-Checksum">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label"> Socket Board 型號<br />Thông số khuôn</label>
+                            <input type="text" class="form-control mb-3" id="update-SocketBoard">
+
+                            <label class="form-label">程式修改者<br />Người cải thiện</label>
+                            <select type="text" class="form-select mb-3 w-100" id="update-Improver"></select>
+
+                            <label class="form-label">燒錄步驟 <br />Các bước sao chép</label>
+                            <input type="text" class="form-control mb-3" id="update-Step" />
+
+                            <label class="form-label">烧入时间（秒）<br />Thời gian sao chép</label>
+                            <input type="number" class="form-control mb-3" id="update-Time" min="0" value="0" />
+
+                            <label class="form-label">變更日期 <br />Thời gian thay đổi</label>
+                            <input type="datetime-local" class="form-control mb-3" id="update-ChangeDate" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="UpdateRecordModal-btnSave"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 
 @section scripts{
     <!-- plugin -->
-    <script src="~/Areas/Lable/Content/vendor/DataTables/datatables.min.js"></script>
+    <script src="~/Areas/Lable/Content/vendor/DataTables/datatables.js"></script>
+    <script src="~/Areas/Lable/Content/vendor/DataTables/dataTables.fixedColumns.js"></script>
+    <script src="~/Areas/Lable/Content/vendor/DataTables/fixedColumns.dataTables.js"></script>
+
     <script src="~/Areas/Lable/Content/vendor/Toats/toastr.min.js"></script>
     <script src="~/Areas/Lable/Content/vendor/MomentJs/moment.js"></script>
     <script src="~/Areas/Lable/Content/vendor/Select2/select2.min.js"></script>
+
     <!-- custom -->
-    <script src="~/Areas/ICColor/Content/ICColorManager.js"></script>
+    <script src="~/Areas/ICColor/Content/ICColorManager.js?v=@newGuid"></script>
 }
