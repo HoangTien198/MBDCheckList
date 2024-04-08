@@ -9,3 +9,43 @@ input:disabled {
     color: #212529;
     background-color: #fff !important;
 }
+@media (max-width: 1920px) {
+
+    body, button, .input-group-text, .form-control {
+        font-size: 14px !important;
+    }
+
+    td > button {
+        height: 26px;
+        width: 26px;
+        padding: 0 !important;
+        font-size: 14px !important;
+    }
+
+    table.dataTable > tbody > tr > td {
+        padding: 8px 10px;
+    }
+
+    table.dataTable > thead > tr > th {
+        padding: 8px 5px;
+    }
+}
+@media (max-width: 1600px) {
+
+    body, button, .input-group-text, .form-control {
+        font-size: 12px !important;
+    }
+    td > button {
+        height: 22px;
+        width: 22px;
+        padding: 0 !important;
+        font-size: 12px !important;
+    }
+    table.dataTable > tbody > tr > td{
+        padding: 8px 5px;
+    }
+    table.dataTable > thead > tr > th {
+        padding: 8px 5px;
+    }
+   
+}

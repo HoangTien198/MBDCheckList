@@ -613,7 +613,7 @@ async function ConfirmCheckListOnTime(elm, e) {
         Swal.fire("Empty", "Chưa lấy được giá trị ô hiệu suất thực tế!", "warning");
     }
     else {
-        ifif(!data.LineLeaderTestQuantity) {
+        if(!data.LineLeaderTestQuantity) {
             Swal.fire("Empty", "Chưa lấy được giá trị ô số lượng kiểm tra mẫu!", "warning");
         }
             else {

@@ -2,6 +2,8 @@
 
 $(document).ready(async () => {
     try {
+        $('body').addClass('toggle-sidebar');
+
         ToastrConfig();
         CreateDatatable();
         CreateUsers();
@@ -19,7 +21,7 @@ $(document).ready(async () => {
 
 /* datatable */
 function CreateDatatable() {
-    var scrollHeight = document.querySelector('#sidebar').offsetHeight - 200 + 'px';
+    var scrollHeight = document.querySelector('#sidebar').offsetHeight - 350 + 'px';
 
     let options = {
         scrollY: scrollHeight,
@@ -34,7 +36,7 @@ function CreateDatatable() {
             end: 1
         },
         columnDefs: [
-            { targets: "_all", orderable: false, className: 'text-nowrap align-content-center text-center px-3' },
+            { targets: "_all", orderable: false, className: 'text-nowrap align-content-center text-center' },
             { targets: [0, 1], visible: false },
             { targets: [2], className: 'text-start' },
             { targets: [11], width: 200 },
@@ -352,7 +354,7 @@ function CreateDatatableHistory() {
     }
     else {
         let options = {
-            scrollY: 400,
+            scrollY: 200,
             scrollX: true,
             order: [0, 'desc'],
             autoWidth: true,
@@ -360,7 +362,7 @@ function CreateDatatableHistory() {
             paging: false,
             ordering: true,          
             columnDefs: [
-                { targets: "_all", orderable: false, className: 'text-nowrap align-content-center text-center px-3' },
+                { targets: "_all", orderable: false, className: 'text-nowrap align-content-center text-center' },
                 { targets: [0, 1], visible: false },
                 { targets: [2], className: 'text-start' },
 
