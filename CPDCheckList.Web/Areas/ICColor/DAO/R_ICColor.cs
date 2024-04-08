@@ -20,15 +20,7 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
         /* GET */
         public static object GetICColors()
         {
-            var ICColors = context.ICColorManager1.ToList();
-
-            foreach ( var c in ICColors )
-            {
-                var status = c.ICColorStatuss.FirstOrDefault();
-                status.UserCreated = context.User_ICColor.FirstOrDefault(u => u.UserId == status.IdUserCreated);
-               // status.USER = context.User_ICColor.FirstOrDefault(u => u.UserId == status.IdUserCreated);
-                //status.UserCreated = context.User_ICColor.FirstOrDefault(u => u.UserId == status.IdUserCreated);
-            }
+            var ICColors = context.ICColors.ToList();
 
             var ICColorsByCustomer = ICColors
             .GroupBy(ic => ic.Customer)
@@ -39,11 +31,12 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
 
             return ICColorsByCustomer;
         }
-        public static ICColorManager1 GetICColor(int Id)
+        public static Data.ICColor GetICColor(int Id)
         {
-            var ICColor = context.ICColorManager1.FirstOrDefault(ic => ic.Id == Id);
+            var ICColor = context.ICColors.FirstOrDefault(ic => ic.Id == Id);
+            ICColor.ICColorHistories = context.HistoryICColors.Where(ich => ich.IdICColor ==  Id).ToList();
 
-            ICColor.ICColorStatuss.FirstOrDefault().UserCreated = context.User_ICColor.FirstOrDefault(u => u.UserId == ICColor.Improver);
+            //ICColor.ICColorStatuss.FirstOrDefault().UserCreated = context.User_ICColor.FirstOrDefault(u => u.UserId == ICColor.Improver);
 
             return ICColor;
         }
@@ -83,8 +76,10 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
             }
         }
 
+
+
         /* SET */
-        public static Data.ICColorManager1 CreateICColor(ICColorManager1 icColor)
+        public static Data.ICColor CreateICColor(Data.ICColor icColor)
         {
             try
             {
@@ -96,10 +91,9 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
                 if (string.IsNullOrEmpty(icColor.Customer)) throw new Exception("Please create new Customer before create new record.");
 
                 icColor.CreatedDate = currentDateTime;
-                context.ICColorManager1.Add(icColor);
-                context.SaveChanges();
+                context.ICColors.Add(icColor);
 
-                Data.ICColorStatus icColorStatus = new ICColorStatus
+                StatusICColor icColorStatus = new StatusICColor
                 {
                     IdICColor = icColor.Id,
                     IdUser1 = 119,
@@ -109,7 +103,7 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
                     IdUserCreated = icColor.Improver
                 };
 
-                context.ICColorStatus1.Add(icColorStatus);
+                context.StatusICColors.Add(icColorStatus);
                 context.SaveChanges();
 
                 return GetICColor(icColor.Id);
@@ -121,42 +115,51 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
             }
            
         }
-        public static ICColorManager1 UpdateICColor(ICColorManager1 icColor)
+        public static Data.ICColor UpdateICColor(Data.ICColor icColor)
         {
-            if (icColor == null)
+            AccountLogin userLogin = (AccountLogin)HttpContext.Current.Session["USER_SESSION"];
+            if (userLogin.UserId == 119 || userLogin.UserId == 179 || userLogin.UserId == 1189)
             {
-                throw new Exception("Data is null.");
+                if (icColor == null)
+                {
+                    throw new Exception("Data is null.");
+                }
+
+                var dbICColor = GetICColor(icColor.Id);
+
+                if (dbICColor == null)
+                {
+                    throw new Exception("IC Color does not exixts.");
+                }
+
+                var history = CreateICColorHistory(dbICColor);
+
+                dbICColor.Customer = icColor.Customer;
+                dbICColor.ProgramName = icColor.ProgramName;
+                dbICColor.MachineType = icColor.MachineType;
+                dbICColor.ICCode = icColor.ICCode;
+                dbICColor.ICParameter = icColor.ICParameter;
+                dbICColor.Checksum = icColor.Checksum;
+                dbICColor.SocketBoard = icColor.SocketBoard;
+                dbICColor.Improver = userLogin.UserId;
+                dbICColor.Step = icColor.Step;
+                dbICColor.Time = icColor.Time;
+                dbICColor.ChangeDate = icColor.ChangeDate;
+                dbICColor.ICColorStatus.FirstOrDefault().IdUserCreated = icColor.Improver;
+
+                return GetICColor(dbICColor.Id);
             }
-
-            var dbICColor = GetICColor(icColor.Id);
-
-            if (dbICColor == null)
+            else
             {
-                throw new Exception("IC Color does not exixts.");
+                throw new Exception("No Access.");
             }
-
-            dbICColor.Customer = icColor.Customer;
-            dbICColor.ProgramName = icColor.ProgramName;
-            dbICColor.MachineType = icColor.MachineType;
-            dbICColor.ICCode = icColor.ICCode;
-            dbICColor.ICParameter = icColor.ICParameter;
-            dbICColor.Checksum = icColor.Checksum;
-            dbICColor.SocketBoard = icColor.SocketBoard;
-            dbICColor.Improver = icColor.Improver;
-            dbICColor.Step = icColor.Step;
-            dbICColor.Time = icColor.Time;
-            dbICColor.ChangeDate = icColor.ChangeDate;
-            dbICColor.ICColorStatuss.FirstOrDefault().IdUserCreated = icColor.Improver;
-
-            context.SaveChanges();
-
-            return GetICColor(icColor.Id);
+                
         }
         public static bool DeleteICColor(int Id)
         {
 
             AccountLogin userLogin = (AccountLogin)HttpContext.Current.Session["USER_SESSION"];
-            if (userLogin.UserId == 119 || userLogin.UserId == 179)
+            if (userLogin.UserId == 119 || userLogin.UserId == 179 || userLogin.UserId == 1189)
             {
                 var dbICColor = GetICColor(Id);
 
@@ -165,7 +168,7 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
                     throw new Exception("IC Color does not exixts.");
                 }
 
-                context.ICColorManager1.Remove(dbICColor);
+                context.ICColors.Remove(dbICColor);
                 context.SaveChanges();
 
                 return true;
@@ -176,6 +179,56 @@ namespace CPDCheckList.Web.Areas.ICColor.DAO
             }
         }
 
+
+        public static HistoryICColor CreateICColorHistory(Data.ICColor icColor)
+        {
+            try
+            {
+                AccountLogin userLogin = (AccountLogin)HttpContext.Current.Session["USER_SESSION"];
+                var history = new HistoryICColor
+                {
+                    IdICColor = icColor.Id,
+                    Customer = icColor.Customer,
+                    ProgramName = icColor.ProgramName,
+                    MachineType = icColor.MachineType,
+                    ICCode = icColor.ICCode,
+                    ICParameter = icColor.ICParameter,
+                    Checksum = icColor.Checksum,
+                    SocketBoard = icColor.SocketBoard,
+                    Improver = icColor.Improver,
+                    Step = icColor.Step,
+                    Time = icColor.Time,
+                    ChangeDate = icColor.ChangeDate,
+                };
+
+                context.HistoryICColors.Add(history);
+
+                var status = icColor.ICColorStatus.FirstOrDefault();
+                var historyStatus = new StatusHistoryICColor
+                {
+                    IdICColorHistory = history.Id,
+                    IdUser1 = status.IdUser1,
+                    IdUser2 = status.IdUser2,
+                    IdUserCreated = status.IdUserCreated,
+                    Status = status.Status,
+                    Datetime = status.Datetime,
+                    Note = status.Note,
+                };
+
+
+                context.StatusHistoryICColors.Add(historyStatus);
+                context.SaveChanges();
+
+                history.ICColorStatusHistories.Add(historyStatus);
+
+                return history;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
 
     }
 }

@@ -189,6 +189,12 @@
     <Compile Include="Areas\ICColor\Controllers\ICColorManagerController.cs" />
     <Compile Include="Areas\ICColor\DAO\R_ICColor.cs" />
     <Compile Include="Areas\ICColor\DAO\R_ICColorStatus.cs" />
+    <Compile Include="Areas\ICColor\Data\HistoryICColor.cs">
+      <DependentUpon>ICColorManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\ICColor\Data\ICColor.cs">
+      <DependentUpon>ICColorManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\ICColor\Data\ICColorManager.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -204,10 +210,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ICColorManager.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\ICColor\Data\ICColorManager1.cs">
+    <Compile Include="Areas\ICColor\Data\StatusHistoryICColor.cs">
       <DependentUpon>ICColorManager.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\ICColor\Data\ICColorStatus.cs">
+    <Compile Include="Areas\ICColor\Data\StatusICColor.cs">
       <DependentUpon>ICColorManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\ICColor\Data\User_ICColor.cs">

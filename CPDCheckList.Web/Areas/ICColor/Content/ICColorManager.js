@@ -1,4 +1,4 @@
-﻿var ICColors, ICColor, thisTabCustomer, datatable, users;
+﻿var ICColors, ICColor, thisTabCustomer, datatable, users, datatableHistory;
 
 $(document).ready(async () => {
     try {
@@ -31,7 +31,7 @@ function CreateDatatable() {
         ordering: true,
         fixedColumns: {
             start: 0,
-            end: 2
+            end: 1
         },
         columnDefs: [
             { targets: "_all", orderable: false, className: 'text-nowrap align-content-center text-center px-3' },
@@ -57,8 +57,10 @@ function CreateDatatableData() {
             let datarow = CreateDatatableRow(icColor);
             dataRows.push(datarow);
         });
-        datatable.rows.add(dataRows).draw(true);
+        datatable.rows.add(dataRows).draw(false);
     }
+
+    datatable.columns.adjust().draw(false);
    
 }
 function CreateDatatableRow(icColor) {
@@ -71,34 +73,31 @@ function CreateDatatableRow(icColor) {
         icColor.ICParameter,
         icColor.Checksum,
         icColor.SocketBoard,
-        `${icColor.ICColorStatuss[0].UserCreated.Username} - ${icColor.ICColorStatuss[0].UserCreated.UserFullName}`,
+        `${icColor.ICColorStatus[0].UserCreated ? icColor.ICColorStatus[0].UserCreated.Username + ' - ' + icColor.ICColorStatus[0].UserCreated.UserFullName : ''}`,
         icColor.Step,
         icColor.Time,
         moment(icColor.ChangeDate).format('YYYY-MM-DD HH:mm'),
-        CreateDatatableCellStatus(icColor),
+        CreateDatatableCellStatus(icColor.ICColorStatus[0]),
         CreateDatatableCellAction(icColor)
     ]
 }
-function CreateDatatableCellStatus(icColor) {
-    switch (icColor.ICColorStatuss[0].Status) {
+function CreateDatatableCellStatus(status) {
+    switch (status.Status) {
         case 'Confirmed':
             return '<span class="badge rounded-pill bg-success">Đã xác nhận</span>'
     }
 }
-function CreateDatatableCellAction(icColor) {
-    return `
-            <button title="Sửa"      data-id=${icColor.Id} class="btn btn-warning" onclick="ICColorEdit(this, event)"><i class="bi bi-pen"></i></button>
-            <button title="Xóa"      data-id=${icColor.Id} class="btn btn-danger"  onclick="ICColorDelete(this, event)"><i class="bi bi-trash"></i></button>`;
-
-    //switch ($('#thisUser').data('id')) {
-    //    case 119:
-    //    case 179:
-    //        return `<button title="Chi tiết" data-id=${icColor.Id} class="btn btn-info"    onclick="ICColorDetails(this, event)"><i class="bi bi-info"></i></button>
-    //                <button title="Sửa"      data-id=${icColor.Id} class="btn btn-warning" onclick="ICColorEdit(this, event)"><i class="bi bi-pen"></i></button>
-    //                <button title="Xóa"      data-id=${icColor.Id} class="btn btn-danger"  onclick="ICColorDelete(this, event)"><i class="bi bi-trash"></i></button>`;
-    //    default:
-    //        return `<button title="Chi tiết" data-id=${icColor.Id} class="btn btn-info"    onclick="ICColorDetails(this, event)"><i class="bi bi-info"></i></button>`;
-    //}
+function CreateDatatableCellAction(icColor) {    
+    switch ($('#thisUser').data('id')) {
+        case 119:
+        case 179:
+        case 1189:
+            return `<button title="Chi tiết" data-id=${icColor.Id} class="btn btn-info"    onclick="ICColorDetail(this, event)"><i class="bi bi-info"></i></button>
+                    <button title="Sửa"      data-id=${icColor.Id} class="btn btn-warning" onclick="ICColorEdit(this, event)"><i class="bi bi-pen"></i></button>
+                    <button title="Xóa"      data-id=${icColor.Id} class="btn btn-danger"  onclick="ICColorDelete(this, event)"><i class="bi bi-trash"></i></button>`;
+        default:
+            return `<button title="Chi tiết" data-id=${icColor.Id} class="btn btn-info"    onclick="ICColorDetail(this, event)"><i class="bi bi-info"></i></button>`;
+    }
 }
 
 /* tab event */
@@ -149,6 +148,17 @@ function CreateTab() {
 
 /* new record event */
 $('#newICColor-btn').click(function () {
+    $('#new-ProgramName').val('');
+    $('#new-MachineType').val('');
+    $('#new-ICCode').val('');
+    $('#new-ICParameter').val('');
+    $('#new-Checksum').val('');
+    $('#new-SocketBoard').val('');
+    $('#new-Improver').val($('#thisUser').data('id')).trigger('change');
+    $('#new-Step').val('');
+    $('#new-Time').val(0);
+    $('#new-ChangeDate').val(moment().format('YYYY-MM-DDTHH:mm'));
+
     $('#NewRecordModal').modal('show');
 });
 $('#NewRecordModal').on('shown.bs.modal', function (e) {
@@ -177,6 +187,7 @@ $('#NewRecordModal-btnSave').click(async function () {
             var datarow = CreateDatatableRow(result);
             datatable.row.add(datarow).draw(false);
 
+            $('#NewRecordModal').modal('hide');
             toastr['success']('Save record success.');
         }
     } catch (e) {
@@ -256,10 +267,10 @@ async function ICColorEdit(elm, e) {
         $('#update-ICParameter').val(ICColor.ICParameter);
         $('#update-Checksum').val(ICColor.Checksum);
         $('#update-SocketBoard').val(ICColor.SocketBoard);
-        $('#update-Improver').val(ICColor.Improver).trigger('change');
+        $('#update-Improver').val($('#thisUser').data('id')).trigger('change');
         $('#update-Step').val(ICColor.Step);
         $('#update-Time').val(ICColor.Time);
-        $('#update-ChangeDate').val(moment(ICColor.ChangeDate).format('YYYY-MM-DDTHH:MM:ss'));
+        $('#update-ChangeDate').val(moment().format('YYYY-MM-DDTHH:MM:ss'));
 
         $('#UpdateRecordModal').modal('show');
     } catch (e) {
@@ -292,13 +303,93 @@ $('#UpdateRecordModal-btnSave').click(async function () {
             const thisIndex = datatable.row($(`[data-id="${ICColor.Id}"]`).closest('tr')).index();
             datatable.row(thisIndex).data(datarow).draw(false);
 
+            $('#UpdateRecordModal').modal('hide');
             toastr['success']('Update record success.');
         }
     } catch (e) {
         console.error(e);
         Swal.fire("Có lỗi xảy ra!", e, "error");
     }
-})
+});
+
+/* detail */
+async function ICColorDetail(elm, e) {
+    try {
+        ICColor = await GetICColor($(elm).data('id'));
+
+        $('#detail-ProgramName').val(ICColor.ProgramName);
+        $('#detail-MachineType').val(ICColor.MachineType);
+        $('#detail-ICCode').val(ICColor.ICCode);
+        $('#detail-ICParameter').val(ICColor.ICParameter);
+        $('#detail-Checksum').val(ICColor.Checksum);
+        $('#detail-SocketBoard').val(ICColor.SocketBoard);
+        $('#detail-Improver').val(ICColor.ICColorStatus[0].UserCreated.Username + ' - ' + ICColor.ICColorStatus[0].UserCreated.UserFullName).trigger('change');
+        $('#detail-Step').val(ICColor.Step);
+        $('#detail-Time').val(ICColor.Time);
+        $('#detail-ChangeDate').val(moment().format('YYYY-MM-DD HH:MM'));
+
+        CreateDatatableHistory();
+        let dataRows = []
+        ICColor.ICColorHistories.forEach(async function (icColor) {
+            let datarow = CreateDatatableHistoryRow(icColor);
+            dataRows.push(datarow);
+        });
+        datatableHistory.rows.add(dataRows).draw(true);
+        setTimeout(() => {
+            datatableHistory.columns.adjust().draw(false);
+        }, 300);
+        
+
+        $('#DetailRecordModal').modal('show');
+    } catch (e) {
+        console.error(e);
+        Swal.fire("Có lỗi xảy ra!", e, "error");
+    }
+}
+function CreateDatatableHistory() {
+    if (datatableHistory) {
+        datatableHistory.clear();
+    }
+    else {
+        let options = {
+            scrollY: 400,
+            scrollX: true,
+            order: [0, 'desc'],
+            autoWidth: true,
+            deferRender: true,
+            paging: false,
+            ordering: true,          
+            columnDefs: [
+                { targets: "_all", orderable: false, className: 'text-nowrap align-content-center text-center px-3' },
+                { targets: [0, 1], visible: false },
+                { targets: [2], className: 'text-start' },
+
+            ],
+            createdRow: function (row, data, dataIndex) {
+                $(row).data('id', data[0]);               
+            },
+        }
+
+        datatableHistory = $('#datatable-history').DataTable(options);
+    }
+}
+function CreateDatatableHistoryRow(icColor) {
+    return [
+        icColor.Id,
+        icColor.Customer,
+        icColor.ProgramName,
+        icColor.MachineType,
+        icColor.ICCode,
+        icColor.ICParameter,
+        icColor.Checksum,
+        icColor.SocketBoard,
+        `${icColor.ICColorStatusHistories[0].UserCreated ? icColor.ICColorStatusHistories[0].UserCreated.Username + ' - ' + icColor.ICColorStatusHistories[0].UserCreated.UserFullName : ''}`,
+        icColor.Step,
+        icColor.Time,
+        moment(icColor.ChangeDate).format('YYYY-MM-DD HH:mm'),
+        CreateDatatableCellStatus(icColor.ICColorStatusHistories[0])
+    ];
+}
 
 /* PROMISE */
 function GetICColors() {

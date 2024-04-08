@@ -12,7 +12,7 @@ namespace CPDCheckList.Web.Areas.ICColor.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class ICColorStatus
+    public partial class StatusHistoryICColor
     {
         public int Id { get; set; }
         public Nullable<int> IdUser1 { get; set; }
@@ -21,10 +21,10 @@ namespace CPDCheckList.Web.Areas.ICColor.Data
         public Nullable<System.DateTime> Datetime { get; set; }
         public string Note { get; set; }
         public Nullable<int> IdUserCreated { get; set; }
-        public Nullable<int> IdICColor { get; set; }
+        public Nullable<int> IdICColorHistory { get; set; }
     
-        public virtual User_ICColor UserCreated { get; set; }
         public virtual User_ICColor UserSign1 { get; set; }
         public virtual User_ICColor UserSign2 { get; set; }
+        public virtual User_ICColor UserCreated { get; set; }
     }
 }

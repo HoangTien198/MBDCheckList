@@ -57,7 +57,7 @@ namespace CPDCheckList.Web.Areas.ICColor.Controllers
             }
         }
 
-        public JsonResult CreateICColor(ICColorManager1 icColor)
+        public JsonResult CreateICColor(Data.ICColor icColor)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace CPDCheckList.Web.Areas.ICColor.Controllers
                 return Json(new { status = false, message = ex }, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult UpdateICColor(ICColorManager1 icColor)
+        public JsonResult UpdateICColor(Data.ICColor icColor)
         {
             try
             {

@@ -4,3 +4,8 @@
     align-items: center !important;
     margin-bottom: 1rem !important;
 }
+input:disabled {
+    cursor: not-allowed;
+    color: #212529;
+    background-color: #fff !important;
+}

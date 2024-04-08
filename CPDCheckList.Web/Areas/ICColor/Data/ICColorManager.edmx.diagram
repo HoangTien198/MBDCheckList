@@ -5,13 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="c4b74f3b554944b4baa6a656feb4a7c1" Name="Diagram1">
-        <EntityTypeShape EntityType="ICColorModel.User_ICColor" Width="1.5" PointX="11.25" PointY="1.25" />
-        <EntityTypeShape EntityType="ICColorModel.ICColorManager1" Width="1.5" PointX="3" PointY="1.375" />
-        <EntityTypeShape EntityType="ICColorModel.ICColorStatus" Width="1.5" PointX="7.125" PointY="1.375" />
-        <AssociationConnector Association="ICColorModel.FK_ICColorStatus_ICColorManager" />
+        <EntityTypeShape EntityType="ICColorModel.User_ICColor" Width="1.5" PointX="11.5" PointY="2.625" />
+        <EntityTypeShape EntityType="ICColorModel.StatusICColor" Width="1.75" PointX="6.875" PointY="1.375" />
         <AssociationConnector Association="ICColorModel.FK_ICColorStatus_UserCreated" />
         <AssociationConnector Association="ICColorModel.FK_ICColorStatus_Users1" />
         <AssociationConnector Association="ICColorModel.FK_ICColorStatus_Users2" />
+        <EntityTypeShape EntityType="ICColorModel.HistoryICColor" Width="1.875" PointX="3" PointY="6.5" />
+        <EntityTypeShape EntityType="ICColorModel.StatusHistoryICColor" Width="1.75" PointX="6.875" PointY="5.125" />
+        <AssociationConnector Association="ICColorModel.FK_ICColorStatusHistory_ICColorHistory" />
+        <AssociationConnector Association="ICColorModel.FK_ICColorStatusHistory_Users" />
+        <AssociationConnector Association="ICColorModel.FK_ICColorStatusHistory_Users1" />
+        <AssociationConnector Association="ICColorModel.FK_ICColorStatusHistory_Users2" />
+        <EntityTypeShape EntityType="ICColorModel.ICColor" Width="1.875" PointX="3" PointY="1.125" />
+        <AssociationConnector Association="ICColorModel.FK_ICColorHistory_ICColorManager" />
+        <AssociationConnector Association="ICColorModel.FK_ICColorStatus_ICColorManager" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

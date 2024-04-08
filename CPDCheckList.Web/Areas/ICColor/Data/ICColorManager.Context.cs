@@ -26,7 +26,9 @@ namespace CPDCheckList.Web.Areas.ICColor.Data
         }
     
         public virtual DbSet<User_ICColor> User_ICColor { get; set; }
-        public virtual DbSet<ICColorManager1> ICColorManager1 { get; set; }
-        public virtual DbSet<ICColorStatus> ICColorStatus1 { get; set; }
+        public virtual DbSet<StatusICColor> StatusICColors { get; set; }
+        public virtual DbSet<HistoryICColor> HistoryICColors { get; set; }
+        public virtual DbSet<StatusHistoryICColor> StatusHistoryICColors { get; set; }
+        public virtual DbSet<ICColor> ICColors { get; set; }
     }
 }
