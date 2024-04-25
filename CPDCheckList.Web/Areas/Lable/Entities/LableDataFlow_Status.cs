@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CPDCheckList.Web.Areas.Lable.Data
+namespace CPDCheckList.Web.Areas.Lable.Entities
 {
     using System;
     using System.Collections.Generic;

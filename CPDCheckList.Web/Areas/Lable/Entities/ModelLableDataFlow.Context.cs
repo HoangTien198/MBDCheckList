@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CPDCheckList.Web.Areas.Lable.Data
+namespace CPDCheckList.Web.Areas.Lable.Entities
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class LabelSampleEntities : DbContext
+    public partial class LableDataFlowEntities : DbContext
     {
-        public LabelSampleEntities()
-            : base("name=LabelSampleEntities")
+        public LableDataFlowEntities()
+            : base("name=LableDataFlowEntities")
         {
         }
     
@@ -25,12 +25,9 @@ namespace CPDCheckList.Web.Areas.Lable.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CurrentLabel> CurrentLabels { get; set; }
-        public virtual DbSet<FoxconnLabel> FoxconnLabels { get; set; }
-        public virtual DbSet<LabelSample> LabelSamples { get; set; }
-        public virtual DbSet<LabelSampleStatus> LabelSampleStatus1 { get; set; }
-        public virtual DbSet<SNLabel> SNLabels { get; set; }
-        public virtual DbSet<User_LS> User_LS { get; set; }
-        public virtual DbSet<MacIDLabel> MacIDLabels { get; set; }
+        public virtual DbSet<LableDataFlow_Data> LableDataFlow_Data { get; set; }
+        public virtual DbSet<LableDataFlow_Status> LableDataFlow_Status { get; set; }
+        public virtual DbSet<LableDataFlow> LableDataFlows { get; set; }
+        public virtual DbSet<User_Lb> User_Lb { get; set; }
     }
 }

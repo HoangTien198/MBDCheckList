@@ -1,4 +1,4 @@
-﻿using CPDCheckList.Web.Areas.Lable.Data;
+﻿using CPDCheckList.Web.Areas.Lable.Entities;
 using CPDCheckList.Web.Commons;
 using System;
 using System.Collections;

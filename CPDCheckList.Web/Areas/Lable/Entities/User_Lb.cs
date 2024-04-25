@@ -7,19 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CPDCheckList.Web.Areas.Lable.Data
+namespace CPDCheckList.Web.Areas.Lable.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class MacIDLabel
+    public partial class User_Lb
     {
-        public int Id { get; set; }
-        public Nullable<bool> IsBarCode { get; set; }
-        public string MacID { get; set; }
-        public string LabelCode { get; set; }
-        public string CoalPaperSpec { get; set; }
-        public string DerivedFrom { get; set; }
-        public string LabelImagePath { get; set; }
+        public int UserId { get; set; }
+        public string UserCode { get; set; }
+        public string UserFullName { get; set; }
+        public string Username { get; set; }
+        public Nullable<int> RoleId { get; set; }
     }
 }

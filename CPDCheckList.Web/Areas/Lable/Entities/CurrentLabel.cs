@@ -7,18 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CPDCheckList.Web.Areas.Lable.Data
+namespace CPDCheckList.Web.Areas.Lable.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class FoxconnLabel
+    public partial class CurrentLabel
     {
         public int Id { get; set; }
-        public Nullable<bool> IsBarCode { get; set; }
-        public string CustomerNote { get; set; }
-        public string MadeIn { get; set; }
-        public string LableRev { get; set; }
+        public string LabelName { get; set; }
         public string LabelCode { get; set; }
         public string CoalPaperSpec { get; set; }
         public string DerivedFrom { get; set; }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
-using CPDCheckList.Web.Areas.Lable.Data;
+using CPDCheckList.Web.Areas.Lable.Entities;
 using CPDCheckList.Web.Areas.RutKiem;
 using CPDCheckList.Web.Commons;
 

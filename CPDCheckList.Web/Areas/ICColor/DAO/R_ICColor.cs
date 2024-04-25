@@ -8,7 +8,7 @@ using CPDCheckList.Web.Areas.ICColor.Data;
 using CPDCheckList.Web.Commons;
 using Microsoft.Ajax.Utilities;
 using System.Runtime.InteropServices.ComTypes;
-using CPDCheckList.Web.Areas.Lable.Data;
+using CPDCheckList.Web.Areas.Lable.Entities;
 using System.Drawing;
 
 namespace CPDCheckList.Web.Areas.ICColor.DAO

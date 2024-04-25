@@ -7,15 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CPDCheckList.Web.Areas.Lable.Data
+namespace CPDCheckList.Web.Areas.Lable.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class CurrentLabel
+    public partial class SNLabel
     {
         public int Id { get; set; }
-        public string LabelName { get; set; }
+        public Nullable<bool> IsBarCode { get; set; }
+        public string TimeChangeMethod { get; set; }
+        public string FixedCode { get; set; }
+        public string RangeCode { get; set; }
         public string LabelCode { get; set; }
         public string CoalPaperSpec { get; set; }
         public string DerivedFrom { get; set; }

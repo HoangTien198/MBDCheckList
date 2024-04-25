@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using static System.Collections.Specialized.BitVector32;
 using System.Threading;
-using CPDCheckList.Web.Areas.Lable.Data;
+using CPDCheckList.Web.Areas.Lable.Entities;
 using System.Globalization;
 using System.Text;
 using CPDCheckList.Web.Areas.SMT.Entities;

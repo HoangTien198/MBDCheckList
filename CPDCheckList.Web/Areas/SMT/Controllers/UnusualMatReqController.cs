@@ -1,4 +1,4 @@
-﻿using CPDCheckList.Web.Areas.Lable.Data;
+﻿using CPDCheckList.Web.Areas.Lable.Entities;
 using CPDCheckList.Web.Areas.SMT.Entities;
 using Newtonsoft.Json;
 using System;
