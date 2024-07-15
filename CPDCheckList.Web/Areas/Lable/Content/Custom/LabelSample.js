@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿var Ids = [119, 179, 1189, 37, 38]
+
+$(function () {
     $('#page_name').text('Label 樣品表 Bảng Label mẫu');
     LoadDataCheckList();
 
@@ -9,21 +11,20 @@
 
     AddImageEvent();
 
-    $('#btn_AddNew').show();
-
     const myInterval = setInterval(() => {
-        if ($('#thisUser').data('role') == 8) {
-            if ($('#btn_AddNew').is(':visible')) {
-                clearInterval(myInterval);
-            } else {
-                $('#btn_AddNew').show();
-            }
+        if (!Ids.includes($('#thisUser').data('id'))) {
+            $('#btn_AddNew').hide();
         }
         else {
-            clearInterval(myInterval);
+            $('#btn_AddNew').show();
         }
-        console.log("sss");
+
+        if ($('#thisUser').data('role') == 8) {
+            $('#btn_AddNew').show();
+        }     
         
+        clearInterval(myInterval);
+
     }, 100);
 });
 
@@ -209,12 +210,14 @@ function DrawTableRows(item, isAddInDatatable = false) {
         var id = $('#thisUser').data('id');
         var SampleStatus = item.LabelSampleStatus;
 
+        if (Ids.includes($('#thisUser').data('id'))) role = 4;
+
         switch (parseInt(role)) {
             case 1:
             case 2:
             case 3:
             case 4: {
-                if (SampleStatus.IdUserCreated == id || id == 119 || 179) {
+                if (SampleStatus.IdUserCreated == id || Ids.includes($('#thisUser').data('id'))) {
                     cButton = `<td class="action_col">
                                   <button title="Chi tiết" data-id=${item.Id} class="btn btn-info"    onclick="Details(this, event)"><i class="bi bi-info"></i></button>
                                   <button title="Sửa"      data-id=${item.Id} class="btn btn-warning" onclick="Edit(this, event)"><i class="bi bi-pen"></i></button>
@@ -549,7 +552,8 @@ function ClearModal() {
     $('#LabelSample .modal-footer').show();
 
     const ImageRow = $('#LabelSample_Table-tbody tr').eq(7);
-    const ImageCells = $(ImageRow).find('td:gt(0)');
+    const ImageCells = $(ImageRow).find('td:gt(0)');    
+    ImageCells.push($('[NoteImage]').closest('td'));
 
     $.each(ImageCells, function (k, cell) {
 
@@ -569,7 +573,7 @@ function ClearModal() {
 $(document).on('click', '#btn_AddNew', function (e) {
     e.preventDefault();
 
-    if ($('#thisUser').data('id') != 119 && $('#thisUser').data('id') != 179) return;
+    if (!Ids.includes($('#thisUser').data('id'))) return;
 
     $('input[data-name="CreatedDate"]').val(moment().format('YYYY-MM-DDTHH:mm'));
     $('input[data-name="ValidDate"]').val(moment().format('YYYY-MM-DDTHH:mm'));
@@ -809,6 +813,10 @@ function GetModalFormData() {
         data.PdfFile = $('#UploadFilesInput')[0].files[0];
     }
 
+    if ($('[NoteImage]')[0].files[0] != undefined) {
+        data.NoteImage = $('[NoteImage]')[0].files[0];
+    }
+
     return data;
 }
 function objectToFormData(obj, formData = null, parentKey = '') {
@@ -875,7 +883,7 @@ function Details(elm, e) {
 
 // Edit
 function Edit(elm, e) {
-    if ($('#thisUser').data('id') != 119 && $('#thisUser').data('id') != 179) return;
+    if (!Ids.includes($('#thisUser').data('id'))) return;
 
     ClearModal();
     e.preventDefault();
@@ -958,7 +966,7 @@ function SaveEdit(elm, e) {
 
 // Delete
 function Delete(elm, e) {
-    if ($('#thisUser').data('id') != 119 && $('#thisUser').data('id') != 179) return;
+    if (!Ids.includes($('#thisUser').data('id'))) return;
 
     e.preventDefault();
 
@@ -1150,6 +1158,8 @@ function FillDataToModal(label, isEditModal = false) {
         FillMacIDLabel(label.MacIDLabel);
         FillCurrentLabel(label.CurrentLabel);
         FillPdfFile(label);
+        FillNoteImage(label);
+
         // Footer
         const note = label.Note.split(',');
         $('input[data-name="note_1"]').val(note[0]);
@@ -1438,6 +1448,30 @@ function FillPdfFile(label) {
         $('#FilesPreview').empty();
     }   
 }
+function FillNoteImage(label) {
+    try {
+        // LabelImagePath
+        if (label.NotePath != null) {
+            const img = $(`<img src="${label.NotePath.replace(/^.*\\Areas/, "/Areas")}" class="previewImage">`);
+
+            const noteImageRow = $('[NoteImage]').closest('td');
+
+            noteImageRow.find('.previewContainer').html(img);
+            noteImageRow.find('.previewContainer').show();
+            noteImageRow.find('.deleteButton').hide();
+            noteImageRow.find('button[Btn-Image]').hide();
+
+            $(img).on('click', function () {
+                let image = $('#ImagePreview');
+                image.attr('src', $(img).attr('src'));
+                $(image).click();
+            });
+        }
+    }
+    catch {
+        $('#FilesPreview').empty();
+    }
+}
 
 // Image Event
 var viewPreview;
@@ -1445,6 +1479,7 @@ function AddImageEvent()
 {
     const ImageRow = $('#LabelSample_Table-tbody tr').eq(7);
     const ImageCells = $(ImageRow).find('td:gt(0)');
+    ImageCells.push($('[NoteImage]').closest('td'));
 
 
     $.each(ImageCells, function (k, cell) {
@@ -1580,6 +1615,11 @@ $('#ImagePreview').on('click', function () {
     $('button[name="CurrentLabel"][Btn-Image]').click(function () {
         $('input[name="CurrentLabel"][LabelImagePath]').click();
     });
+
+    $('button[name="NoteImage"][Btn-Image]').click(function () {
+        $('input[name="NoteImage"][NoteImage]').click();
+    });
+
     // Upload Pdf
     $(document).on('click', '#UploadFiles', function (e) {
         if ($('#thisUser').data('id') != 119) return;

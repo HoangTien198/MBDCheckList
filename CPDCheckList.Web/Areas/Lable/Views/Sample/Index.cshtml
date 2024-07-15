@@ -417,7 +417,7 @@
                             <td colspan="4" class="text-center fw-bold" style="background-color: blanchedalmond">Ghi chú</td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td colspan="1">
                                 <div class="d-flex align-items-center mb-3">
                                     <label class="form-control-label me-2" style="width: 290px;">產品共 (Tổng) ... MAC:</label>
                                     <input type="text" class="form-control form-control-sm" data-name="note_1">
@@ -427,21 +427,27 @@
                                     <input type="text" class="form-control form-control-sm" data-name="note_2">
                                 </div>
                             </td>
-                            <td colspan="2">
-                                <div class="row">
-                                    <div class="col-7">
-                                        <textarea class="form-control" rows="3" style="resize: none;" data-name="note_3"></textarea>
-                                    </div>
-                                    <div class="col-5">
-                                        <div style="width: fit-content" id="UploadFiles" class="border">
-                                            <button class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></button>
-                                            <label>Upload <span class="text-danger">*.pdf</span> file.</label>
-                                        </div>
-                                        <input type="file" class="d-none" accept="application/pdf" id="UploadFilesInput" />
-                                        <div id="FilesPreview" class="d-flex flex-column mt-2 overflow-hidden">
-                                        </div>
-                                    </div>
-                                </div>                              
+                            <td colspan="1">
+                                <div class="d-flex justify-content-between">
+                                    <button class="deleteButton"><i class="bi bi-x-circle"></i></button>
+                                </div>
+
+                                <button type="button" class="btn btn-outline-dark col-12" style="height: 100px; font-size: 2rem" name="NoteImage" Btn-Image><i class="bi bi-camera-fill"></i></button>
+                                <input type="file" class="d-none" name="NoteImage" NoteImage accept="image/*" />
+
+                                <div class="previewContainer"></div>
+                            </td>
+                            <td colspan="1">
+                                <textarea class="form-control fw-bold text-primary" rows="3" style="resize: none;" data-name="note_3"></textarea>
+                            </td>
+                            <td colspan="1">
+                                <div style="width: fit-content" id="UploadFiles" class="border">
+                                    <button class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></button>
+                                    <label>Upload <span class="text-danger">*.pdf</span> file.</label>
+                                </div>
+                                <input type="file" class="d-none" accept="application/pdf" id="UploadFilesInput" />
+                                <div id="FilesPreview" class="d-flex flex-column mt-2 overflow-hidden">
+                                </div>
                             </td>
                         </tr>
                         <!-- Row 10 -->
@@ -481,9 +487,9 @@
                         <p class="mb-1">表單編號: FD3NVB005001B</p>
                         <p class="mb-1">Mã bảng biểu: FD3NVB005001B</p>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
             <div class="modal-footer justify-content-end">
                 <button type="button" class="btn btn-sm btn-primary" id="LabelSample-btnSave">添新 Thêm mới</button>
@@ -497,6 +503,7 @@
     <!-- Vendor -->
     <script src="~/Areas/Lable/Content/vendor/MomentJs/moment.js"></script>
     <script src="~/files/Content/vendor/Viewer JS/viewer.min.js"></script>
-    <!-- Custom -->   
+    <!-- Custom -->
     <script src="~/Areas/Lable/Content/Custom/LabelSample.js?v=@Guid.NewGuid()"></script>
+    @*<script src="~/Areas/Lable/Content/Custom/LabelSample.js"></script>*@
 }

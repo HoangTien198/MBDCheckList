@@ -28,6 +28,7 @@ namespace CPDCheckList.Web.Areas.Lable.Entities
         public string Note { get; set; }
         public string Location { get; set; }
         public string FilePath { get; set; }
+        public string NotePath { get; set; }
     
         public virtual CurrentLabel CurrentLabel { get; set; }
         public virtual FoxconnLabel FoxconnLabel { get; set; }

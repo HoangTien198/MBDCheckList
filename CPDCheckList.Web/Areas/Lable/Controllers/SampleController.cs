@@ -246,6 +246,25 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 }
                 #endregion
 
+                #region NoteImage
+                if (files.AllKeys.Any(k => k.Contains("NoteImage")))
+                {
+                    string fileKey = files.AllKeys.FirstOrDefault(k => k.Contains("NoteImage"));
+                    HttpPostedFileBase file = Request.Files[fileKey];
+
+                    string SavePath = SaveNoteImage(file, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+                    if (!string.IsNullOrEmpty(SavePath))
+                    {
+
+                        LabelSample.NotePath = SavePath;
+                    }
+                    else
+                    {
+                        return Json(new { status = false, message = "Save image failed." });
+                    }
+                }
+                #endregion
+
                 #region Label Sample Status
                 User_LS user = GetSessionUser();
                 LabelSampleStatus status = new LabelSampleStatus();
@@ -525,6 +544,25 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 }
                 #endregion
 
+                #region Note Image
+                if (files.AllKeys.Any(k => k.Contains("NoteImage")))
+                {
+                    string fileKey = files.AllKeys.FirstOrDefault(k => k.Contains("NoteImage"));
+                    HttpPostedFileBase file = Request.Files[fileKey];
+
+                    string SavePath = SaveNoteImage(file, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+                    if (!string.IsNullOrEmpty(SavePath))
+                    {
+
+                        LabelSample.NotePath = SavePath;
+                    }
+                    else
+                    {
+                        return Json(new { status = false, message = "Save image failed." });
+                    }
+                }
+                #endregion
+
                 db.LabelSamples.AddOrUpdate(LabelSample);
                 db.SaveChanges();
 
@@ -687,6 +725,24 @@ namespace CPDCheckList.Web.Areas.Lable.Controllers
                 return string.Empty;
             }
         }
+        private string SaveNoteImage(HttpPostedFileBase file, string folder)
+        {
+            string rootPath = Server.MapPath($"/Areas/Lable/Data/ImageData/Sample/{folder}");
+            if (!Directory.Exists(rootPath)) Directory.CreateDirectory(rootPath);
+
+            try
+            {
+                string savePath = Path.Combine(rootPath, $"{Guid.NewGuid()}{file.FileName}");
+                file.SaveAs(savePath);
+
+                return savePath;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
         private User_LS GetSessionUser()
         {
             try
