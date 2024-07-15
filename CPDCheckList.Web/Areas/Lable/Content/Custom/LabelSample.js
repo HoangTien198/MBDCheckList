@@ -308,8 +308,22 @@ $('#isFoxconnLabel').change(function () {
 
         $(tds).find('input[IsDerivedFrom]').attr('disabled', false);
         $(tds).find('input[IsDerivedFrom]').prop('checked', false);
-        $(tds).find('input[DerivedFrom]').attr('disabled', true);
-        $(tds).find('input[DerivedFrom]').val('');
+        $(tds).find('input[IsDerivedFrom]').change(function () {
+            if ($(this).is(':checked')) {
+                $(tds).find('input[name="FoxconnLabel-DerivedFrom"]').attr('disabled', false);
+                $(tds).find('input[name="FoxconnLabel-DerivedFrom"]:first').prop('checked', true);
+                $(tds).find('input[name="FoxconnLabel-DerivedFrom"]:first').change();
+            }
+            else {
+                $(tds).find('input[name="FoxconnLabel-DerivedFrom"]').attr('disabled', true);
+            }
+        })
+        $(tds).find('input[name="FoxconnLabel-DerivedFrom"]:first').change(function () {
+            $(tds).find('input[name="FoxconnLabel-DerivedFrom-Other"]').attr('disabled', true);
+        });
+        $(tds).find('input[name="FoxconnLabel-DerivedFrom"]:last').change(function () {
+            $(tds).find('input[name="FoxconnLabel-DerivedFrom-Other"]').attr('disabled', false);
+        });
 
         $(tds).find('button[Btn-Image]').attr('disabled', false);
         $(tds).find('input[LabelImagePath]').val('');
@@ -339,8 +353,10 @@ $('#isFoxconnLabel').change(function () {
 
         $(tds).find('input[IsDerivedFrom]').attr('disabled', true);
         $(tds).find('input[IsDerivedFrom]').prop('checked', false);
-        $(tds).find('input[DerivedFrom]').attr('disabled', true);
-        $(tds).find('input[DerivedFrom]').val('');
+        $(tds).find('input[name="FoxconnLabel-DerivedFrom"]').attr('disabled', true);
+        $(tds).find('input[name="FoxconnLabel-DerivedFrom"]').prop('checked', false);
+        $(tds).find('input[name="FoxconnLabel-DerivedFrom-Other"]').attr('disabled', true);
+        $(tds).find('input[name="FoxconnLabel-DerivedFrom-Other"]').val('');
 
         $(tds).find('button[Btn-Image]').attr('disabled', true);
         $(tds).find('input[LabelImagePath]').val('');
@@ -372,8 +388,22 @@ $('#isSNLabel').change(function () {
 
         $(tds).find('input[IsDerivedFrom]').attr('disabled', false);
         $(tds).find('input[IsDerivedFrom]').prop('checked', false);
-        $(tds).find('input[DerivedFrom]').attr('disabled', true);
-        $(tds).find('input[DerivedFrom]').val('');
+        $(tds).find('input[IsDerivedFrom]').change(function () {
+            if ($(this).is(':checked')) {
+                $(tds).find('input[name="SNLabel-DerivedFrom"]').attr('disabled', false);
+                $(tds).find('input[name="SNLabel-DerivedFrom"]:first').prop('checked', true);
+                $(tds).find('input[name="SNLabel-DerivedFrom"]:first').change();
+            }
+            else {
+                $(tds).find('input[name="SNLabel-DerivedFrom"]').attr('disabled', true);
+            }
+        })
+        $(tds).find('input[name="SNLabel-DerivedFrom"]:first').change(function () {
+            $(tds).find('input[name="SNLabel-DerivedFrom-Other"]').attr('disabled', true);
+        });
+        $(tds).find('input[name="SNLabel-DerivedFrom"]:last').change(function () {
+            $(tds).find('input[name="SNLabel-DerivedFrom-Other"]').attr('disabled', false);
+        });
 
         $(tds).find('button[Btn-Image]').attr('disabled', false);
         $(tds).find('input[LabelImagePath]').val('');
@@ -401,8 +431,10 @@ $('#isSNLabel').change(function () {
 
         $(tds).find('input[IsDerivedFrom]').attr('disabled', true);
         $(tds).find('input[IsDerivedFrom]').prop('checked', false);
-        $(tds).find('input[DerivedFrom]').attr('disabled', true);
-        $(tds).find('input[DerivedFrom]').val('');
+        $(tds).find('input[name="SNLabel-DerivedFrom"]').attr('disabled', true);
+        $(tds).find('input[name="SNLabel-DerivedFrom"]').prop('checked', false);
+        $(tds).find('input[name="SNLabel-DerivedFrom-Other"]').attr('disabled', true);
+        $(tds).find('input[name="SNLabel-DerivedFrom-Other"]').val('');
 
         $(tds).find('button[Btn-Image]').attr('disabled', true);
         $(tds).find('input[LabelImagePath]').val('');
@@ -430,8 +462,22 @@ $('#isMacIDLabel').change(function () {
 
         $(tds).find('input[IsDerivedFrom]').attr('disabled', false);
         $(tds).find('input[IsDerivedFrom]').prop('checked', false);
-        $(tds).find('input[DerivedFrom]').attr('disabled', true);
-        $(tds).find('input[DerivedFrom]').val('');
+        $(tds).find('input[IsDerivedFrom]').change(function () {
+            if ($(this).is(':checked')) {
+                $(tds).find('input[name="MacIDLabel-DerivedFrom"]').attr('disabled', false);
+                $(tds).find('input[name="MacIDLabel-DerivedFrom"]:first').prop('checked', true);
+                $(tds).find('input[name="MacIDLabel-DerivedFrom"]:first').change();
+            }
+            else {
+                $(tds).find('input[name="MacIDLabel-DerivedFrom"]').attr('disabled', true);
+            }
+        })
+        $(tds).find('input[name="MacIDLabel-DerivedFrom"]:first').change(function () {
+            $(tds).find('input[name="MacIDLabel-DerivedFrom-Other"]').attr('disabled', true);
+        });
+        $(tds).find('input[name="MacIDLabel-DerivedFrom"]:last').change(function () {
+            $(tds).find('input[name="MacIDLabel-DerivedFrom-Other"]').attr('disabled', false);
+        });
 
         $(tds).find('button[Btn-Image]').attr('disabled', false);
         $(tds).find('input[LabelImagePath]').val('');
@@ -455,8 +501,10 @@ $('#isMacIDLabel').change(function () {
 
         $(tds).find('input[IsDerivedFrom]').attr('disabled', true);
         $(tds).find('input[IsDerivedFrom]').prop('checked', false);
-        $(tds).find('input[DerivedFrom]').attr('disabled', true);
-        $(tds).find('input[DerivedFrom]').val('');
+        $(tds).find('input[name="MacIDLabel-DerivedFrom"]').attr('disabled', true);
+        $(tds).find('input[name="MacIDLabel-DerivedFrom"]').prop('checked', false);
+        $(tds).find('input[name="MacIDLabel-DerivedFrom-Other"]').attr('disabled', true);
+        $(tds).find('input[name="MacIDLabel-DerivedFrom-Other"]').val('');
 
         $(tds).find('button[Btn-Image]').attr('disabled', true);
         $(tds).find('input[LabelImagePath]').val('');
@@ -479,8 +527,22 @@ $('#isCurrentLabel').change(function (e) {
 
         $(tds).find('input[IsDerivedFrom]').attr('disabled', false);
         $(tds).find('input[IsDerivedFrom]').prop('checked', false);
-        $(tds).find('input[DerivedFrom]').attr('disabled', true);
-        $(tds).find('input[DerivedFrom]').val('');
+        $(tds).find('input[IsDerivedFrom]').change(function () {
+            if ($(this).is(':checked')) {
+                $(tds).find('input[name="CurrentLabel-DerivedFrom"]').attr('disabled', false);
+                $(tds).find('input[name="CurrentLabel-DerivedFrom"]:first').prop('checked', true);
+                $(tds).find('input[name="CurrentLabel-DerivedFrom"]:first').change();
+            }
+            else {
+                $(tds).find('input[name="CurrentLabel-DerivedFrom"]').attr('disabled', true);
+            }
+        })
+        $(tds).find('input[name="CurrentLabel-DerivedFrom"]:first').change(function () {
+            $(tds).find('input[name="CurrentLabel-DerivedFrom-Other"]').attr('disabled', true);
+        });
+        $(tds).find('input[name="CurrentLabel-DerivedFrom"]:last').change(function () {
+            $(tds).find('input[name="CurrentLabel-DerivedFrom-Other"]').attr('disabled', false);
+        });
 
         $(tds).find('button[Btn-Image]').attr('disabled', false);
         $(tds).find('input[LabelImagePath]').val('');
@@ -499,8 +561,10 @@ $('#isCurrentLabel').change(function (e) {
 
         $(tds).find('input[IsDerivedFrom]').attr('disabled', true);
         $(tds).find('input[IsDerivedFrom]').prop('checked', false);
-        $(tds).find('input[DerivedFrom]').attr('disabled', true);
-        $(tds).find('input[DerivedFrom]').val('');
+        $(tds).find('input[name="CurrentLabel-DerivedFrom"]').attr('disabled', true);
+        $(tds).find('input[name="CurrentLabel-DerivedFrom"]').prop('checked', false);
+        $(tds).find('input[name="CurrentLabel-DerivedFrom-Other"]').attr('disabled', true);
+        $(tds).find('input[name="CurrentLabel-DerivedFrom-Other"]').val('');
 
         $(tds).find('button[Btn-Image]').attr('disabled', true);
         $(tds).find('input[LabelImagePath]').val('');
@@ -583,7 +647,6 @@ $(document).on('click', '#btn_AddNew', function (e) {
 });
 $('#LabelSample-btnSave').click(function () {
     const data = GetModalFormData();
-
     const formData = objectToFormData(data);
 
     $.ajax({
@@ -660,7 +723,13 @@ function GetModalFormData() {
                 FoxconnLabel.CoalPaperSpec = $(field).val();
             }
             if ($(field).is('[IsDerivedFrom]') && $(field).is(':checked')) {
-                FoxconnLabel.DerivedFrom = FoxconnLabelFields.filter('[DerivedFrom]').val();
+                const DerivedFrom = $('input[name="FoxconnLabel-DerivedFrom"]:is(:checked)').val()
+                if (DerivedFrom.includes('Other')) {
+                    FoxconnLabel.DerivedFrom = $('input[name="FoxconnLabel-DerivedFrom-Other"]').val();
+                }
+                else {
+                    FoxconnLabel.DerivedFrom = DerivedFrom;
+                }               
             }
             if ($(field).is('[LabelImagePath]')) {
                 FoxconnLabel.LabelImagePath = $(field)[0].files[0];
@@ -707,7 +776,13 @@ function GetModalFormData() {
                 SNLabel.CoalPaperSpec = $(field).val();
             }
             if ($(field).is('[IsDerivedFrom]') && $(field).is(':checked')) {
-                SNLabel.DerivedFrom = SNLabelFields.filter('[DerivedFrom]').val();
+                const DerivedFrom = $('input[name="SNLabel-DerivedFrom"]:is(:checked)').val()
+                if (DerivedFrom.includes('Other')) {
+                    SNLabel.DerivedFrom = $('input[name="SNLabel-DerivedFrom-Other"]').val();
+                }
+                else {
+                    SNLabel.DerivedFrom = DerivedFrom;
+                }      
             }
             if ($(field).is('[LabelImagePath]')) {
                 SNLabel.LabelImagePath = $(field)[0].files[0];
@@ -753,7 +828,13 @@ function GetModalFormData() {
                 MacIDLabel.CoalPaperSpec = $(field).val();
             }
             if ($(field).is('[IsDerivedFrom]') && $(field).is(':checked')) {
-                MacIDLabel.DerivedFrom = MacIDLabelFields.filter('[DerivedFrom]').val();
+                const DerivedFrom = $('input[name="MacIDLabel-DerivedFrom"]:is(:checked)').val()
+                if (DerivedFrom.includes('Other')) {
+                    MacIDLabel.DerivedFrom = $('input[name="MacIDLabel-DerivedFrom-Other"]').val();
+                }
+                else {
+                    MacIDLabel.DerivedFrom = DerivedFrom;
+                }  
             }
             if ($(field).is('[LabelImagePath]')) {
                 MacIDLabel.LabelImagePath = $(field)[0].files[0];
@@ -788,7 +869,13 @@ function GetModalFormData() {
                 CurrentLabel.CoalPaperSpec = $(field).val();
             }
             if ($(field).is('[IsDerivedFrom]') && $(field).is(':checked')) {
-                CurrentLabel.DerivedFrom = CurrentLabelFields.filter('[DerivedFrom]').val();
+                const DerivedFrom = $('input[name="CurrentLabel-DerivedFrom"]:is(:checked)').val()
+                if (DerivedFrom.includes('Other')) {
+                    CurrentLabel.DerivedFrom = $('input[name="CurrentLabel-DerivedFrom-Other"]').val();
+                }
+                else {
+                    CurrentLabel.DerivedFrom = DerivedFrom;
+                } 
             }
             if ($(field).is('[LabelImagePath]')) {
                 CurrentLabel.LabelImagePath = $(field)[0].files[0];
@@ -842,8 +929,6 @@ function objectToFormData(obj, formData = null, parentKey = '') {
             }
         }
     }
-
-
 
     return formData;
 }
@@ -931,7 +1016,6 @@ function SaveEdit(elm, e) {
     e.preventDefault();
 
     const data = GetModalFormData();
-
     const formData = objectToFormData(data);
 
     const Id = $(elm).data('id');
@@ -960,8 +1044,6 @@ function SaveEdit(elm, e) {
             Swal.fire("Có lỗi xảy ra", GetInlineString(err.responseText, 'title'), "error");
         }
     });
-
-
 }
 
 // Delete
@@ -1238,7 +1320,14 @@ function FillFoxconnLabel(label) {
             $('input[name="FoxconnLabel"][IsDerivedFrom]').prop('checked', true);
             $('input[name="FoxconnLabel"][IsDerivedFrom]').css('opacity', 1);
             $('input[name="FoxconnLabel"][IsDerivedFrom]').next('label').css('opacity', 1);
-            $('input[name="FoxconnLabel"][DerivedFrom]').val(label.DerivedFrom);
+
+            if (label.DerivedFrom === '制造文件 (Văn kiện chế tạo)') {
+                $('input[name="FoxconnLabel-DerivedFrom"]:first').prop('checked', true);
+            }
+            else {
+                $('input[name="FoxconnLabel-DerivedFrom"]:last').prop('checked', true);
+                $('input[name="FoxconnLabel-DerivedFrom-Other"]:last').val(label.DerivedFrom != null || label.DerivedFrom != 'null' ? label.DerivedFrom : '');
+            }
         }
         // LabelImagePath
         if (label.LabelImagePath != null) {
@@ -1284,10 +1373,19 @@ function FillSNLabel(label) {
 
         // DerivedFrom
         if (label.DerivedFrom != null) {
+            console.log('ss');
+
             $('input[name="SNLabel"][IsDerivedFrom]').prop('checked', true);
             $('input[name="SNLabel"][IsDerivedFrom]').css('opacity', 1);
             $('input[name="SNLabel"][IsDerivedFrom]').next('label').css('opacity', 1);
-            $('input[name="SNLabel"][DerivedFrom]').val(label.DerivedFrom);
+
+            if (label.DerivedFrom === '制造文件 (Văn kiện chế tạo)') {
+                $('input[name="SNLabel-DerivedFrom"]:first').prop('checked', true);
+            }
+            else {
+                $('input[name="SNLabel-DerivedFrom"]:last').prop('checked', true);
+                $('input[name="SNLabel-DerivedFrom-Other"]:last').val(label.DerivedFrom != null || label.DerivedFrom != 'null' ? label.DerivedFrom : '');
+            }
         }
 
         // LabelImagePath
@@ -1337,7 +1435,14 @@ function FillMacIDLabel(label) {
             $('input[name="MacIDLabel"][IsDerivedFrom]').prop('checked', true);
             $('input[name="MacIDLabel"][IsDerivedFrom]').css('opacity', 1);
             $('input[name="MacIDLabel"][IsDerivedFrom]').next('label').css('opacity', 1);
-            $('input[name="MacIDLabel"][DerivedFrom]').val(label.DerivedFrom);
+
+            if (label.DerivedFrom === '制造文件 (Văn kiện chế tạo)') {
+                $('input[name="MacIDLabel-DerivedFrom"]:first').prop('checked', true);
+            }
+            else {
+                $('input[name="MacIDLabel-DerivedFrom"]:last').prop('checked', true);
+                $('input[name="MacIDLabel-DerivedFrom-Other"]:last').val(label.DerivedFrom != null || label.DerivedFrom != 'null' ? label.DerivedFrom : '');
+            }
         }
 
         // LabelImagePath
@@ -1376,7 +1481,14 @@ function FillCurrentLabel(label) {
             $('input[name="CurrentLabel"][IsDerivedFrom]').prop('checked', true);
             $('input[name="CurrentLabel"][IsDerivedFrom]').css('opacity', 1);
             $('input[name="CurrentLabel"][IsDerivedFrom]').next('label').css('opacity', 1);
-            $('input[name="CurrentLabel"][DerivedFrom]').val(label.DerivedFrom);
+
+            if (label.DerivedFrom === '制造文件 (Văn kiện chế tạo)') {
+                $('input[name="CurrentLabel-DerivedFrom"]:first').prop('checked', true);
+            }
+            else {
+                $('input[name="CurrentLabel-DerivedFrom"]:last').prop('checked', true);
+                $('input[name="CurrentLabel-DerivedFrom-Other"]:last').val(label.DerivedFrom != null || label.DerivedFrom != 'null' ? label.DerivedFrom : '');
+            }
         }
 
         // LabelImagePath

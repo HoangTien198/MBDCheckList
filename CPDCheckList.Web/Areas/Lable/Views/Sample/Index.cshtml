@@ -49,7 +49,7 @@
                 <button type="button" class="btn btn-outline-danger border-0 rounded-circle" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x" style="font-size: 20px"></i></button>
             </div>
             <div class="modal-body" id="LabelSample-body">
-                <div class="row mb-3">
+                <div class="row mb-3" style="margin-left: 75px;">
                     <div class="col-3">
                         <label class="form-label">機種名 (Tên sản phẩm):</label>
                         <input type="text" class="form-control" placeholder="Tên sản phẩm .." data-name="ProductName">
@@ -67,7 +67,7 @@
                         <input type="text" class="form-control" placeholder="MO .." data-name="MO">
                     </div>
                 </div>
-                <table class="table table-bordered table-lablesample" id="LabelSample_Table">
+                <table class="table table-bordered table-lablesample" style="table-layout: fixed;" id="LabelSample_Table">
                     <thead>
                         <tr style="background-color: blanchedalmond">
                             <th style="width: 75px;">Thứ tự</th>
@@ -330,7 +330,17 @@
                                         <label class="form-check-label">舞 Không / 有 Có</label>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control form-control-sm" name="FoxconnLabel" DerivedFrom>
+                                <div class="form-check">
+                                    <input class="form-check-input" name="FoxconnLabel-DerivedFrom" value="制造文件 (Văn kiện chế tạo)" type="radio">
+                                    <label class="form-check-label">制造文件 (Văn kiện chế tạo)</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input" name="FoxconnLabel-DerivedFrom" value="Other" type="radio">
+                                    <div class="d-flex align-items-center w-100 ms-2">
+                                        <label class="form-check-label">其他 (Khác)</label>
+                                        <input class="form-check-label form-control form-control-sm ms-2 w-75" name="FoxconnLabel-DerivedFrom-Other">
+                                    </div>
+                                </div>
                             </td>
                             <td SNLabel>
                                 <div class="d-flex justify-content-between">
@@ -340,7 +350,17 @@
                                         <label class="form-check-label">舞 Không / 有 Có</label>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control form-control-sm" name="SNLabel" DerivedFrom>
+                                <div class="form-check">
+                                    <input class="form-check-input" name="SNLabel-DerivedFrom" value="制造文件 (Văn kiện chế tạo)" type="radio">
+                                    <label class="form-check-label">制造文件 (Văn kiện chế tạo)</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input" name="SNLabel-DerivedFrom" value="Other" type="radio">
+                                    <div class="d-flex align-items-center w-100 ms-2">
+                                        <label class="form-check-label">其他 (Khác)</label>
+                                        <input class="form-check-label form-control form-control-sm ms-2 w-75" name="SNLabel-DerivedFrom-Other">
+                                    </div>
+                                </div>
                             </td>
                             <td MacIDLabel>
                                 <div class="d-flex justify-content-between">
@@ -350,7 +370,17 @@
                                         <label class="form-check-label">舞 Không / 有 Có</label>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control form-control-sm" name="MacIDLabel" DerivedFrom>
+                                <div class="form-check">
+                                    <input class="form-check-input" name="MacIDLabel-DerivedFrom" value="制造文件 (Văn kiện chế tạo)" type="radio">
+                                    <label class="form-check-label">制造文件 (Văn kiện chế tạo)</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input" name="MacIDLabel-DerivedFrom" value="Other" type="radio">
+                                    <div class="d-flex align-items-center w-100 ms-2">
+                                        <label class="form-check-label">其他 (Khác)</label>
+                                        <input class="form-check-label form-control form-control-sm ms-2 w-75" name="MacIDLabel-DerivedFrom-Other">
+                                    </div>
+                                </div>
                             </td>
                             <td CurrentLabel>
                                 <div class="d-flex justify-content-between">
@@ -360,7 +390,17 @@
                                         <label class="form-check-label">舞 Không / 有 Có</label>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control form-control-sm" name="CurrentLabel" DerivedFrom>
+                                <div class="form-check">
+                                    <input class="form-check-input" name="CurrentLabel-DerivedFrom" value="制造文件 (Văn kiện chế tạo)" type="radio">
+                                    <label class="form-check-label">制造文件 (Văn kiện chế tạo)</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center">
+                                    <input class="form-check-input" name="CurrentLabel-DerivedFrom" value="Other" type="radio">
+                                    <div class="d-flex align-items-center w-100 ms-2">
+                                        <label class="form-check-label">其他 (Khác)</label>
+                                        <input class="form-check-label form-control form-control-sm ms-2 w-75" name="CurrentLabel-DerivedFrom-Other">
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         <!-- Row 8-->
